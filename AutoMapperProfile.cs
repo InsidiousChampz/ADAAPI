@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TEMPLETEAPI.DTOs;
+using TEMPLETEAPI.DTOs.Product;
 using TEMPLETEAPI.Models;
+using TEMPLETEAPI.Models.Product;
 
 namespace TEMPLETEAPI
 {
@@ -22,7 +24,11 @@ namespace TEMPLETEAPI
             //Weapon
             CreateMap<Weapon, GetWeaponDto>();
 
-            //Test
+            //Product
+            CreateMap<Product, GetProductDto>();
+
+            //ProductGroup
+            CreateMap<ProductGroup, GetProductGroupDto>();
         }
     }
 }

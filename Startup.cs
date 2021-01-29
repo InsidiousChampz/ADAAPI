@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TEMPLETEAPI.Services.Character;
+using TEMPLETEAPI.Services.Product;
 
 namespace TEMPLETEAPI
 {
@@ -125,6 +126,7 @@ namespace TEMPLETEAPI
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddScoped<IProductService, ProductService>();
 
             //------End: Service------
         }

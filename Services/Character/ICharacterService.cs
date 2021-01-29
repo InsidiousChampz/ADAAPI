@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TEMPLETEAPI.DTOs;
+using TEMPLETEAPI.DTOs.Fight;
 using TEMPLETEAPI.Models;
 
 namespace TEMPLETEAPI.Services.Character
@@ -27,5 +28,10 @@ namespace TEMPLETEAPI.Services.Character
         Task<ServiceResponse<GetWeaponDto>> UpdateWeaponById(int weaponId, UpdateWeaponDto updateWeapon);
 
 
+        //Mark Learning Day2.
+        Task<ServiceResponse<AttackResultDto>> WeaponAtk(WeaponAttackDto request);
+        Task<ServiceResponse<AttackResultDto>> SkillAtk(SkillAttackDto request);
+        Task<ServiceResponse<GetCharacterDto>> RemoveWeapon(int characterId);
+        Task<ServiceResponse<GetCharacterDto>> RemoveSkill(int characterId);
     }
 }

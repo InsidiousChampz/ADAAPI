@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TEMPLETEAPI.DTOs;
+using TEMPLETEAPI.DTOs.Fight;
 using TEMPLETEAPI.Services.Character;
 
 namespace TEMPLETEAPI.Controllers
@@ -70,30 +71,6 @@ namespace TEMPLETEAPI.Controllers
             return Ok(await _charService.AddSkill(newSkill));
         }
 
-        [HttpDelete("deletecharacter")]
-        public async Task<IActionResult> DeleteCharacterById(int characterId)
-        {
-
-            return Ok(await _charService.DeleteCharacterById(characterId));
-
-        }
-
-        [HttpDelete("deleteskill")]
-        public async Task<IActionResult> DeleteSkillById(int skillId)
-        {
-
-            return Ok(await _charService.DeleteSkillById(skillId));
-
-        }
-
-        [HttpDelete("deleteweapon")]
-        public async Task<IActionResult> DeleteweaponById(int weaponId)
-        {
-
-            return Ok(await _charService.DeleteWeaponById(weaponId));
-
-        }
-
         [HttpPost("updatecharacter")]
         public async Task<IActionResult> UpdateCharacterById(int characterId, UpdateCharacterDto updateCharacter)
         {
@@ -118,7 +95,58 @@ namespace TEMPLETEAPI.Controllers
             return Ok(await _charService.UpdateWeaponById(weaponId, updateWeapon));
         }
 
+        [HttpPut("weaponatk")]
+        public async Task<IActionResult> WeaponAtk(WeaponAttackDto request)
+        {
+            return Ok(await _charService.WeaponAtk(request));
+        }
 
+        [HttpPut("skillatk")]
+        public async Task<IActionResult> SkillAtk(SkillAttackDto request)
+        {
+            return Ok(await _charService.SkillAtk(request));
+        }
+
+        [HttpDelete("removeskill")]
+        public async Task<IActionResult> RemoveSkill(int characterId)
+        {
+
+            return Ok(await _charService.RemoveSkill(characterId));
+
+        }
+
+        [HttpDelete("removeweapon")]
+        public async Task<IActionResult> RemoveWeapon(int characterId)
+        {
+
+            return Ok(await _charService.RemoveWeapon(characterId));
+
+        }
+
+        [HttpDelete("deletecharacter")]
+        public async Task<IActionResult> DeleteCharacterById(int characterId)
+        {
+
+            return Ok(await _charService.DeleteCharacterById(characterId));
+
+        }
+
+        [HttpDelete("deleteskill")]
+        public async Task<IActionResult> DeleteSkillById(int skillId)
+        {
+
+            return Ok(await _charService.DeleteSkillById(skillId));
+
+        }
+
+        [HttpDelete("deleteweapon")]
+        public async Task<IActionResult> DeleteweaponById(int weaponId)
+        {
+
+            return Ok(await _charService.DeleteWeaponById(weaponId));
+
+        }
 
     }
+
 }

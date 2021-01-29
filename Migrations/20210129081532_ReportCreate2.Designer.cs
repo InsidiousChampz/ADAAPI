@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TEMPLETEAPI.Data;
 
 namespace TEMPLETEAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210129081532_ReportCreate2")]
+    partial class ReportCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,82 +61,6 @@ namespace TEMPLETEAPI.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("CharacterSkill");
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Product.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductGroupId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Product.ProductGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductGroups");
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Report.ReportDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReportHeaderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReportHeaderId");
-
-                    b.ToTable("ReportDetails");
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Report.ReportHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReportHeaders");
                 });
 
             modelBuilder.Entity("TEMPLETEAPI.Models.Skill", b =>
@@ -191,24 +117,6 @@ namespace TEMPLETEAPI.Migrations
                     b.HasOne("TEMPLETEAPI.Models.Skill", "Skill")
                         .WithMany("CharacterSkills")
                         .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Product.Product", b =>
-                {
-                    b.HasOne("TEMPLETEAPI.Models.Product.ProductGroup", "ProductGroup")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TEMPLETEAPI.Models.Report.ReportDetail", b =>
-                {
-                    b.HasOne("TEMPLETEAPI.Models.Report.ReportHeader", "ReportHeader")
-                        .WithMany("ReportDetails")
-                        .HasForeignKey("ReportHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
