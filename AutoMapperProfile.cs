@@ -22,7 +22,7 @@ namespace TEMPLETEAPI
             //Weapon
             CreateMap<Weapon, GetWeaponDto>();
 
-
+            //Test
         }
     }
 }
