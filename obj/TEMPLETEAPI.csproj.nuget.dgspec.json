@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj": {}
+    "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj": {}
   },
   "projects": {
-    "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj": {
+    "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
+        "projectUniqueName": "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
         "projectName": "TEMPLETEAPI",
-        "projectPath": "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
+        "projectPath": "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
         "packagesPath": "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\",
-        "outputPath": "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\obj\\",
+        "outputPath": "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Insidious_Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",

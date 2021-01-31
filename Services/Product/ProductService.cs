@@ -94,13 +94,17 @@ namespace TEMPLETEAPI.Services.Product
         }
         public async Task<ServiceResponse<List<GetProductGroupDto>>> GetAllProductGroup()
         {
-            var _productGroup = await _dbContext.ProductGroups.AsNoTracking().ToListAsync();
+            var _productGroup = await _dbContext.ProductGroups
+            .Include(x => x.Products)
+            .AsNoTracking().ToListAsync();
             var dto = _mapper.Map<List<GetProductGroupDto>>(_productGroup);
             return ResponseResult.Success(dto);
         }
         public async Task<ServiceResponse<GetProductGroupDto>> GetProductGroupById(int ProductGroupId)
         {
-            var _productGroup = await _dbContext.ProductGroups.FirstOrDefaultAsync(x => x.Id == ProductGroupId);
+            var _productGroup = await _dbContext.ProductGroups
+            .Include(x => x.Products)
+            .FirstOrDefaultAsync(x => x.Id == ProductGroupId);
             if (_productGroup == null)
             {
                 return ResponseResult.Failure<GetProductGroupDto>("ProductGroup Not Found.");

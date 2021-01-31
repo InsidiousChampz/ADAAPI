@@ -1,3 +1,5 @@
+using TEMPLETEAPI.Models.Product;
+
 namespace TEMPLETEAPI.DTOs.Product
 {
     public class GetProductDto

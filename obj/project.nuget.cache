@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KAynkrHb8aGeRgzrKYtyiaLnonArynu1ng+mhBxNv9Ly9DDtKv74EJUanHVFo6v7mTQRQlrcPnsYtvHC3+3l2A==",
+  "dgSpecHash": "MN6FeWy87Px4FKXWtQBLpM2Co8EkB8hhnm4+qrpw193O4s2Jg2sWxTFEnoGtUmElyZdanLaKFjZrJuoXFl10gQ==",
   "success": true,
-  "projectFilePath": "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
+  "projectFilePath": "D:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",

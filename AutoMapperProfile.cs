@@ -25,7 +25,7 @@ namespace TEMPLETEAPI
             CreateMap<Weapon, GetWeaponDto>();
 
             //Product
-            CreateMap<Product, GetProductDto>();
+            CreateMap<Product, GetProductDto>().ForMember(x => x.ProductGroupId, x => x.MapFrom(x => x.ProductGroupId));
 
             //ProductGroup
             CreateMap<ProductGroup, GetProductGroupDto>();
