@@ -14,7 +14,6 @@ namespace TEMPLETEAPI.Services.Product
         private readonly AppDBContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<ProductService> _log;
-
         public ProductService(AppDBContext dBContext, IMapper mapper, ILogger<ProductService> log)
         {
             _dbContext = dBContext;
