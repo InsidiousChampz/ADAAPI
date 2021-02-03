@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace NetCoreAPI_Template_v2.Validations
+namespace STANDARDAPI.Validations
 {
     public class FileSizeValidator : ValidationAttribute
     {

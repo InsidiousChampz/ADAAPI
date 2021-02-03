@@ -5,7 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 
-namespace TEMPLETEAPI
+namespace STANDARDAPI
 {
     public class Program
     {

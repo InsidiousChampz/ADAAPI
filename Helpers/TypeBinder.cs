@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace TEMPLETEAPI.Helpers
+namespace STANDARDAPI.Helpers
 {
     public class TypeBinder<T> : IModelBinder
     {

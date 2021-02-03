@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TEMPLETEAPI.Data;
-using TEMPLETEAPI.DTOs.Product;
-using TEMPLETEAPI.Models;
+using STANDARDAPI.Data;
+using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Models;
 
-namespace TEMPLETEAPI.Services.Product
+namespace STANDARDAPI.Services.Product
 {
     public class ProductService : IProductService
     {
@@ -22,7 +22,7 @@ namespace TEMPLETEAPI.Services.Product
         }
         public async Task<ServiceResponse<GetProductDto>> AddProduct(AddProductDto newProduct)
         {
-            var _product = new TEMPLETEAPI.Models.Product.Product
+            var _product = new STANDARDAPI.Models.Product.Product
             {
                 Name = newProduct.Name,
                 Price = newProduct.Price,
@@ -116,7 +116,7 @@ namespace TEMPLETEAPI.Services.Product
         }
         public async Task<ServiceResponse<GetProductGroupDto>> AddProductGroup(AddProductGroupDto newProductGroup)
         {
-            var _productgroup = new TEMPLETEAPI.Models.Product.ProductGroup
+            var _productgroup = new STANDARDAPI.Models.Product.ProductGroup
             {
                 Name = newProductGroup.Name,
             };

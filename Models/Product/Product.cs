@@ -1,4 +1,4 @@
-namespace TEMPLETEAPI.Models.Product
+namespace STANDARDAPI.Models.Product
 {
     public class Product
     {

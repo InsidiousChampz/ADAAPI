@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TEMPLETEAPI.DTOs.Product;
-using TEMPLETEAPI.Models;
+using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Models;
 
-namespace TEMPLETEAPI.Services.Product
+namespace STANDARDAPI.Services.Product
 {
     public interface IProductService
     {

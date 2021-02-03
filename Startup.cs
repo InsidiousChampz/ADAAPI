@@ -13,17 +13,17 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using TEMPLETEAPI.Data;
-using TEMPLETEAPI.Helpers;
+using STANDARDAPI.Data;
+using STANDARDAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TEMPLETEAPI.Services.Character;
-using TEMPLETEAPI.Services.Product;
+using STANDARDAPI.Services.Product;
+using STANDARDAPI.Services;
 
-namespace TEMPLETEAPI
+namespace STANDARDAPI
 {
     public class Startup
     {
@@ -125,9 +125,7 @@ namespace TEMPLETEAPI
 
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IProductService, ProductService>();
-
             //------End: Service------
         }
 
@@ -142,7 +140,7 @@ namespace TEMPLETEAPI
             //------Swagger------
             app.UseSwagger();
 
-            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "TEMPLETEAPI"));
+            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "STANDARDAPI"));
             //------End: Swagger------
 
             //app.UseHttpsRedirection();

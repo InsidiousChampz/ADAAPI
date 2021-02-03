@@ -1,6 +1,6 @@
-﻿using TEMPLETEAPI.DTOs;
+﻿using STANDARDAPI.DTOs;
 
-namespace TEMPLETEAPI.Models
+namespace STANDARDAPI.Models
 {
     public class ServiceResponseWithPagination<T> : ServiceResponse<T>
     {
@@ -8,6 +8,7 @@ namespace TEMPLETEAPI.Models
         public double TotalAmountPages { get; set; }
         public double CurrentPage { get; set; }
         public double RecordsPerPage { get; set; }
+        public int PageIndex { get; set; }
     }
 
     public static class ResponseResultWithPagination
@@ -21,7 +22,8 @@ namespace TEMPLETEAPI.Models
                 TotalAmountRecords = paginationResult.TotalAmountRecords,
                 TotalAmountPages = paginationResult.TotalAmountPages,
                 CurrentPage = paginationResult.CurrentPage,
-                RecordsPerPage = paginationResult.RecordsPerPage
+                RecordsPerPage = paginationResult.RecordsPerPage,
+                PageIndex = paginationResult.PageIndex
             };
         }
 

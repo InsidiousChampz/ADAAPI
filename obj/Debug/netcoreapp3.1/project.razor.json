@@ -1,5 +1,5 @@
 {
-  "FilePath": "d:\\Work\\SSB API TEMPLETE\\NetCoreAPI_Template_v2-master\\TEMPLETEAPI\\TEMPLETEAPI\\TEMPLETEAPI.csproj",
+  "FilePath": "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14389,7 +14389,7 @@
     ],
     "CSharpLanguageVersion": 800
   },
-  "RootNamespace": "TEMPLETEAPI",
+  "RootNamespace": "STANDARDAPI",
   "Documents": [],
   "SerializationFormat": "0.2"
 }

@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TEMPLETEAPI.DTOs.Product;
-using TEMPLETEAPI.Services.Product;
+using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Services.Product;
 
 
 
-namespace TEMPLETEAPI.Controllers
+namespace STANDARDAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

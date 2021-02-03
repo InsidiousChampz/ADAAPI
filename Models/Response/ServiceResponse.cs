@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TEMPLETEAPI.Models
+namespace STANDARDAPI.Models
 {
     public class ServiceResponse<T>
     {

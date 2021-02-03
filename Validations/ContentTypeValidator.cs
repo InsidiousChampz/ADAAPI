@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace NetCoreAPI_Template_v2.Validations
+namespace STANDARDAPI.Validations
 {
     public class ContentTypeValidator : ValidationAttribute
     {

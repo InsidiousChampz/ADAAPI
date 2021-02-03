@@ -1,4 +1,4 @@
-namespace TEMPLETEAPI.DTOs.Product
+namespace STANDARDAPI.DTOs.Product
 {
     public class UpdateProductGroupDto
     {

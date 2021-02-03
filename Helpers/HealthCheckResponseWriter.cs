@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace TEMPLETEAPI.Helpers
+namespace STANDARDAPI.Helpers
 {
     public static class HealthCheckResponseWriter
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TEMPLETEAPI.DTOs
+namespace STANDARDAPI.DTOs
 {
     public class PaginationResultDto
     {
@@ -12,5 +12,6 @@ namespace TEMPLETEAPI.DTOs
         public double TotalAmountPages { get; set; }
         public double CurrentPage { get; set; }
         public double RecordsPerPage { get; set; }
+        public int PageIndex { get; set; }
     }
 }

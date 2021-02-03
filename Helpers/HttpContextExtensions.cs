@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using TEMPLETEAPI.DTOs;
+using STANDARDAPI.DTOs;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TEMPLETEAPI.Helpers
+namespace STANDARDAPI.Helpers
 {
     public static class HttpContextExtensions
     {
@@ -21,14 +21,15 @@ namespace TEMPLETEAPI.Helpers
                 TotalAmountRecords = totalAmountRecords,
                 TotalAmountPages = totalAmountPages,
                 CurrentPage = currentPage,
-                RecordsPerPage = recordsPerPage
+                RecordsPerPage = recordsPerPage,
+                PageIndex = currentPage - 1
             };
 
-            httpContext.Response.Headers.Add("totalAmountRecords", totalAmountRecords.ToString());
-            httpContext.Response.Headers.Add("totalAmountPages", totalAmountPages.ToString());
+            //httpContext.Response.Headers.Add("totalAmountRecords", totalAmountRecords.ToString());
+            //httpContext.Response.Headers.Add("totalAmountPages", totalAmountPages.ToString());
 
-            httpContext.Response.Headers.Add("currentPage", currentPage.ToString());
-            httpContext.Response.Headers.Add("recordsPerPage", recordsPerPage.ToString());
+            //httpContext.Response.Headers.Add("currentPage", currentPage.ToString());
+            //httpContext.Response.Headers.Add("recordsPerPage", recordsPerPage.ToString());
 
             return resultDto;
         }

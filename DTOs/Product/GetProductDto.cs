@@ -1,6 +1,6 @@
-using TEMPLETEAPI.Models.Product;
+using STANDARDAPI.Models.Product;
 
-namespace TEMPLETEAPI.DTOs.Product
+namespace STANDARDAPI.DTOs.Product
 {
     public class GetProductDto
     {

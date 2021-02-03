@@ -4,26 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TEMPLETEAPI.DTOs;
-using TEMPLETEAPI.DTOs.Product;
-using TEMPLETEAPI.Models;
-using TEMPLETEAPI.Models.Product;
+using STANDARDAPI.DTOs;
+using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Models;
+using STANDARDAPI.Models.Product;
 
-namespace TEMPLETEAPI
+namespace STANDARDAPI
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            //Character
-            CreateMap<Character, GetCharacterDto>().ForMember(x => x.Skills, x => x.MapFrom(x => x.CharacterSkills.Select(cs => cs.Skill)));
-            //Character Skill
-            CreateMap<CharacterSkill, GetCharaterSkillDto>();
-            //Skill
-            CreateMap<Skill, GetSkillDto>();
-            //Weapon
-            CreateMap<Weapon, GetWeaponDto>();
-
             //Product
             CreateMap<Product, GetProductDto>().ForMember(x => x.ProductGroupId, x => x.MapFrom(x => x.ProductGroupId));
 

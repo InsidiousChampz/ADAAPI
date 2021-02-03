@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using NetCoreAPI_Template_v2.Validations;
+using STANDARDAPI.Validations;
 
-namespace TEMPLETEAPI.DTOs.Product
+namespace STANDARDAPI.DTOs.Product
 {
     public class AddProductDto
     {

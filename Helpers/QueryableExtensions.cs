@@ -1,7 +1,7 @@
-﻿using TEMPLETEAPI.DTOs;
+﻿using STANDARDAPI.DTOs;
 using System.Linq;
 
-namespace TEMPLETEAPI.Helpers
+namespace STANDARDAPI.Helpers
 {
     public static class QueryableExtensions
     {
@@ -9,5 +9,7 @@ namespace TEMPLETEAPI.Helpers
         {
             return queryable.Skip((pagination.Page - 1) * pagination.RecordsPerPage).Take(pagination.RecordsPerPage);
         }
+
+
     }
 }
