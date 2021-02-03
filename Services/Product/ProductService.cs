@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,77 +21,7 @@ namespace STANDARDAPI.Services.Product
             _mapper = mapper;
             _log = log;
         }
-        public async Task<ServiceResponse<GetProductDto>> AddProduct(AddProductDto newProduct)
-        {
-            var _product = new STANDARDAPI.Models.Product.Product
-            {
-                Name = newProduct.Name,
-                Price = newProduct.Price,
-                StockCount = newProduct.StockCount,
-                ProductGroupId = newProduct.ProductGroupId
-
-            };
-
-            _dbContext.Products.Add(_product);
-            await _dbContext.SaveChangesAsync();
-            var dto = _mapper.Map<GetProductDto>(_product);
-            return ResponseResult.Success(dto);
-        }
-        public async Task<ServiceResponse<GetProductDto>> UpdateProductById(int ProductId, UpdateProductDto updateProduct)
-        {
-            var _Product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == ProductId);
-            if (_Product == null)
-            {
-                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
-            }
-            else
-            {
-
-                _Product.Name = updateProduct.Name;
-                _Product.Price = updateProduct.Price;
-                _Product.StockCount = updateProduct.StockCount;
-                _Product.ProductGroupId = updateProduct.ProductGroupId;
-
-                await _dbContext.SaveChangesAsync();
-                var dto = _mapper.Map<GetProductDto>(_Product);
-                return ResponseResult.Success(dto);
-            }
-        }
-        public async Task<ServiceResponse<GetProductDto>> DeleteProductById(int ProductId)
-        {
-            var _Product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == ProductId);
-            if (_Product == null)
-            {
-                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
-            }
-            else
-            {
-                _dbContext.Products.Remove(_Product);
-                await _dbContext.SaveChangesAsync();
-                var dto = _mapper.Map<GetProductDto>(_Product);
-                return ResponseResult.Success(dto);
-            }
-        }
-        public async Task<ServiceResponse<List<GetProductDto>>> GetAllProduct()
-        {
-            var _product = await _dbContext.Products.AsNoTracking().ToListAsync();
-            var dto = _mapper.Map<List<GetProductDto>>(_product);
-            return ResponseResult.Success(dto);
-        }
-        public async Task<ServiceResponse<GetProductDto>> GetProductById(int ProductId)
-        {
-            var _product = await _dbContext.Products
-           .FirstOrDefaultAsync(x => x.Id == ProductId);
-            if (_product == null)
-            {
-                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
-            }
-            else
-            {
-                var dto = _mapper.Map<GetProductDto>(_product);
-                return ResponseResult.Success(dto);
-            }
-        }
+        //Product Group
         public async Task<ServiceResponse<List<GetProductGroupDto>>> GetAllProductGroup()
         {
             var _productGroup = await _dbContext.ProductGroups
@@ -119,6 +50,9 @@ namespace STANDARDAPI.Services.Product
             var _productgroup = new STANDARDAPI.Models.Product.ProductGroup
             {
                 Name = newProductGroup.Name,
+                CreateBy = "06074",
+                CreateDate = DateTime.Now,
+                Status = true
             };
 
             _dbContext.ProductGroups.Add(_productgroup);
@@ -136,6 +70,10 @@ namespace STANDARDAPI.Services.Product
             else
             {
                 _ProductGroup.Name = updateProductGroup.Name;
+                _ProductGroup.CreateBy = "06074";           //updateProductGroup.CreateBy;
+                _ProductGroup.CreateDate = DateTime.Now;    //updateProductGroup.CreateDate;
+                _ProductGroup.Status = updateProductGroup.Status;
+
 
                 await _dbContext.SaveChangesAsync();
                 var dto = _mapper.Map<GetProductGroupDto>(_ProductGroup);
@@ -157,5 +95,85 @@ namespace STANDARDAPI.Services.Product
                 return ResponseResult.Success(dto);
             }
         }
+
+        //Product
+        public async Task<ServiceResponse<List<GetProductDto>>> GetAllProduct()
+        {
+            var _product = await _dbContext.Products.AsNoTracking().ToListAsync();
+            var dto = _mapper.Map<List<GetProductDto>>(_product);
+            return ResponseResult.Success(dto);
+        }
+        public async Task<ServiceResponse<GetProductDto>> GetProductById(int ProductId)
+        {
+            var _product = await _dbContext.Products
+           .FirstOrDefaultAsync(x => x.Id == ProductId);
+            if (_product == null)
+            {
+                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
+            }
+            else
+            {
+                var dto = _mapper.Map<GetProductDto>(_product);
+                return ResponseResult.Success(dto);
+            }
+        }
+        public async Task<ServiceResponse<GetProductDto>> AddProduct(AddProductDto newProduct)
+        {
+            var _product = new STANDARDAPI.Models.Product.Product
+            {
+                Name = newProduct.Name,
+                Price = newProduct.Price,
+                StockCount = newProduct.StockCount,
+                CreateBy = "06074",
+                CreateDate = DateTime.Now,
+                Status = true,
+                ProductGroupId = newProduct.ProductGroupId
+
+            };
+
+            _dbContext.Products.Add(_product);
+            await _dbContext.SaveChangesAsync();
+            var dto = _mapper.Map<GetProductDto>(_product);
+            return ResponseResult.Success(dto);
+        }
+        public async Task<ServiceResponse<GetProductDto>> UpdateProductById(int ProductId, UpdateProductDto updateProduct)
+        {
+            var _Product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == ProductId);
+            if (_Product == null)
+            {
+                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
+            }
+            else
+            {
+
+                _Product.Name = updateProduct.Name;
+                _Product.Price = updateProduct.Price;
+                _Product.StockCount = updateProduct.StockCount;
+                _Product.CreateBy = "06074";           //updateProduct.CreateBy;
+                _Product.CreateDate = DateTime.Now;    //updateProduct.CreateDate;
+                _Product.Status = updateProduct.Status;
+                _Product.ProductGroupId = updateProduct.ProductGroupId;
+
+                await _dbContext.SaveChangesAsync();
+                var dto = _mapper.Map<GetProductDto>(_Product);
+                return ResponseResult.Success(dto);
+            }
+        }
+        public async Task<ServiceResponse<GetProductDto>> DeleteProductById(int ProductId)
+        {
+            var _Product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == ProductId);
+            if (_Product == null)
+            {
+                return ResponseResult.Failure<GetProductDto>("Product Not Found.");
+            }
+            else
+            {
+                _dbContext.Products.Remove(_Product);
+                await _dbContext.SaveChangesAsync();
+                var dto = _mapper.Map<GetProductDto>(_Product);
+                return ResponseResult.Success(dto);
+            }
+        }
+
     }
 }

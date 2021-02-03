@@ -30,28 +30,10 @@ namespace STANDARDAPI.Controllers
             return Ok(await _prodService.GetProductById(productId));
         }
 
-        [HttpGet("productgroup")]
-        public async Task<IActionResult> GetAllProductGroup()
-        {
-            return Ok(await _prodService.GetAllProductGroup());
-        }
-
-        [HttpGet("productgroupId/{productId}")]
-        public async Task<IActionResult> GetProductGroupById(int productId)
-        {
-            return Ok(await _prodService.GetProductGroupById(productId));
-        }
-
         [HttpPost("addproduct")]
         public async Task<IActionResult> AddProduct(AddProductDto newProduct)
         {
             return Ok(await _prodService.AddProduct(newProduct));
-        }
-
-        [HttpPost("addproductgroup")]
-        public async Task<IActionResult> AddProductGroup(AddProductGroupDto newProductGroup)
-        {
-            return Ok(await _prodService.AddProductGroup(newProductGroup));
         }
 
         [HttpPut("updateproduct/{productId}")]
@@ -60,23 +42,11 @@ namespace STANDARDAPI.Controllers
             return Ok(await _prodService.UpdateProductById(productId, updateProduct));
         }
 
-        [HttpPut("updateproductgroup/{productGroupId}")]
-        public async Task<IActionResult> UpdateProductGroupById(int productGroupId, UpdateProductGroupDto updateProductGroup)
-        {
-            return Ok(await _prodService.UpdateProductGroupById(productGroupId, updateProductGroup));
-        }
-
         [HttpDelete("deleteproduct/{productId}")]
         public async Task<IActionResult> DeleteProductById(int ProductId)
         {
             return Ok(await _prodService.DeleteProductById(ProductId));
         }
-        [HttpDelete("deleteproductgroup/{productGroupId}")]
-        public async Task<IActionResult> DeleteProductGroupById(int productGroupId)
-        {
-            return Ok(await _prodService.DeleteProductGroupById(productGroupId));
-        }
-
 
     }
 }
