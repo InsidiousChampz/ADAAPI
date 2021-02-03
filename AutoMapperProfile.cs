@@ -15,6 +15,14 @@ namespace STANDARDAPI
     {
         public AutoMapperProfile()
         {
+            //Auth
+            CreateMap<User, UserDto>();
+            CreateMap<Role, RoleDto>()
+                .ForMember(x => x.RoleName, x => x.MapFrom(x => x.Name));
+            CreateMap<RoleDtoAdd, Role>()
+                .ForMember(x => x.Name, x => x.MapFrom(x => x.RoleName)); ;
+            CreateMap<UserRole, UserRoleDto>();
+
             //Product
             CreateMap<Product, GetProductDto>().ForMember(x => x.ProductGroupId, x => x.MapFrom(x => x.ProductGroupId));
 

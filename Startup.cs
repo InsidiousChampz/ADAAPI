@@ -22,11 +22,20 @@ using System.Text;
 using System.Threading.Tasks;
 using STANDARDAPI.Services.Product;
 using STANDARDAPI.Services;
+using STANDARDAPI.Models.Product;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Net.Http.Headers;
+using Microsoft.OData.Edm;
+using Microsoft.AspNet.OData.Builder;
+using Newtonsoft.Json;
 
 namespace STANDARDAPI
 {
     public class Startup
     {
+        private const string _projectName = "NetCoreAPI_Template_v3_with_auth";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,7 +46,8 @@ namespace STANDARDAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore); //ReferenceLoopHandling;
 
             services.AddHttpContextAccessor();
             services.AddResponseCaching();
@@ -48,10 +58,13 @@ namespace STANDARDAPI
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader();
-                builder.WithExposedHeaders("totalAmountRecords");
-                builder.WithExposedHeaders("totalAmountPages");
-                builder.WithExposedHeaders("currentPage");
-                builder.WithExposedHeaders("recordsPerPage");
+
+                //Add Pagination to Header
+
+                //builder.WithExposedHeaders("totalAmountRecords");
+                //builder.WithExposedHeaders("totalAmountPages");
+                //builder.WithExposedHeaders("currentPage");
+                //builder.WithExposedHeaders("recordsPerPage");
             }));
             //------End: Allow Origins------
 
@@ -69,64 +82,24 @@ namespace STANDARDAPI
             //------End: DBContext------
 
             //------Swagger------
-            services.AddSwaggerGen(config =>
-            {
-                config.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "CoreAPI" });
+            services.AddOData();
+            //------End: Swagger------
 
-                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
-
-                config.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                    {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header
-                        },
-                        new List<string>()
-                    }
-                    });
-            });
+            //------Swagger------
+            AddSwagger(services);
             //------End: Swagger------
 
             //------Authentication------
-            //services.AddAuthentication(config =>
-            //{
-            //    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer(options =>
-
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = false,
-            //            ValidateAudience = false,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true,
-            //            IssuerSigningKey = new SymmetricSecurityKey(
-            //                Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
-            //            ClockSkew = TimeSpan.Zero
-            //        }
-            //    );
+            AddAuthentication(services);
             //------End: Authentication------
 
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
             //------End: Service------
+
+            AddFormatters(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -140,7 +113,7 @@ namespace STANDARDAPI
             //------Swagger------
             app.UseSwagger();
 
-            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", "STANDARDAPI"));
+            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", _projectName));
             //------End: Swagger------
 
             //app.UseHttpsRedirection();
@@ -151,7 +124,7 @@ namespace STANDARDAPI
 
             app.UseResponseCaching();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -181,5 +154,98 @@ namespace STANDARDAPI
                 endpoints.MapControllers();
             });
         }
+
+        #region Method
+
+        /// <summary>
+        /// Add Authentication
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                            .AddJwtBearer(options =>
+
+                                options.TokenValidationParameters = new TokenValidationParameters
+                                {
+                                    ValidateIssuer = false,
+                                    ValidateAudience = false,
+                                    ValidateLifetime = true,
+                                    ValidateIssuerSigningKey = true,
+                                    IssuerSigningKey = new SymmetricSecurityKey(
+                                        Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
+                                    ClockSkew = TimeSpan.Zero
+                                }
+                            );
+        }
+
+        /// <summary>
+        /// Add Swagger
+        /// </summary>
+        /// <param name="services"></param>
+        private static void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(config =>
+            {
+                //var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "WebApi.XML";
+                //config.IncludeXmlComments(xmlPath);
+
+                config.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = _projectName });
+
+                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                config.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                    {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                    });
+            });
+        }
+
+        /// <summary>
+        /// Add Formatter for OData with swagger
+        /// </summary>
+        /// <param name="services"></param>
+        public void AddFormatters(IServiceCollection services)
+        {
+            services.AddMvcCore(options =>
+            {
+                foreach (var outputFormatter in options.OutputFormatters.OfType<OutputFormatter>().Where(x => x.SupportedMediaTypes.Count == 0))
+                {
+                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+
+                foreach (var inputFormatter in options.InputFormatters.OfType<InputFormatter>().Where(x => x.SupportedMediaTypes.Count == 0))
+                {
+                    inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+            }
+            );
+        }
+
+        #endregion Method
     }
 }

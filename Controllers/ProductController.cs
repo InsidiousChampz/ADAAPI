@@ -1,6 +1,9 @@
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Models.Product;
 using STANDARDAPI.Services.Product;
 
 
@@ -19,10 +22,13 @@ namespace STANDARDAPI.Controllers
         }
 
         [HttpGet("product")]
+        [EnableQuery]
         public async Task<IActionResult> GetAllProduct()
         {
             return Ok(await _prodService.GetAllProduct());
         }
+
+
 
         [HttpGet("productId/{productId}")]
         public async Task<IActionResult> GetProductById(int productId)
