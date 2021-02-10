@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using STANDARDAPI.Models.Product;
 
 namespace STANDARDAPI.DTOs.Product
@@ -12,5 +13,7 @@ namespace STANDARDAPI.DTOs.Product
         public DateTime CreateDate { get; set; }
         public bool Status { get; set; }
         public int ProductGroupId { get; set; }
+        public GetProductGroupDto ProductGroup { get; set; }
+
     }
 }

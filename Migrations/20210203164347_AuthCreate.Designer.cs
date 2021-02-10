@@ -3,95 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using STANDARDAPI.Data;
 
 namespace STANDARDAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210203164347_AuthCreate")]
+    partial class AuthCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("STANDARDAPI.Models.Order.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOrder")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Net")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("STANDARDAPI.Models.Order.OrderList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TotalPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderLists");
-                });
 
             modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>
                 {
@@ -170,22 +98,22 @@ namespace STANDARDAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b5b4cbed-435e-416e-9b09-8d2faf938563"),
+                            Id = new Guid("cc45320e-5e09-462f-83bc-c50906ef5713"),
                             Name = "user"
                         },
                         new
                         {
-                            Id = new Guid("911238c3-7bf3-4562-99c9-6f33f127c265"),
+                            Id = new Guid("4ce6e34c-82b3-4d22-9613-2689625874b0"),
                             Name = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("fb0d5917-dde0-455a-85f8-f29fc4f17ae8"),
+                            Id = new Guid("6fbf5422-07ad-410b-a548-09427cc9dd53"),
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("b164ec54-7209-4c4f-a09d-781863c22cc9"),
+                            Id = new Guid("3003d234-9100-4d91-bcfa-79d77837e5fc"),
                             Name = "Developer"
                         });
                 });
@@ -227,15 +155,6 @@ namespace STANDARDAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole","auth");
-                });
-
-            modelBuilder.Entity("STANDARDAPI.Models.Order.OrderList", b =>
-                {
-                    b.HasOne("STANDARDAPI.Models.Order.Order", "Order")
-                        .WithMany("OrderLists")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>

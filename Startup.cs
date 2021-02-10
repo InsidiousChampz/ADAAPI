@@ -34,7 +34,9 @@ namespace STANDARDAPI
 {
     public class Startup
     {
-        private const string _projectName = "NetCoreAPI_Template_v3_with_auth";
+        private const string _projectName = "Standard API";
+        private const string _connectionString = "DefaultConnection";
+        private const string _rootSwagger = "/swagger/v1/swagger.json";
 
         public Startup(IConfiguration configuration)
         {
@@ -58,13 +60,6 @@ namespace STANDARDAPI
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader();
-
-                //Add Pagination to Header
-
-                //builder.WithExposedHeaders("totalAmountRecords");
-                //builder.WithExposedHeaders("totalAmountPages");
-                //builder.WithExposedHeaders("currentPage");
-                //builder.WithExposedHeaders("recordsPerPage");
             }));
             //------End: Allow Origins------
 
@@ -78,7 +73,7 @@ namespace STANDARDAPI
 
             //------DBContext------
             services.AddDbContext<AppDBContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString(_connectionString)));
             //------End: DBContext------
 
             //------Swagger------
@@ -113,7 +108,7 @@ namespace STANDARDAPI
             //------Swagger------
             app.UseSwagger();
 
-            app.UseSwaggerUI(config => config.SwaggerEndpoint("/swagger/v1/swagger.json", _projectName));
+            app.UseSwaggerUI(config => config.SwaggerEndpoint(_rootSwagger, _projectName));
             //------End: Swagger------
 
             //app.UseHttpsRedirection();
@@ -152,6 +147,9 @@ namespace STANDARDAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.EnableDependencyInjection();
+                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(10);
+                endpoints.MapODataRoute("api", "api", GetEdmModel());
             });
         }
 
@@ -244,6 +242,14 @@ namespace STANDARDAPI
                 }
             }
             );
+        }
+
+        //Odata EDM
+        private IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Product>("Products");
+            return builder.GetEdmModel();
         }
 
         #endregion Method

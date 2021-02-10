@@ -1,25 +1,35 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using STANDARDAPI.Data;
 using STANDARDAPI.DTOs.Product;
+using STANDARDAPI.Helpers;
 using STANDARDAPI.Models;
+using mProduct = STANDARDAPI.Models.Product.Product;
+using mProductGroup = STANDARDAPI.Models.Product.ProductGroup;
 
+using System.Linq.Dynamic.Core;
 namespace STANDARDAPI.Services.Product
 {
-    public class ProductService : IProductService
+    public class ProductService : ServiceBase, IProductService
     {
         private readonly AppDBContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<ProductService> _log;
-        public ProductService(AppDBContext dBContext, IMapper mapper, ILogger<ProductService> log)
+        private readonly IHttpContextAccessor _httpcontext;
+
+
+        public ProductService(AppDBContext dBContext, IMapper mapper, ILogger<ProductService> log, IHttpContextAccessor httpcontext) : base(dBContext, mapper, httpcontext)
         {
             _dbContext = dBContext;
             _mapper = mapper;
             _log = log;
+            _httpcontext = httpcontext;
         }
         //Product Group
         public async Task<ServiceResponse<List<GetProductGroupDto>>> GetAllProductGroup()
@@ -31,6 +41,7 @@ namespace STANDARDAPI.Services.Product
             return ResponseResult.Success(dto);
         }
         public async Task<ServiceResponse<GetProductGroupDto>> GetProductGroupById(int ProductGroupId)
+
         {
             var _productGroup = await _dbContext.ProductGroups
             .Include(x => x.Products)
@@ -45,12 +56,52 @@ namespace STANDARDAPI.Services.Product
                 return ResponseResult.Success(dto);
             }
         }
+        public async Task<ServiceResponseWithPagination<List<mProductGroup>>> GetProductGroupWithFilter(GetProductGroupFilterDto ProductGroupFilter)
+        {
+            var Queryable = _dbContext.ProductGroups
+            .Include(x => x.Products)
+            .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(ProductGroupFilter.Name))
+            {
+                Queryable = Queryable.Where(x => x.Name.Contains(ProductGroupFilter.Name));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ProductGroupFilter.CreateBy))
+            {
+                Queryable = Queryable.Where(x => x.CreateBy.Contains(ProductGroupFilter.CreateBy));
+            }
+
+            if (ProductGroupFilter.Status != null)
+            {
+                Queryable = Queryable.Where(x => x.Status == ProductGroupFilter.Status);
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(ProductGroupFilter.OrderingField))
+            {
+                try
+                {
+                    Queryable = Queryable.OrderBy($"{ProductGroupFilter.OrderingField} {(ProductGroupFilter.AscendingOrder ? "ascending" : "descending")}");
+                }
+                catch
+                {
+                    return ResponseResultWithPagination.Failure<List<Models.Product.ProductGroup>>($"Could not order by field: {ProductGroupFilter.OrderingField}");
+                }
+
+              ;
+            }
+
+            var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(Queryable, ProductGroupFilter.RecordsPerPage, ProductGroupFilter.Page);
+            var dto = await Queryable.Paginate(ProductGroupFilter).ToListAsync();
+            return ResponseResultWithPagination.Success(dto, paginationResult);
+        }
         public async Task<ServiceResponse<GetProductGroupDto>> AddProductGroup(AddProductGroupDto newProductGroup)
         {
-            var _productgroup = new STANDARDAPI.Models.Product.ProductGroup
+            var _productgroup = new mProductGroup
             {
                 Name = newProductGroup.Name,
-                CreateBy = "06074",
+                CreateBy = GetUsername(),
                 CreateDate = DateTime.Now,
                 Status = true
             };
@@ -70,8 +121,8 @@ namespace STANDARDAPI.Services.Product
             else
             {
                 _ProductGroup.Name = updateProductGroup.Name;
-                _ProductGroup.CreateBy = "06074";           //updateProductGroup.CreateBy;
-                _ProductGroup.CreateDate = DateTime.Now;    //updateProductGroup.CreateDate;
+                _ProductGroup.CreateBy = GetUsername();           //updateProductGroup.CreateBy;
+                _ProductGroup.CreateDate = Now();                        //updateProductGroup.CreateDate;
                 _ProductGroup.Status = updateProductGroup.Status;
 
 
@@ -99,13 +150,16 @@ namespace STANDARDAPI.Services.Product
         //Product
         public async Task<ServiceResponse<List<GetProductDto>>> GetAllProduct()
         {
-            var _product = await _dbContext.Products.AsNoTracking().ToListAsync();
+            var _product = await _dbContext.Products.AsNoTracking()
+            .Include(x => x.ProductGroup)
+            .ToListAsync();
             var dto = _mapper.Map<List<GetProductDto>>(_product);
             return ResponseResult.Success(dto);
         }
         public async Task<ServiceResponse<GetProductDto>> GetProductById(int ProductId)
         {
             var _product = await _dbContext.Products
+            .Include(x => x.ProductGroup)
            .FirstOrDefaultAsync(x => x.Id == ProductId);
             if (_product == null)
             {
@@ -117,18 +171,69 @@ namespace STANDARDAPI.Services.Product
                 return ResponseResult.Success(dto);
             }
         }
+        public async Task<ServiceResponseWithPagination<List<mProduct>>> GetProductWithFilter(GetProductFilterDto ProductFilter)
+        {
+            var Queryable = _dbContext.Products
+            .Include(x => x.ProductGroup)
+            .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(ProductFilter.Name))
+            {
+                Queryable = Queryable.Where(x => x.Name.Contains(ProductFilter.Name));
+            }
+
+            if (ProductFilter.Price != null)
+            {
+                Queryable = Queryable.Where(x => x.Price == ProductFilter.Price);
+            }
+
+            if (ProductFilter.StockCount != null)
+            {
+                Queryable = Queryable.Where(x => x.StockCount == ProductFilter.StockCount);
+            }
+
+
+            if (ProductFilter.ProductGroupId != null)
+            {
+                Queryable = Queryable.Where(x => x.ProductGroupId == ProductFilter.ProductGroupId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ProductFilter.OrderingField))
+            {
+                try
+                {
+                    Queryable = Queryable.OrderBy($"{ProductFilter.OrderingField} {(ProductFilter.AscendingOrder ? "ascending" : "descending")}");
+                }
+                catch
+                {
+                    return ResponseResultWithPagination.Failure<List<Models.Product.Product>>($"Could not order by field: {ProductFilter.OrderingField}");
+                }
+
+              ;
+            }
+
+            var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(Queryable, ProductFilter.RecordsPerPage, ProductFilter.Page);
+            var dto = await Queryable.Paginate(ProductFilter).ToListAsync();
+            return ResponseResultWithPagination.Success(dto, paginationResult);
+        }
         public async Task<ServiceResponse<GetProductDto>> AddProduct(AddProductDto newProduct)
         {
-            var _product = new STANDARDAPI.Models.Product.Product
+            var productGroup = await _dbContext.ProductGroups.FirstOrDefaultAsync(x => x.Id == newProduct.ProductGroupId);
+            if (productGroup == null)
+            {
+                return ResponseResult.Failure<GetProductDto>("Product Group Not Found.");
+            }
+
+            var _product = new mProduct
             {
                 Name = newProduct.Name,
                 Price = newProduct.Price,
                 StockCount = newProduct.StockCount,
-                CreateBy = "06074",
-                CreateDate = DateTime.Now,
+                CreateBy = GetUsername(),
+                CreateDate = Now(),
                 Status = true,
-                ProductGroupId = newProduct.ProductGroupId
-
+                ProductGroupId = newProduct.ProductGroupId,
+                ProductGroup = productGroup
             };
 
             _dbContext.Products.Add(_product);
@@ -149,9 +254,9 @@ namespace STANDARDAPI.Services.Product
                 _Product.Name = updateProduct.Name;
                 _Product.Price = updateProduct.Price;
                 _Product.StockCount = updateProduct.StockCount;
-                _Product.CreateBy = "06074";           //updateProduct.CreateBy;
+                _Product.CreateBy = GetUsername();           //updateProduct.CreateBy;
                 _Product.CreateDate = DateTime.Now;    //updateProduct.CreateDate;
-                _Product.Status = updateProduct.Status;
+                _Product.Status = true;
                 _Product.ProductGroupId = updateProduct.ProductGroupId;
 
                 await _dbContext.SaveChangesAsync();
@@ -174,6 +279,7 @@ namespace STANDARDAPI.Services.Product
                 return ResponseResult.Success(dto);
             }
         }
+
 
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using STANDARDAPI.Models;
 using STANDARDAPI.Models.Product;
+using STANDARDAPI.Models.Order;
 
 namespace STANDARDAPI.Data
 {
@@ -41,6 +42,8 @@ namespace STANDARDAPI.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderList> OrderLists { get; set; }
 
     }
 }

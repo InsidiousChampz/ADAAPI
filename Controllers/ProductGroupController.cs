@@ -28,6 +28,12 @@ namespace STANDARDAPI.Controllers
             return Ok(await _prodService.GetProductGroupById(productId));
         }
 
+        [HttpGet("productgroup/filter")]
+        public async Task<IActionResult> GetProductGroupWithFilter([FromQuery] GetProductGroupFilterDto filter)
+        {
+            return Ok(await _prodService.GetProductGroupWithFilter(filter));
+        }
+
         [HttpPost("addproductgroup")]
         public async Task<IActionResult> AddProductGroup(AddProductGroupDto newProductGroup)
         {

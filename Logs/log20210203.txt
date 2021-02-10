@@ -297,3 +297,93 @@ System.ArgumentException: 'select' and 'expand' cannot be both null or empty.
 2021-02-03 23:09:30.730 +07:00 [INF] Starting web host
 2021-02-03 23:09:41.925 +07:00 [INF] Starting web host
 2021-02-03 23:41:13.902 +07:00 [INF] Starting web host
+2021-02-03 23:44:58.292 +07:00 [INF] Starting web host
+2021-02-03 23:45:38.704 +07:00 [INF] Starting web host
+2021-02-03 23:45:53.874 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Cannot find the services container for the non-OData route. This can occur when using OData components on the non-OData route and is usually a configuration issue. Call EnableDependencyInjection() to enable OData components on non-OData routes. This may also occur when a request was mistakenly handled by the ASP.NET Core routing layer instead of the OData routing layer, for instance the URL does not include the OData route prefix configured via a call to MapODataServiceRoute().
+   at Microsoft.AspNet.OData.PerRouteContainerBase.GetODataRootContainer(String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestScope(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestContainer(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetRequestContainer(HttpRequest request)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetModel(HttpRequest request)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.GetModel(Type elementClrType, HttpRequest request, ActionDescriptor actionDescriptor)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.<>c__DisplayClass2_0.<OnActionExecuted>b__0(Type elementClrType)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.ContainsAutoSelectExpandProperty(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, Func`2 modelFunction, ODataPath path)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, IWebApiRequestMessage request, Func`2 modelFunction, Func`2 createQueryOptionFunction, Action`1 createResponseAction, Action`3 createErrorAction)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(ActionExecutedContext actionExecutedContext)
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-03 23:46:27.582 +07:00 [INF] Starting web host
+2021-02-03 23:47:35.155 +07:00 [INF] Starting web host
+2021-02-03 23:47:51.819 +07:00 [INF] Starting web host
+2021-02-03 23:47:59.350 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Cannot find the services container for the non-OData route. This can occur when using OData components on the non-OData route and is usually a configuration issue. Call EnableDependencyInjection() to enable OData components on non-OData routes. This may also occur when a request was mistakenly handled by the ASP.NET Core routing layer instead of the OData routing layer, for instance the URL does not include the OData route prefix configured via a call to MapODataServiceRoute().
+   at Microsoft.AspNet.OData.PerRouteContainerBase.GetODataRootContainer(String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestScope(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestContainer(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetRequestContainer(HttpRequest request)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetModel(HttpRequest request)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.GetModel(Type elementClrType, HttpRequest request, ActionDescriptor actionDescriptor)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.<>c__DisplayClass2_0.<OnActionExecuted>b__0(Type elementClrType)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.ContainsAutoSelectExpandProperty(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, Func`2 modelFunction, ODataPath path)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, IWebApiRequestMessage request, Func`2 modelFunction, Func`2 createQueryOptionFunction, Action`1 createResponseAction, Action`3 createErrorAction)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(ActionExecutedContext actionExecutedContext)
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-03 23:49:55.495 +07:00 [INF] Starting web host
+2021-02-03 23:50:29.130 +07:00 [INF] Starting web host
+2021-02-03 23:50:41.372 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Cannot find the services container for the non-OData route. This can occur when using OData components on the non-OData route and is usually a configuration issue. Call EnableDependencyInjection() to enable OData components on non-OData routes. This may also occur when a request was mistakenly handled by the ASP.NET Core routing layer instead of the OData routing layer, for instance the URL does not include the OData route prefix configured via a call to MapODataServiceRoute().
+   at Microsoft.AspNet.OData.PerRouteContainerBase.GetODataRootContainer(String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestScope(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.CreateRequestContainer(HttpRequest request, String routeName)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetRequestContainer(HttpRequest request)
+   at Microsoft.AspNet.OData.Extensions.HttpRequestExtensions.GetModel(HttpRequest request)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.GetModel(Type elementClrType, HttpRequest request, ActionDescriptor actionDescriptor)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.<>c__DisplayClass2_0.<OnActionExecuted>b__0(Type elementClrType)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.ContainsAutoSelectExpandProperty(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, Func`2 modelFunction, ODataPath path)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(Object responseValue, IQueryable singleResultCollection, IWebApiActionDescriptor actionDescriptor, IWebApiRequestMessage request, Func`2 modelFunction, Func`2 createQueryOptionFunction, Action`1 createResponseAction, Action`3 createErrorAction)
+   at Microsoft.AspNet.OData.EnableQueryAttribute.OnActionExecuted(ActionExecutedContext actionExecutedContext)
+   at Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-03 23:51:29.756 +07:00 [INF] Starting web host
+2021-02-03 23:51:33.945 +07:00 [INF] Starting web host
+2021-02-03 23:51:57.745 +07:00 [INF] Starting web host
+2021-02-03 23:53:04.806 +07:00 [INF] Starting web host
+2021-02-03 23:55:50.190 +07:00 [INF] Starting web host

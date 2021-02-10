@@ -24,7 +24,7 @@ namespace STANDARDAPI
             CreateMap<UserRole, UserRoleDto>();
 
             //Product
-            CreateMap<Product, GetProductDto>().ForMember(x => x.ProductGroupId, x => x.MapFrom(x => x.ProductGroupId));
+            CreateMap<Product, GetProductDto>();
 
             //ProductGroup
             CreateMap<ProductGroup, GetProductGroupDto>();

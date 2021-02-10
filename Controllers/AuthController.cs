@@ -11,11 +11,20 @@ namespace STANDARDAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _auth;
+        private const string TEXTSTARTED = "Auth Service Start";
 
         public AuthController(IAuthService auth)
         {
             _auth = auth;
         }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return Ok(TEXTSTARTED);
+        }
+
+
 
         [HttpGet("role")]
         public async Task<IActionResult> GetRoles()
