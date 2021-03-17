@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using STANDARDAPI.Models.Order;
 
 namespace STANDARDAPI.DTOs.Order
 {
@@ -14,6 +13,7 @@ namespace STANDARDAPI.DTOs.Order
         public string CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public bool Status { get; set; }
+        public string OrderNumber { get; set; }
         public List<GetOrderListDto> OrderLists { get; set; }
 
     }

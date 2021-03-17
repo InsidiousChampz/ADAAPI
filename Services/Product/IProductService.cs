@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using STANDARDAPI.DTOs.Product;
 using STANDARDAPI.Models;
+using STANDARDAPI.Models.Product;
 
 namespace STANDARDAPI.Services.Product
 {
     public interface IProductService
     {
+
         //Product Group.
         Task<ServiceResponse<List<GetProductGroupDto>>> GetAllProductGroup();
         Task<ServiceResponse<GetProductGroupDto>> GetProductGroupById(int ProductGroupId);
@@ -17,12 +19,21 @@ namespace STANDARDAPI.Services.Product
 
         // Product.
         Task<ServiceResponse<List<GetProductDto>>> GetAllProduct();
+        Task<ServiceResponse<List<GetProductDto>>> GetProductByGroupId(int ProductGroupId);
         Task<ServiceResponse<GetProductDto>> GetProductById(int ProductId);
         Task<ServiceResponseWithPagination<List<Models.Product.Product>>> GetProductWithFilter(GetProductFilterDto ProductFilter);
         Task<ServiceResponse<GetProductDto>> AddProduct(AddProductDto newProduct);
         Task<ServiceResponse<GetProductDto>> UpdateProductById(int ProductId, UpdateProductDto updateProduct);
         Task<ServiceResponse<GetProductDto>> DeleteProductById(int ProductId);
 
+        //Product Audit.
+        Task<ServiceResponse<List<GetProductAuditDto>>> GetAllProductAudit();
+        Task<ServiceResponse<GetProductAuditDto>> GetProductAuditById(int ProductAuditId);
+        Task<ServiceResponseWithPagination<List<ProductAudit>>> GetProductAuditWithFilter(GetProductAuditFilterDto ProductAuditFilter);
+        Task<ServiceResponse<GetProductAuditDto>> AddProductAudit(AddProductAuditDto newProductAudit);
+
+        //Product Audit Type.
+        Task<ServiceResponse<List<GetProductAuditTypeDto>>> GetAllAuditType();
 
 
 

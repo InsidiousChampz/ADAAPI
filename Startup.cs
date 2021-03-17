@@ -29,6 +29,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
+using STANDARDAPI.Services.Order;
 
 namespace STANDARDAPI
 {
@@ -92,6 +93,7 @@ namespace STANDARDAPI
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrdersService, OrdersService>();
             //------End: Service------
 
             AddFormatters(services);

@@ -42,8 +42,12 @@ namespace STANDARDAPI.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductAudit> ProductAudits { get; set; }
+        public DbSet<ProductAuditType> ProductAuditTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderList> OrderLists { get; set; }
+
+
 
     }
 }

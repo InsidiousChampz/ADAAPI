@@ -14,6 +14,10 @@ namespace STANDARDAPI.Models.Order
         public string CreateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public bool Status { get; set; }
+
+        //OrderListID is a FK from OrderList ===
+        public string OrderNumber { get; set; }
         public List<OrderList> OrderLists { get; set; }
+        //==============================================
     }
 }

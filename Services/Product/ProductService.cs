@@ -12,8 +12,9 @@ using STANDARDAPI.Helpers;
 using STANDARDAPI.Models;
 using mProduct = STANDARDAPI.Models.Product.Product;
 using mProductGroup = STANDARDAPI.Models.Product.ProductGroup;
-
+using mProductAudit = STANDARDAPI.Models.Product.ProductAudit;
 using System.Linq.Dynamic.Core;
+
 namespace STANDARDAPI.Services.Product
 {
     public class ProductService : ServiceBase, IProductService
@@ -31,6 +32,7 @@ namespace STANDARDAPI.Services.Product
             _log = log;
             _httpcontext = httpcontext;
         }
+
         //Product Group
         public async Task<ServiceResponse<List<GetProductGroupDto>>> GetAllProductGroup()
         {
@@ -153,6 +155,14 @@ namespace STANDARDAPI.Services.Product
             var _product = await _dbContext.Products.AsNoTracking()
             .Include(x => x.ProductGroup)
             .ToListAsync();
+            var dto = _mapper.Map<List<GetProductDto>>(_product);
+            return ResponseResult.Success(dto);
+        }
+        public async Task<ServiceResponse<List<GetProductDto>>> GetProductByGroupId(int ProductGroupId)
+        {
+            var _product = await _dbContext.Products
+           .Where(x => x.ProductGroupId == ProductGroupId)
+           .ToListAsync();
             var dto = _mapper.Map<List<GetProductDto>>(_product);
             return ResponseResult.Success(dto);
         }
@@ -280,6 +290,101 @@ namespace STANDARDAPI.Services.Product
             }
         }
 
+        //Product Audit
+        public async Task<ServiceResponse<List<GetProductAuditDto>>> GetAllProductAudit()
+        {
+            var _productAudit = await _dbContext.ProductAudits.AsNoTracking().ToListAsync();
+            var dto = _mapper.Map<List<GetProductAuditDto>>(_productAudit);
+            return ResponseResult.Success(dto);
+        }
+        public async Task<ServiceResponse<GetProductAuditDto>> GetProductAuditById(int ProductAuditId)
+        {
+            var _productAudit = await _dbContext.ProductAudits
+            .Include(x => x.ProductAuditTypeId)
+           .FirstOrDefaultAsync(x => x.Id == ProductAuditId);
+            if (_productAudit == null)
+            {
+                return ResponseResult.Failure<GetProductAuditDto>("Transection this Audit Not Found.");
+            }
+            else
+            {
+                var dto = _mapper.Map<GetProductAuditDto>(_productAudit);
+                return ResponseResult.Success(dto);
+            }
+        }
+        public async Task<ServiceResponseWithPagination<List<mProductAudit>>> GetProductAuditWithFilter(GetProductAuditFilterDto ProductAuditFilter)
+        {
+            var Queryable = _dbContext.ProductAudits
+           .Include(x => x.ProductAuditType)
+           .Include(x => x.ProductGroup)
+           .Include(x => x.Product)
+           .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(ProductAuditFilter.Name))
+            {
+                Queryable = Queryable.Where(x => x.Name.Contains(ProductAuditFilter.Name));
+            }
+
+            if (ProductAuditFilter.Remark != null)
+            {
+                Queryable = Queryable.Where(x => x.Remark == ProductAuditFilter.Remark);
+            }
+
+            if (ProductAuditFilter.ProductGroupId != null)
+            {
+                Queryable = Queryable.Where(x => x.ProductGroupId == ProductAuditFilter.ProductGroupId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ProductAuditFilter.OrderingField))
+            {
+                try
+                {
+                    Queryable = Queryable.OrderBy($"{ProductAuditFilter.OrderingField} {(ProductAuditFilter.AscendingOrder ? "ascending" : "descending")}");
+                }
+                catch
+                {
+                    return ResponseResultWithPagination.Failure<List<mProductAudit>>($"Could not order by field: {ProductAuditFilter.OrderingField}");
+                }
+
+              ;
+            }
+
+            var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(Queryable, ProductAuditFilter.RecordsPerPage, ProductAuditFilter.Page);
+            var dto = await Queryable.Paginate(ProductAuditFilter).ToListAsync();
+            return ResponseResultWithPagination.Success(dto, paginationResult);
+        }
+        public async Task<ServiceResponse<GetProductAuditDto>> AddProductAudit(AddProductAuditDto newProductAudit)
+        {
+            var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == newProductAudit.ProductId);
+            if (product == null)
+            {
+                return ResponseResult.Failure<GetProductAuditDto>("Product Not Found.");
+            }
+
+            var productAudit = new mProductAudit
+            {
+                Name = newProductAudit.Name,
+                StockCount = newProductAudit.StockCount,
+                AuditAmount = newProductAudit.AuditAmount,
+                AuditTotalAmount = newProductAudit.AuditTotalAmount,
+                Remark = newProductAudit.Remark,
+                CreateBy = GetUsername(),
+                CreateDate = Now(),
+                ProductGroupId = newProductAudit.ProductGroupId,
+                ProductId = newProductAudit.ProductId,
+                ProductAuditTypeId = newProductAudit.ProductAuditTypeId,
+            };
+
+            _dbContext.ProductAudits.Add(productAudit);
+            await _dbContext.SaveChangesAsync();
+            var dto = _mapper.Map<GetProductAuditDto>(productAudit);
+            return ResponseResult.Success(dto);
+        }
+        public async Task<ServiceResponse<List<GetProductAuditTypeDto>>> GetAllAuditType()
+        {
+            var _productAuditType = await _dbContext.ProductAuditTypes.AsNoTracking().ToListAsync();
+            var dto = _mapper.Map<List<GetProductAuditTypeDto>>(_productAuditType);
+            return ResponseResult.Success(dto);
+        }
     }
 }

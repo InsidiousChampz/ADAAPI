@@ -1,13 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using STANDARDAPI.DTOs.Product;
 using STANDARDAPI.Models.Product;
 using STANDARDAPI.Services.Product;
-
-
-
 namespace STANDARDAPI.Controllers
 {
     [ApiController]
@@ -22,10 +18,15 @@ namespace STANDARDAPI.Controllers
         }
 
         [HttpGet("product")]
-        [EnableQuery]
         public async Task<IActionResult> GetAllProduct()
         {
             return Ok(await _prodService.GetAllProduct());
+        }
+
+        [HttpGet("ProductGroupId/{ProductGroupId}")]
+        public async Task<IActionResult> GetProductByGroupId(int ProductGroupId)
+        {
+            return Ok(await _prodService.GetProductByGroupId(ProductGroupId));
         }
 
         [HttpGet("productId/{productId}")]
@@ -33,6 +34,8 @@ namespace STANDARDAPI.Controllers
         {
             return Ok(await _prodService.GetProductById(productId));
         }
+
+
 
         [HttpGet("product/filter")]
         public async Task<IActionResult> GetProductWithFilter([FromQuery] GetProductFilterDto filter)

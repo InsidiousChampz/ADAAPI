@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace STANDARDAPI.Migrations
 {
-    public partial class OrderCreated : Migration
+    public partial class AuditandOrderCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,11 +44,25 @@ namespace STANDARDAPI.Migrations
                     Net = table.Column<int>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<bool>(nullable: false)
+                    Status = table.Column<bool>(nullable: false),
+                    OrderNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductAuditTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameType = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductAuditTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +71,8 @@ namespace STANDARDAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderNumber = table.Column<string>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
@@ -64,7 +80,7 @@ namespace STANDARDAPI.Migrations
                     CreateBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
                     Status = table.Column<bool>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false)
+                    OrderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,7 +90,47 @@ namespace STANDARDAPI.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductAudits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    StockCount = table.Column<int>(nullable: false),
+                    AuditAmount = table.Column<int>(nullable: false),
+                    AuditTotalAmount = table.Column<int>(nullable: false),
+                    Remark = table.Column<string>(nullable: true),
+                    CreateBy = table.Column<string>(nullable: true),
+                    CreateDate = table.Column<DateTime>(nullable: false),
+                    ProductAuditTypeId = table.Column<int>(nullable: true),
+                    ProductId = table.Column<int>(nullable: true),
+                    ProductGroupId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductAudits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductAudits_ProductAuditTypes_ProductAuditTypeId",
+                        column: x => x.ProductAuditTypeId,
+                        principalTable: "ProductAuditTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ProductAudits_ProductGroups_ProductGroupId",
+                        column: x => x.ProductGroupId,
+                        principalTable: "ProductGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ProductAudits_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -83,16 +139,31 @@ namespace STANDARDAPI.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("b5b4cbed-435e-416e-9b09-8d2faf938563"), "user" },
-                    { new Guid("911238c3-7bf3-4562-99c9-6f33f127c265"), "Manager" },
-                    { new Guid("fb0d5917-dde0-455a-85f8-f29fc4f17ae8"), "Admin" },
-                    { new Guid("b164ec54-7209-4c4f-a09d-781863c22cc9"), "Developer" }
+                    { new Guid("bce94f81-e3cd-4436-99ed-07773c2ced55"), "user" },
+                    { new Guid("6ee8e6b1-7deb-402d-af82-67eef9d194ea"), "Manager" },
+                    { new Guid("ddcb0fd6-e367-4d12-9f26-c89ced0bb1fe"), "Admin" },
+                    { new Guid("bd9077ce-c0a9-4522-a44a-179abafc7085"), "Developer" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderLists_OrderId",
                 table: "OrderLists",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductAudits_ProductAuditTypeId",
+                table: "ProductAudits",
+                column: "ProductAuditTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductAudits_ProductGroupId",
+                table: "ProductAudits",
+                column: "ProductGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductAudits_ProductId",
+                table: "ProductAudits",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -101,31 +172,37 @@ namespace STANDARDAPI.Migrations
                 name: "OrderLists");
 
             migrationBuilder.DropTable(
+                name: "ProductAudits");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
-            migrationBuilder.DeleteData(
-                schema: "auth",
-                table: "Role",
-                keyColumn: "Id",
-                keyValue: new Guid("911238c3-7bf3-4562-99c9-6f33f127c265"));
+            migrationBuilder.DropTable(
+                name: "ProductAuditTypes");
 
             migrationBuilder.DeleteData(
                 schema: "auth",
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: new Guid("b164ec54-7209-4c4f-a09d-781863c22cc9"));
+                keyValue: new Guid("6ee8e6b1-7deb-402d-af82-67eef9d194ea"));
 
             migrationBuilder.DeleteData(
                 schema: "auth",
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: new Guid("b5b4cbed-435e-416e-9b09-8d2faf938563"));
+                keyValue: new Guid("bce94f81-e3cd-4436-99ed-07773c2ced55"));
 
             migrationBuilder.DeleteData(
                 schema: "auth",
                 table: "Role",
                 keyColumn: "Id",
-                keyValue: new Guid("fb0d5917-dde0-455a-85f8-f29fc4f17ae8"));
+                keyValue: new Guid("bd9077ce-c0a9-4522-a44a-179abafc7085"));
+
+            migrationBuilder.DeleteData(
+                schema: "auth",
+                table: "Role",
+                keyColumn: "Id",
+                keyValue: new Guid("ddcb0fd6-e367-4d12-9f26-c89ced0bb1fe"));
 
             migrationBuilder.InsertData(
                 schema: "auth",

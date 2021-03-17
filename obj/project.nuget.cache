@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wQE592SkOMBiM0OQ9sTdnyrcZUvgkWjr9Pvplbme9vQcFC+fwHA10DDiq8vfOw5R4xvVCYDxCASJTPAy/QcbXQ==",
+  "dgSpecHash": "xtRipQ/8oeR+4Ylc0WanJC+di6cfvl3SvOC4DXzuEAssb33F8NT5+ILX/jERzeVizS0WMafuoD/4BoU9gFEV2g==",
   "success": true,
-  "projectFilePath": "D:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj",
+  "projectFilePath": "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
