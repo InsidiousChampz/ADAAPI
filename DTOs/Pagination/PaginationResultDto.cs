@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.DTOs
+namespace INFOEDITORAPI.DTOs
 {
     public class PaginationResultDto
     {

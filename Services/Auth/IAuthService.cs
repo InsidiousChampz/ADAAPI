@@ -1,12 +1,12 @@
-﻿using STANDARDAPI.DTOs;
-using STANDARDAPI.Models;
+﻿using INFOEDITORAPI.DTOs;
+using INFOEDITORAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Services
+namespace INFOEDITORAPI.Services
 {
     public interface IAuthService
     {

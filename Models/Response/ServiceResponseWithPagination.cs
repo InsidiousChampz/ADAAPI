@@ -1,6 +1,6 @@
-﻿using STANDARDAPI.DTOs;
+﻿using INFOEDITORAPI.DTOs;
 
-namespace STANDARDAPI.Models
+namespace INFOEDITORAPI.Models
 {
     public class ServiceResponseWithPagination<T> : ServiceResponse<T>
     {

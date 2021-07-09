@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Helpers
+namespace INFOEDITORAPI.Helpers
 {
     public static class HealthCheckResponseWriter
     {

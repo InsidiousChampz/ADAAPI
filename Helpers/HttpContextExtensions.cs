@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using STANDARDAPI.DTOs;
+using INFOEDITORAPI.DTOs;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Helpers
+namespace INFOEDITORAPI.Helpers
 {
     public static class HttpContextExtensions
     {

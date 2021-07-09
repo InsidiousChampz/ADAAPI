@@ -13,30 +13,30 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using STANDARDAPI.Data;
-using STANDARDAPI.Helpers;
+using INFOEDITORAPI.Data;
+using INFOEDITORAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using STANDARDAPI.Services.Product;
-using STANDARDAPI.Services;
-using STANDARDAPI.Models.Product;
+using INFOEDITORAPI.Services.Product;
+using INFOEDITORAPI.Services;
+using INFOEDITORAPI.Models.Product;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
-using STANDARDAPI.Services.Order;
+using INFOEDITORAPI.Services.Order;
 
-namespace STANDARDAPI
+namespace INFOEDITORAPI
 {
     public class Startup
     {
-        private const string _projectName = "Standard API";
-        private const string _connectionString = "DefaultConnection";
+        private const string _projectName = "Infomation Editor API";
+        private const string _connectionString = "InfoEditAPIConnection";
         private const string _rootSwagger = "/swagger/v1/swagger.json";
 
         public Startup(IConfiguration configuration)

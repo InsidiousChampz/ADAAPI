@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using STANDARDAPI.Validations;
-namespace STANDARDAPI.DTOs.Order
+using INFOEDITORAPI.Validations;
+namespace INFOEDITORAPI.DTOs.Order
 {
     public class GetOrderFilterDto : PaginationDto
     {

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using STANDARDAPI.Data;
+using INFOEDITORAPI.Data;
 
-namespace STANDARDAPI.Migrations
+namespace INFOEDITORAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     [Migration("20210203044409_ProductCreate")]
@@ -21,7 +21,7 @@ namespace STANDARDAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.ProductGroup", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,9 +80,9 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("ProductGroups");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
                 {
-                    b.HasOne("STANDARDAPI.Models.Product.ProductGroup", "ProductGroup")
+                    b.HasOne("INFOEDITORAPI.Models.Product.ProductGroup", "ProductGroup")
                         .WithMany("Products")
                         .HasForeignKey("ProductGroupId")
                         .OnDelete(DeleteBehavior.Cascade)

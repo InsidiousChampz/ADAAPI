@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using STANDARDAPI.Data;
+using INFOEDITORAPI.Data;
 
-namespace STANDARDAPI.Migrations
+namespace INFOEDITORAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     [Migration("20210203164347_AuthCreate")]
@@ -21,7 +21,7 @@ namespace STANDARDAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.ProductGroup", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("ProductGroups");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.Role", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace STANDARDAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.User", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("User","auth");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.UserRole", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -157,24 +157,24 @@ namespace STANDARDAPI.Migrations
                     b.ToTable("UserRole","auth");
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
                 {
-                    b.HasOne("STANDARDAPI.Models.Product.ProductGroup", "ProductGroup")
+                    b.HasOne("INFOEDITORAPI.Models.Product.ProductGroup", "ProductGroup")
                         .WithMany("Products")
                         .HasForeignKey("ProductGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("STANDARDAPI.Models.UserRole", b =>
+            modelBuilder.Entity("INFOEDITORAPI.Models.UserRole", b =>
                 {
-                    b.HasOne("STANDARDAPI.Models.Role", "Role")
+                    b.HasOne("INFOEDITORAPI.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("STANDARDAPI.Models.User", "User")
+                    b.HasOne("INFOEDITORAPI.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

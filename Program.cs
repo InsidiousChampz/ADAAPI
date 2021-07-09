@@ -5,7 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 
-namespace STANDARDAPI
+namespace INFOEDITORAPI
 {
     public class Program
     {

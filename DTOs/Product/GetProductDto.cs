@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using STANDARDAPI.Models.Product;
+using INFOEDITORAPI.Models.Product;
 
-namespace STANDARDAPI.DTOs.Product
+namespace INFOEDITORAPI.DTOs.Product
 {
     public class GetProductDto
     {

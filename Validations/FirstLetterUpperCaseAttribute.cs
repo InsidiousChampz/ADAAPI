@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace STANDARDAPI.Validations
+namespace INFOEDITORAPI.Validations
 {
     public class FirstLetterUpperCaseAttribute : ValidationAttribute
     {

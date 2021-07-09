@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace STANDARDAPI.DTOs
+namespace INFOEDITORAPI.DTOs
 {
     public class UserRegisterDto
     {

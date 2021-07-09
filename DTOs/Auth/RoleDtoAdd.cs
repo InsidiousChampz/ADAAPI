@@ -1,6 +1,6 @@
-﻿using STANDARDAPI.Validations;
+﻿using INFOEDITORAPI.Validations;
 
-namespace STANDARDAPI.DTOs
+namespace INFOEDITORAPI.DTOs
 {
     public class RoleDtoAdd
     {

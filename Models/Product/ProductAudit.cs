@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace STANDARDAPI.Models.Product
+namespace INFOEDITORAPI.Models.Product
 {
     public class ProductAudit
     {

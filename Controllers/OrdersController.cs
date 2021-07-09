@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using STANDARDAPI.DTOs.Order;
-using STANDARDAPI.Services.Order;
+using INFOEDITORAPI.DTOs.Order;
+using INFOEDITORAPI.Services.Order;
 
-namespace STANDARDAPI.Controllers
+namespace INFOEDITORAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

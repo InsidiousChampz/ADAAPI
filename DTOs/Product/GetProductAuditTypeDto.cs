@@ -1,4 +1,4 @@
-namespace STANDARDAPI.DTOs.Product
+namespace INFOEDITORAPI.DTOs.Product
 {
     public class GetProductAuditTypeDto
     {

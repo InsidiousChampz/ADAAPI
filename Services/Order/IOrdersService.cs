@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using STANDARDAPI.DTOs.Order;
-using STANDARDAPI.Models;
+using INFOEDITORAPI.DTOs.Order;
+using INFOEDITORAPI.Models;
 
-namespace STANDARDAPI.Services.Order
+namespace INFOEDITORAPI.Services.Order
 {
     public interface IOrdersService
     {

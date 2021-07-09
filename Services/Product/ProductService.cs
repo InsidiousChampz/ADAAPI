@@ -6,16 +6,16 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using STANDARDAPI.Data;
-using STANDARDAPI.DTOs.Product;
-using STANDARDAPI.Helpers;
-using STANDARDAPI.Models;
-using mProduct = STANDARDAPI.Models.Product.Product;
-using mProductGroup = STANDARDAPI.Models.Product.ProductGroup;
-using mProductAudit = STANDARDAPI.Models.Product.ProductAudit;
+using INFOEDITORAPI.Data;
+using INFOEDITORAPI.DTOs.Product;
+using INFOEDITORAPI.Helpers;
+using INFOEDITORAPI.Models;
+using mProduct = INFOEDITORAPI.Models.Product.Product;
+using mProductGroup = INFOEDITORAPI.Models.Product.ProductGroup;
+using mProductAudit = INFOEDITORAPI.Models.Product.ProductAudit;
 using System.Linq.Dynamic.Core;
 
-namespace STANDARDAPI.Services.Product
+namespace INFOEDITORAPI.Services.Product
 {
     public class ProductService : ServiceBase, IProductService
     {

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using STANDARDAPI.Data;
-using STANDARDAPI.DTOs;
-using STANDARDAPI.Models;
+using INFOEDITORAPI.Data;
+using INFOEDITORAPI.DTOs;
+using INFOEDITORAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,7 +15,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Services
+namespace INFOEDITORAPI.Services
 {
     public class AuthService : ServiceBase, IAuthService
     {

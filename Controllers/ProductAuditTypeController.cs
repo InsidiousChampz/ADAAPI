@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using STANDARDAPI.Services.Product;
+using INFOEDITORAPI.Services.Product;
 
-namespace STANDARDAPI.Controllers
+namespace INFOEDITORAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

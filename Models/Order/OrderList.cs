@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace STANDARDAPI.Models.Order
+namespace INFOEDITORAPI.Models.Order
 {
     public class OrderList
     {

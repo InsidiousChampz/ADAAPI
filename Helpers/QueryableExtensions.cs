@@ -1,7 +1,7 @@
-﻿using STANDARDAPI.DTOs;
+﻿using INFOEDITORAPI.DTOs;
 using System.Linq;
 
-namespace STANDARDAPI.Helpers
+namespace INFOEDITORAPI.Helpers
 {
     public static class QueryableExtensions
     {

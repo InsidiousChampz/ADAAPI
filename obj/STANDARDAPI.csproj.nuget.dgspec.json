@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj": {}
+    "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\STANDARDAPI.csproj": {}
   },
   "projects": {
-    "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj": {
+    "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\STANDARDAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj",
+        "projectUniqueName": "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\STANDARDAPI.csproj",
         "projectName": "STANDARDAPI",
-        "projectPath": "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\STANDARDAPI.csproj",
+        "projectPath": "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\STANDARDAPI.csproj",
         "packagesPath": "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\",
-        "outputPath": "d:\\Work\\SSB STANDARD PROJECT\\BACKEND\\STANDARDAPI\\obj\\",
+        "outputPath": "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Insidious_Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -113,6 +113,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.13, 3.1.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

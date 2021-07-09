@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Helpers
+namespace INFOEDITORAPI.Helpers
 {
     public class TypeBinder<T> : IModelBinder
     {

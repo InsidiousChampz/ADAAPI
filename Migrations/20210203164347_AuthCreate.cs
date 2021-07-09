@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace STANDARDAPI.Migrations
+namespace INFOEDITORAPI.Migrations
 {
     public partial class AuthCreate : Migration
     {

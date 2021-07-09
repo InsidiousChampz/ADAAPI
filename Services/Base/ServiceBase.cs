@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using STANDARDAPI.Data;
-using STANDARDAPI.DTOs;
-using STANDARDAPI.Helpers;
-using STANDARDAPI.Models;
+using INFOEDITORAPI.Data;
+using INFOEDITORAPI.DTOs;
+using INFOEDITORAPI.Helpers;
+using INFOEDITORAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Services
+namespace INFOEDITORAPI.Services
 {
     public class ServiceBase
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace STANDARDAPI.DTOs.Order
+namespace INFOEDITORAPI.DTOs.Order
 {
     public class AddBothOrderDto
     {

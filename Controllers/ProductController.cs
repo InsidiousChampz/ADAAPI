@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using STANDARDAPI.DTOs.Product;
-using STANDARDAPI.Models.Product;
-using STANDARDAPI.Services.Product;
-namespace STANDARDAPI.Controllers
+using INFOEDITORAPI.DTOs.Product;
+using INFOEDITORAPI.Models.Product;
+using INFOEDITORAPI.Services.Product;
+namespace INFOEDITORAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

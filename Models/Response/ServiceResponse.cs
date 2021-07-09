@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace STANDARDAPI.Models
+namespace INFOEDITORAPI.Models
 {
 
     public class ServiceResponse<T>

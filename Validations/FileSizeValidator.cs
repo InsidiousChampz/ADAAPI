@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace STANDARDAPI.Validations
+namespace INFOEDITORAPI.Validations
 {
     public class FileSizeValidator : ValidationAttribute
     {

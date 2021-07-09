@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using STANDARDAPI.DTOs.Product;
-using STANDARDAPI.Models;
-using STANDARDAPI.Models.Product;
+using INFOEDITORAPI.DTOs.Product;
+using INFOEDITORAPI.Models;
+using INFOEDITORAPI.Models.Product;
 
-namespace STANDARDAPI.Services.Product
+namespace INFOEDITORAPI.Services.Product
 {
     public interface IProductService
     {

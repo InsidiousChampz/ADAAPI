@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using STANDARDAPI.DTOs;
-using STANDARDAPI.Services;
+using INFOEDITORAPI.DTOs;
+using INFOEDITORAPI.Services;
 using System.Threading.Tasks;
 
-namespace STANDARDAPI.Controllers
+namespace INFOEDITORAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

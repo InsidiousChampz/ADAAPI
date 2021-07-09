@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using STANDARDAPI.Validations;
+using INFOEDITORAPI.Validations;
 
-namespace STANDARDAPI.DTOs.Product
+namespace INFOEDITORAPI.DTOs.Product
 {
     public class AddProductGroupDto
     {

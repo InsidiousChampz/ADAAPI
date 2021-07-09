@@ -1,4 +1,4 @@
-namespace STANDARDAPI.DTOs.Order
+namespace INFOEDITORAPI.DTOs.Order
 {
     public class UpdateOrderStatusDto
     {

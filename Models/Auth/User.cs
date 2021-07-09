@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace STANDARDAPI.Models
+namespace INFOEDITORAPI.Models
 {
     [Table("User", Schema = "auth")]
     public class User : IId

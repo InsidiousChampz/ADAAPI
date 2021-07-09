@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using STANDARDAPI.Models;
-using STANDARDAPI.Models.Product;
-using STANDARDAPI.Models.Order;
+using INFOEDITORAPI.Models;
+using INFOEDITORAPI.Models.Product;
+using INFOEDITORAPI.Models.Order;
 
-namespace STANDARDAPI.Data
+namespace INFOEDITORAPI.Data
 {
     public class AppDBContext : DbContext
     {
