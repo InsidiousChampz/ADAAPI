@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "17tpv37g+B6r3g7iUzmjHwFjrUQVxQUI54BE3bNJVSDG2PRwMQtFXYKG0VduoSgnYMqoIJiYv+nmT/0dpT6h2Q==",
+  "dgSpecHash": "Xn/m30YizORGSspH7mURJX7LDULmyNZFRwMSunhludTpIKSobRtcjixS/XojZKoDYE45joykWRMGoNsHWsRwkw==",
   "success": true,
-  "projectFilePath": "D:\\6. Work\\SSB INFORMATION EDITING SYSTEM\\INFOEDITORAPI\\INFOEDITORAPI.csproj",
+  "projectFilePath": "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
@@ -157,8 +157,7 @@
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.13\\microsoft.netcore.app.host.win-x64.3.1.13.nupkg.sha512"
+    "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

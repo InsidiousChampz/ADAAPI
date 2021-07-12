@@ -31,6 +31,7 @@ using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
 using INFOEDITORAPI.Services.Order;
 
+
 namespace INFOEDITORAPI
 {
     public class Startup
@@ -191,8 +192,8 @@ namespace INFOEDITORAPI
         {
             services.AddSwaggerGen(config =>
             {
-                //var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "WebApi.XML";
-                //config.IncludeXmlComments(xmlPath);
+                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "APIDOCUMENT.XML";
+                config.IncludeXmlComments(xmlPath);
 
                 config.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = _projectName });
 

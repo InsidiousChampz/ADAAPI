@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using INFOEDITORAPI.Data;
+using INFOEDITORAPI.DTOs.Info;
+using INFOEDITORAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,6 +25,21 @@ namespace INFOEDITORAPI.Services.Info
             _mapper = mapper;
             _log = log;
             _httpcontext = httpcontext;
+        }
+
+        public Task<ServiceResponse<List<GetPersonalInfoDto>>> GetPersonalInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResponse<GetPersonalInfoDto>> GetPersonalInfoById(int personId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResponse<GetPersonalInfoDto>> UpdatePersonalInfoById(int personId, UpdatePersonalInfoDto updatePerson)
+        {
+            throw new NotImplementedException();
         }
     }
 }
