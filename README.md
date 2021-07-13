@@ -1,4 +1,4 @@
-# CustomerProfileAPI
+# Customer Profile API
 
 SSB # Customer Profile API Example
 09/07/2021 : 10.00-14.00 : Update SourceCode.
