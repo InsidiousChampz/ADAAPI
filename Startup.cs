@@ -30,7 +30,7 @@ using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
 using INFOEDITORAPI.Services.Order;
-
+using INFOEDITORAPI.Services.Info;
 
 namespace INFOEDITORAPI
 {
@@ -95,6 +95,8 @@ namespace INFOEDITORAPI
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrdersService, OrdersService>();
+
+            services.AddScoped<IInfoService, InfoService>();
             //------End: Service------
 
             AddFormatters(services);
@@ -194,7 +196,6 @@ namespace INFOEDITORAPI
             {
                 var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + "APIDOCUMENT.XML";
                 config.IncludeXmlComments(xmlPath);
-
                 config.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = _projectName });
 
                 config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

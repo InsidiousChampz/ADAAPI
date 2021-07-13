@@ -23,11 +23,11 @@ namespace INFOEDITORAPI.DTOs.Info
         [Required(ErrorMessage = "Genre must be specified")]
         public string Genre { get; set; }
 
-
         [Required(ErrorMessage = "Email is Missing"), RegularExpression("^(.+)@(.+)$")]
         public string Email { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:d}")]
+        [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
