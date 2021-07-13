@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using INFOEDITORAPI.DTOs;
+using CustomerProFileAPI.DTOs;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Helpers
+namespace CustomerProFileAPI.Helpers
 {
     public static class HttpContextExtensions
     {

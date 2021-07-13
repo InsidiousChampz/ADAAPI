@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Xn/m30YizORGSspH7mURJX7LDULmyNZFRwMSunhludTpIKSobRtcjixS/XojZKoDYE45joykWRMGoNsHWsRwkw==",
+  "dgSpecHash": "brFg8fAvpI4XkyhYk+koSqR1T+9Vbei16r9vhbjHjsgFfQJNVjPRXkoo8ACVqWG3d7rVFy1N0TSl6hOqAX1KXw==",
   "success": true,
-  "projectFilePath": "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj",
+  "projectFilePath": "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\CustomerProFileAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",

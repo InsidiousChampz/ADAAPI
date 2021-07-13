@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Models
+namespace CustomerProFileAPI.Models
 {
     public interface IId
     {

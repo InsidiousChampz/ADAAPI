@@ -13,31 +13,31 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using INFOEDITORAPI.Data;
-using INFOEDITORAPI.Helpers;
+using CustomerProFileAPI.Data;
+using CustomerProFileAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEDITORAPI.Services.Product;
-using INFOEDITORAPI.Services;
-using INFOEDITORAPI.Models.Product;
+using CustomerProFileAPI.Services.Product;
+using CustomerProFileAPI.Services;
+using CustomerProFileAPI.Models.Product;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
-using INFOEDITORAPI.Services.Order;
-using INFOEDITORAPI.Services.Info;
+using CustomerProFileAPI.Services.Order;
+using CustomerProFileAPI.Services.Info;
 
-namespace INFOEDITORAPI
+namespace CustomerProFileAPI
 {
     public class Startup
     {
-        private const string _projectName = "Infomation Editor API";
-        private const string _connectionString = "InfoEditAPIConnection";
+        private const string _projectName = "Customer Profiles API";
+        private const string _connectionString = "CustomerProfilesConnection";
         private const string _rootSwagger = "/swagger/v1/swagger.json";
 
         public Startup(IConfiguration configuration)
@@ -92,7 +92,6 @@ namespace INFOEDITORAPI
 
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrdersService, OrdersService>();
 

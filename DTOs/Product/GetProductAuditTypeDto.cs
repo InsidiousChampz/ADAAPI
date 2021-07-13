@@ -1,4 +1,4 @@
-namespace INFOEDITORAPI.DTOs.Product
+namespace CustomerProFileAPI.DTOs.Product
 {
     public class GetProductAuditTypeDto
     {

@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using INFOEDITORAPI.Data;
-using INFOEDITORAPI.DTOs.Order;
-using INFOEDITORAPI.Models;
-using INFOEDITORAPI.Models.Order;
-using mOrder = INFOEDITORAPI.Models.Order.Order;
+using CustomerProFileAPI.Data;
+using CustomerProFileAPI.DTOs.Order;
+using CustomerProFileAPI.Models;
+using CustomerProFileAPI.Models.Order;
+using mOrder = CustomerProFileAPI.Models.Order.Order;
 using System.Linq.Dynamic.Core;
 using System;
 using Microsoft.AspNetCore.Http;
-using INFOEDITORAPI.Helpers;
+using CustomerProFileAPI.Helpers;
 
-namespace INFOEDITORAPI.Services.Order
+namespace CustomerProFileAPI.Services.Order
 {
     public class OrdersService : ServiceBase, IOrdersService
     {

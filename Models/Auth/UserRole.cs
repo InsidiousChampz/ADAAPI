@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INFOEDITORAPI.Models
+namespace CustomerProFileAPI.Models
 {
     [Table("UserRole", Schema = "auth")]
     public class UserRole

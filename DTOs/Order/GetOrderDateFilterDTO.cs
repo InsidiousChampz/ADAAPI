@@ -1,6 +1,6 @@
 using System;
 
-namespace INFOEDITORAPI.DTOs.Order
+namespace CustomerProFileAPI.DTOs.Order
 {
     public class GetOrderDateFilterDTO : PaginationDto
     {

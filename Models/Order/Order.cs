@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace INFOEDITORAPI.Models.Order
+namespace CustomerProFileAPI.Models.Order
 {
     public class Order
     {

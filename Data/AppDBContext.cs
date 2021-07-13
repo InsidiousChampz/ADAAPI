@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEDITORAPI.Models;
-using INFOEDITORAPI.Models.Product;
-using INFOEDITORAPI.Models.Order;
+using CustomerProFileAPI.Models;
+using CustomerProFileAPI.Models.Product;
+using CustomerProFileAPI.Models.Order;
 
-namespace INFOEDITORAPI.Data
+namespace CustomerProFileAPI.Data
 {
     public class AppDBContext : DbContext
     {
@@ -18,28 +18,11 @@ namespace INFOEDITORAPI.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
-
-            SeedData(modelBuilder);
-
+            //modelBuilder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
+            
             base.OnModelCreating(modelBuilder);
         }
 
-        private void SeedData(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Role>()
-                .HasData(new List<Role>()
-               {
-                    new Role(){ Id = Guid.NewGuid(), Name = "user"},
-                    new Role(){ Id = Guid.NewGuid(), Name = "Manager"},
-                    new Role(){ Id = Guid.NewGuid(), Name = "Admin"},
-                    new Role(){ Id = Guid.NewGuid(), Name = "Developer"}
-               });
-        }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductAudit> ProductAudits { get; set; }

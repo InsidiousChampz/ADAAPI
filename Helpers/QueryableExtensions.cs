@@ -1,7 +1,7 @@
-﻿using INFOEDITORAPI.DTOs;
+﻿using CustomerProFileAPI.DTOs;
 using System.Linq;
 
-namespace INFOEDITORAPI.Helpers
+namespace CustomerProFileAPI.Helpers
 {
     public static class QueryableExtensions
     {

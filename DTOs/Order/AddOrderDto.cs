@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using INFOEDITORAPI.Models.Order;
+using CustomerProFileAPI.Models.Order;
 
-namespace INFOEDITORAPI.DTOs.Order
+namespace CustomerProFileAPI.DTOs.Order
 {
     public class AddOrderDto
     {

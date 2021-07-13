@@ -1,5 +1,5 @@
-﻿using INFOEDITORAPI.DTOs.Info;
-using INFOEDITORAPI.Services.Info;
+﻿using CustomerProFileAPI.DTOs.Info;
+using CustomerProFileAPI.Services.Info;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Data
+namespace CustomerProFileAPI.Data
 {
     //[Produces("application/json")]
     [ApiController]

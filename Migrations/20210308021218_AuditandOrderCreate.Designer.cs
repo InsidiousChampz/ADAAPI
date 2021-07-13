@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using INFOEDITORAPI.Data;
+using CustomerProFileAPI.Data;
 
-namespace INFOEDITORAPI.Migrations
+namespace CustomerProFileAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     [Migration("20210308021218_AuditandOrderCreate")]
@@ -21,7 +21,7 @@ namespace INFOEDITORAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Order.Order", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Order.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Order.OrderList", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Order.OrderList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +104,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("OrderLists");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +139,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductAudit", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.ProductAudit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,7 +187,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("ProductAudits");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductAuditType", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.ProductAuditType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("ProductAuditTypes");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductGroup", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.ProductGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -226,7 +226,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("ProductGroups");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Role", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +264,7 @@ namespace INFOEDITORAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.User", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,7 +288,7 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("User","auth");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.UserRole", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -303,46 +303,46 @@ namespace INFOEDITORAPI.Migrations
                     b.ToTable("UserRole","auth");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Order.OrderList", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Order.OrderList", b =>
                 {
-                    b.HasOne("INFOEDITORAPI.Models.Order.Order", null)
+                    b.HasOne("CustomerProFileAPI.Models.Order.Order", null)
                         .WithMany("OrderLists")
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.Product", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.Product", b =>
                 {
-                    b.HasOne("INFOEDITORAPI.Models.Product.ProductGroup", "ProductGroup")
+                    b.HasOne("CustomerProFileAPI.Models.Product.ProductGroup", "ProductGroup")
                         .WithMany("Products")
                         .HasForeignKey("ProductGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.Product.ProductAudit", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.Product.ProductAudit", b =>
                 {
-                    b.HasOne("INFOEDITORAPI.Models.Product.ProductAuditType", "ProductAuditType")
+                    b.HasOne("CustomerProFileAPI.Models.Product.ProductAuditType", "ProductAuditType")
                         .WithMany("ProductAudits")
                         .HasForeignKey("ProductAuditTypeId");
 
-                    b.HasOne("INFOEDITORAPI.Models.Product.ProductGroup", "ProductGroup")
+                    b.HasOne("CustomerProFileAPI.Models.Product.ProductGroup", "ProductGroup")
                         .WithMany()
                         .HasForeignKey("ProductGroupId");
 
-                    b.HasOne("INFOEDITORAPI.Models.Product.Product", "Product")
+                    b.HasOne("CustomerProFileAPI.Models.Product.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
                 });
 
-            modelBuilder.Entity("INFOEDITORAPI.Models.UserRole", b =>
+            modelBuilder.Entity("CustomerProFileAPI.Models.UserRole", b =>
                 {
-                    b.HasOne("INFOEDITORAPI.Models.Role", "Role")
+                    b.HasOne("CustomerProFileAPI.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("INFOEDITORAPI.Models.User", "User")
+                    b.HasOne("CustomerProFileAPI.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

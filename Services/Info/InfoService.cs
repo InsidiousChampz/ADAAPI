@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using INFOEDITORAPI.Data;
-using INFOEDITORAPI.DTOs.Info;
-using INFOEDITORAPI.Models;
+using CustomerProFileAPI.Data;
+using CustomerProFileAPI.DTOs.Info;
+using CustomerProFileAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Services.Info
+namespace CustomerProFileAPI.Services.Info
 {
     public class InfoService : ServiceBase, IInfoService
     {

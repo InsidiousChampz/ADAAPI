@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace INFOEDITORAPI.DTOs
+namespace CustomerProFileAPI.DTOs
 {
     public class AssignRoleDto
     {

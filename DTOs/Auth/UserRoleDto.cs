@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace INFOEDITORAPI.DTOs
+namespace CustomerProFileAPI.DTOs
 {
     public class UserRoleDto
     {

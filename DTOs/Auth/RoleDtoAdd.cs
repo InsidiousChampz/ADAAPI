@@ -1,6 +1,6 @@
-﻿using INFOEDITORAPI.Validations;
+﻿using CustomerProFileAPI.Validations;
 
-namespace INFOEDITORAPI.DTOs
+namespace CustomerProFileAPI.DTOs
 {
     public class RoleDtoAdd
     {

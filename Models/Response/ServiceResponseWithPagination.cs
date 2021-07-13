@@ -1,6 +1,6 @@
-﻿using INFOEDITORAPI.DTOs;
+﻿using CustomerProFileAPI.DTOs;
 
-namespace INFOEDITORAPI.Models
+namespace CustomerProFileAPI.Models
 {
     public class ServiceResponseWithPagination<T> : ServiceResponse<T>
     {

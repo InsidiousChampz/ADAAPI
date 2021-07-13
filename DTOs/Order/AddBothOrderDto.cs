@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace INFOEDITORAPI.DTOs.Order
+namespace CustomerProFileAPI.DTOs.Order
 {
     /// <summary>
     /// Add both Order 

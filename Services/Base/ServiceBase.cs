@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using INFOEDITORAPI.Data;
-using INFOEDITORAPI.DTOs;
-using INFOEDITORAPI.Helpers;
-using INFOEDITORAPI.Models;
+using CustomerProFileAPI.Data;
+using CustomerProFileAPI.DTOs;
+using CustomerProFileAPI.Helpers;
+using CustomerProFileAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Services
+namespace CustomerProFileAPI.Services
 {
     public class ServiceBase
     {

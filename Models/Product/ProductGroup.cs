@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace INFOEDITORAPI.Models.Product
+namespace CustomerProFileAPI.Models.Product
 {
     public class ProductGroup
     {

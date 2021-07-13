@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace INFOEDITORAPI.Validations
+namespace CustomerProFileAPI.Validations
 {
     public class ContentTypeValidator : ValidationAttribute
     {

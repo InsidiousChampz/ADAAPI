@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.DTOs
+namespace CustomerProFileAPI.DTOs
 {
     public class PaginationDto
     {

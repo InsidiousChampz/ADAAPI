@@ -5,7 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 
-namespace INFOEDITORAPI
+namespace CustomerProFileAPI
 {
     public class Program
     {

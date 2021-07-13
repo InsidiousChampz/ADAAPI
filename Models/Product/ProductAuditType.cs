@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace INFOEDITORAPI.Models.Product
+namespace CustomerProFileAPI.Models.Product
 {
     public class ProductAuditType
     {

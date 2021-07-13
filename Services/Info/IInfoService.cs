@@ -1,11 +1,11 @@
-﻿using INFOEDITORAPI.DTOs.Info;
-using INFOEDITORAPI.Models;
+﻿using CustomerProFileAPI.DTOs.Info;
+using CustomerProFileAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.Services.Info
+namespace CustomerProFileAPI.Services.Info
 {
     public interface IInfoService
     {

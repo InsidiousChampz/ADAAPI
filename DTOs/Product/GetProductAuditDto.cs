@@ -1,6 +1,6 @@
 using System;
 
-namespace INFOEDITORAPI.DTOs.Product
+namespace CustomerProFileAPI.DTOs.Product
 {
     public class GetProductAuditDto
     {

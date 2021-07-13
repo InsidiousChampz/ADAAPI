@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace INFOEDITORAPI.Models
+namespace CustomerProFileAPI.Models
 {
 
     public class ServiceResponse<T>

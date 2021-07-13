@@ -1,6 +1,6 @@
 using System;
 
-namespace INFOEDITORAPI.Models.Product
+namespace CustomerProFileAPI.Models.Product
 {
 
     public class Product

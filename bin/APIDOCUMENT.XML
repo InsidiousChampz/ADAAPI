@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>INFOEDITORAPI</name>
+        <name>CustomerProFileAPI</name>
     </assembly>
     <members>
-        <member name="M:INFOEDITORAPI.Data.InfoController.GetPersonalInfo">
+        <member name="M:CustomerProFileAPI.Data.InfoController.GetPersonalInfo">
             <summary>
                 สำหรับ GET Personal Information ทั้งหมดทุกคน.
             </summary>
@@ -21,14 +21,14 @@
             <response code="404"> Not Found </response>
             <response code="500"> Internal Server Error </response>
         </member>
-        <member name="M:INFOEDITORAPI.Data.InfoController.GetPersonalInfoById(System.Int32)">
+        <member name="M:CustomerProFileAPI.Data.InfoController.GetPersonalInfoById(System.Int32)">
             <summary>
             สำหรับ GET Personal Information เป็นรายบุคคล.
             </summary>
             <param name="personId"></param>
             <returns></returns>
         </member>
-        <member name="M:INFOEDITORAPI.Data.InfoController.UpdatePersonalInfoById(System.Int32,INFOEDITORAPI.DTOs.Info.UpdatePersonalInfoDto)">
+        <member name="M:CustomerProFileAPI.Data.InfoController.UpdatePersonalInfoById(System.Int32,CustomerProFileAPI.DTOs.Info.UpdatePersonalInfoDto)">
             <summary>
             สำหรับ Update Personal information เป้นรายบุคคล
             </summary>
@@ -36,27 +36,24 @@
             <param name="updateperson"></param>
             <returns></returns>
         </member>
-        <member name="T:INFOEDITORAPI.DTOs.Order.AddBothOrderDto">
+        <member name="T:CustomerProFileAPI.DTOs.Order.AddBothOrderDto">
             <summary>
             Add both Order 
             </summary>
         </member>
-        <member name="M:INFOEDITORAPI.Services.AuthService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,INFOEDITORAPI.Data.AppDBContext,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
-            Constructor
-        </member>
-        <member name="M:INFOEDITORAPI.Startup.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:CustomerProFileAPI.Startup.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Add Authentication
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:INFOEDITORAPI.Startup.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:CustomerProFileAPI.Startup.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Add Swagger
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:INFOEDITORAPI.Startup.AddFormatters(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:CustomerProFileAPI.Startup.AddFormatters(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Add Formatter for OData with swagger
             </summary>

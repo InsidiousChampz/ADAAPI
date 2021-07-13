@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj": {}
+    "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\INFOEDITORAPI.csproj": {}
   },
   "projects": {
-    "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj": {
+    "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\INFOEDITORAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj",
+        "projectUniqueName": "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\INFOEDITORAPI.csproj",
         "projectName": "INFOEDITORAPI",
-        "projectPath": "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\INFOEDITORAPI.csproj",
+        "projectPath": "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\INFOEDITORAPI.csproj",
         "packagesPath": "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\",
-        "outputPath": "D:\\6. Work\\SSB INFORMATION EDITING\\INFOEDITORAPI\\obj\\",
+        "outputPath": "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

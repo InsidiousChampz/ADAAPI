@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace INFOEDITORAPI.Migrations
+namespace CustomerProFileAPI.Migrations
 {
     public partial class AuditandOrderCreate : Migration
     {

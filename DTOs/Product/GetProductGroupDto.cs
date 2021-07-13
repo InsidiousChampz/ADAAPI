@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace INFOEDITORAPI.DTOs.Product
+namespace CustomerProFileAPI.DTOs.Product
 {
     public class GetProductGroupDto
     {

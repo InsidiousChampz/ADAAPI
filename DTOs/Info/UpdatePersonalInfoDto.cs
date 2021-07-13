@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace INFOEDITORAPI.DTOs.Info
+namespace CustomerProFileAPI.DTOs.Info
 {
     public interface UpdatePersonalInfoDto
     {

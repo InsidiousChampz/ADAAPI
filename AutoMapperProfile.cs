@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEDITORAPI.DTOs;
-using INFOEDITORAPI.DTOs.Product;
-using INFOEDITORAPI.Models;
-using INFOEDITORAPI.Models.Product;
-using INFOEDITORAPI.DTOs.Order;
-using INFOEDITORAPI.Models.Order;
+using CustomerProFileAPI.DTOs;
+using CustomerProFileAPI.DTOs.Product;
+using CustomerProFileAPI.Models;
+using CustomerProFileAPI.Models.Product;
+using CustomerProFileAPI.DTOs.Order;
+using CustomerProFileAPI.Models.Order;
 
-namespace INFOEDITORAPI
+namespace CustomerProFileAPI
 {
     public class AutoMapperProfile : Profile
     {

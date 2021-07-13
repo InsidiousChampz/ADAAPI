@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
-using INFOEDITORAPI.DTOs.Product;
-using INFOEDITORAPI.Services.Product;
+using CustomerProFileAPI.DTOs.Product;
+using CustomerProFileAPI.Services.Product;
 
-namespace INFOEDITORAPI.Controllers
+namespace CustomerProFileAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
