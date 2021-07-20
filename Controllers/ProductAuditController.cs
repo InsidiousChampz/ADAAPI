@@ -12,35 +12,35 @@ namespace CustomerProFileAPI.Controllers
     {
         private readonly IProductService _prodService;
 
-        public ProductAuditController(IProductService prodService)
-        {
-            _prodService = prodService;
-        }
+        //public ProductAuditController(IProductService prodService)
+        //{
+        //    _prodService = prodService;
+        //}
 
-        [HttpGet("productaudit")]
-        [EnableQuery]
-        public async Task<IActionResult> GetAllProductAudit()
-        {
-            return Ok(await _prodService.GetAllProductAudit());
-        }
+        //[HttpGet("productaudit")]
+        //[EnableQuery]
+        //public async Task<IActionResult> GetAllProductAudit()
+        //{
+        //    return Ok(await _prodService.GetAllProductAudit());
+        //}
 
-        [HttpGet("productAuditId/{productAuditId}")]
-        public async Task<IActionResult> GetProductAuditById(int productAuditId)
-        {
-            return Ok(await _prodService.GetProductAuditById(productAuditId));
-        }
+        //[HttpGet("productAuditId/{productAuditId}")]
+        //public async Task<IActionResult> GetProductAuditById(int productAuditId)
+        //{
+        //    return Ok(await _prodService.GetProductAuditById(productAuditId));
+        //}
 
-        [HttpGet("productaudit/filter")]
-        public async Task<IActionResult> GetProductAuditWithFilter([FromQuery] GetProductAuditFilterDto filter)
-        {
-            return Ok(await _prodService.GetProductAuditWithFilter(filter));
-        }
+        //[HttpGet("productaudit/filter")]
+        //public async Task<IActionResult> GetProductAuditWithFilter([FromQuery] GetProductAuditFilterDto filter)
+        //{
+        //    return Ok(await _prodService.GetProductAuditWithFilter(filter));
+        //}
 
-        [HttpPost("addproductaudit")]
-        public async Task<IActionResult> AddProductAudit(AddProductAuditDto newAudit)
-        {
-            return Ok(await _prodService.AddProductAudit(newAudit));
-        }
+        //[HttpPost("addproductaudit")]
+        //public async Task<IActionResult> AddProductAudit(AddProductAuditDto newAudit)
+        //{
+        //    return Ok(await _prodService.AddProductAudit(newAudit));
+        //}
 
     }
 }

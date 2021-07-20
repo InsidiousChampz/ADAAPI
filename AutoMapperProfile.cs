@@ -10,6 +10,10 @@ using CustomerProFileAPI.Models;
 using CustomerProFileAPI.Models.Product;
 using CustomerProFileAPI.DTOs.Order;
 using CustomerProFileAPI.Models.Order;
+using CustomerProFileAPI.Models.Customer_Infomations;
+using CustomerProFileAPI.DTOs.Customer_Infomations;
+using CustomerProFileAPI.Models.Customer_Snapshots;
+using CustomerProFileAPI.DTOs.Customer;
 
 namespace CustomerProFileAPI
 {
@@ -17,26 +21,33 @@ namespace CustomerProFileAPI
     {
         public AutoMapperProfile()
         {
-            //Auth
-            CreateMap<User, UserDto>();
-            CreateMap<Role, RoleDto>()
-                .ForMember(x => x.RoleName, x => x.MapFrom(x => x.Name));
-            CreateMap<RoleDtoAdd, Role>()
-                .ForMember(x => x.Name, x => x.MapFrom(x => x.RoleName));
-            CreateMap<UserRole, UserRoleDto>();
+            // Customer infomations
+            CreateMap<Customer_Header, GetCustomerHeaderDto>();
+            CreateMap<Customer_Detail, GetCustomerHeaderDto>();
 
-            //Product
-            CreateMap<Product, GetProductDto>();
-            //ProductGroup
-            CreateMap<ProductGroup, GetProductGroupDto>();
-            //ProductAudit
-            CreateMap<ProductAudit, GetProductAuditDto>();
-            //ProductAuditType
-            CreateMap<ProductAuditType, GetProductAuditTypeDto>();
-            //OrderList
-            CreateMap<OrderList, GetOrderListDto>();
-            //Order
-            CreateMap<Order, GetOrderDto>();
+
+
+            //Customer_Snapshot
+            CreateMap<Policy_Snapshot, GetPolicyDto>();
+            CreateMap<Customer_Snapshot, GetCustomerDto>();
+            CreateMap<Customer_Snapshot, GetCustomerListDto>();
+
+
+            //Policy_Snapshot
+            //CreateMap<Policy_Snapshot, GetPolicyDto>();
+
+            ////Product
+            //CreateMap<Product, GetProductDto>();
+            ////ProductGroup
+            //CreateMap<ProductGroup, GetProductGroupDto>();
+            ////ProductAudit
+            //CreateMap<ProductAudit, GetProductAuditDto>();
+            ////ProductAuditType
+            //CreateMap<ProductAuditType, GetProductAuditTypeDto>();
+            ////OrderList
+            //CreateMap<OrderList, GetOrderListDto>();
+            ////Order
+            //CreateMap<Order, GetOrderDto>();
         }
     }
 }

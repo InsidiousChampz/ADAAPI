@@ -1,5 +1,10 @@
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\out\web.config
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\appsettings.json
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\out\appsettings.Development.json
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\out\appsettings.json
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\out\CustomerProFileAPI.deps.json
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\out\CustomerProFileAPI.runtimeconfig.json
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\CustomerProFileAPI.exe
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\CustomerProFileAPI.deps.json
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\CustomerProFileAPI.runtimeconfig.json
@@ -114,7 +119,6 @@ D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netco
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.csproj.AssemblyReference.cache
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.AssemblyInfoInputs.cache
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.AssemblyInfo.cs
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.csproj.CoreCompileInputs.cache
@@ -128,3 +132,4 @@ D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netco
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.dll
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.pdb
 D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.genruntimeconfig.cache
+D:\Work\SSB SOURCE PROJECT\SSB CUSTOMER PROFILES\CUSTOMERPROFILE\obj\Debug\netcoreapp3.1\CustomerProFileAPI.csproj.AssemblyReference.cache

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CustomerProFileAPI.Models;
 using CustomerProFileAPI.Models.Product;
 using CustomerProFileAPI.Models.Order;
+using CustomerProFileAPI.Models.Customer_Snapshots;
+using CustomerProFileAPI.Models.Customer_Infomations;
 
 namespace CustomerProFileAPI.Data
 {
@@ -18,19 +20,20 @@ namespace CustomerProFileAPI.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
-            
+            //modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.Entity<Policy_Snapshot>()
+                 .Property(x => x.Premium)
+                 .HasColumnType("decimal(16,2)");
+
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<ProductGroup> ProductGroups { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductAudit> ProductAudits { get; set; }
-        public DbSet<ProductAuditType> ProductAuditTypes { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderList> OrderLists { get; set; }
+        public DbSet<Customer_Snapshot> Customer_Snapshots { get; set; }
+        public DbSet<Policy_Snapshot> Policy_Snapshots { get; set; }
+        public DbSet<Customer_Header> Customer_Headers { get; set; }
+        public DbSet<Customer_Detail> Customer_Details { get; set; }
 
 
-
+        
     }
 }

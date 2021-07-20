@@ -29,8 +29,8 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
-using CustomerProFileAPI.Services.Order;
-using CustomerProFileAPI.Services.Info;
+using CustomerProFileAPI.Services.Customer_Infomations;
+using CustomerProFileAPI.Services.Customer;
 
 namespace CustomerProFileAPI
 {
@@ -92,10 +92,9 @@ namespace CustomerProFileAPI
 
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IOrdersService, OrdersService>();
-
-            services.AddScoped<IInfoService, InfoService>();
+            
+            services.AddScoped<ICustomerInfomationServices, CustomerInfomationServices>();
+            services.AddScoped<ICustomerServices, CustomerServices>();
             //------End: Service------
 
             AddFormatters(services);

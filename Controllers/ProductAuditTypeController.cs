@@ -10,15 +10,15 @@ namespace CustomerProFileAPI.Controllers
     {
         private readonly IProductService _prodService;
 
-        public ProductAuditTypeController(IProductService prodService)
-        {
-            _prodService = prodService;
-        }
+        //public ProductAuditTypeController(IProductService prodService)
+        //{
+        //    _prodService = prodService;
+        //}
 
-        [HttpGet("productaudittypes")]
-        public async Task<IActionResult> GetAllAuditType()
-        {
-            return Ok(await _prodService.GetAllAuditType());
-        }
+        //[HttpGet("productaudittypes")]
+        //public async Task<IActionResult> GetAllAuditType()
+        //{
+        //    return Ok(await _prodService.GetAllAuditType());
+        //}
     }
 }
