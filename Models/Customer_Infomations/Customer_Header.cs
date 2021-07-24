@@ -15,6 +15,15 @@ namespace CustomerProFileAPI.Models.Customer_Infomations
         public int HeaderCustomerID { get; set; }
         public int? PayerPersonId { get; set; }
 
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime Birthdate { get; set; }
+
         [StringLength(13)]
         public string LoginIdentityCard { get; set; }
 
@@ -23,6 +32,9 @@ namespace CustomerProFileAPI.Models.Customer_Infomations
 
         [StringLength(255)]
         public string LoginRefCode { get; set; }
+
+        [StringLength(255)]
+        public string SMSFormat { get; set; }
 
         [StringLength(40)]
         public string PrimaryPhone { get; set; }

@@ -1,0 +1,315 @@
+2021-07-22 09:53:38.318 +07:00 [INF] Starting web host
+2021-07-22 09:54:14.661 +07:00 [INF] Starting web host
+2021-07-22 10:24:35.564 +07:00 [INF] Starting web host
+2021-07-22 10:24:48.710 +07:00 [INF] Starting web host
+2021-07-22 12:17:30.290 +07:00 [INF] Starting web host
+2021-07-22 12:24:15.503 +07:00 [INF] Starting web host
+2021-07-22 12:33:05.166 +07:00 [INF] Starting web host
+2021-07-22 12:43:45.943 +07:00 [INF] Starting web host
+2021-07-22 12:56:37.463 +07:00 [INF] Starting web host
+2021-07-22 13:00:18.252 +07:00 [INF] Starting web host
+2021-07-22 13:03:04.972 +07:00 [INF] Starting web host
+2021-07-22 13:50:51.363 +07:00 [INF] Starting web host
+2021-07-22 13:51:59.382 +07:00 [INF] Starting web host
+2021-07-22 13:52:58.422 +07:00 [INF] Starting web host
+2021-07-22 13:54:28.826 +07:00 [INF] Starting web host
+2021-07-22 14:25:43.801 +07:00 [INF] Starting web host
+2021-07-22 15:04:45.773 +07:00 [INF] Starting web host
+2021-07-22 15:05:20.485 +07:00 [INF] Starting web host
+2021-07-22 15:25:02.336 +07:00 [INF] Starting web host
+2021-07-22 15:29:56.772 +07:00 [INF] Starting web host
+2021-07-22 15:37:00.768 +07:00 [INF] Starting web host
+2021-07-22 15:37:30.595 +07:00 [INF] Starting web host
+2021-07-22 16:00:56.905 +07:00 [INF] Starting web host
+2021-07-22 16:02:02.405 +07:00 [INF] Starting web host
+2021-07-22 16:04:04.505 +07:00 [INF] Starting web host
+2021-07-22 16:15:12.820 +07:00 [INF] Starting web host
+2021-07-22 16:15:25.041 +07:00 [INF] Starting web host
+2021-07-22 16:15:36.458 +07:00 [ERR] Failed executing DbCommand (45ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN [ss].[SnapPolicy] AS [s0] ON [s].[Id] = [s0].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [s0].[Id]
+2021-07-22 16:15:36.503 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:b9544541-52fc-430e-af70-6590a1e9782f
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:b9544541-52fc-430e-af70-6590a1e9782f
+Error Number:207,State:1,Class:16
+2021-07-22 16:17:44.045 +07:00 [INF] Starting web host
+2021-07-22 16:17:50.392 +07:00 [ERR] Failed executing DbCommand (59ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN [ss].[SnapPolicy] AS [s0] ON [s].[Id] = [s0].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [s0].[Id]
+2021-07-22 16:17:50.435 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:b749a63a-932f-4d42-9c3e-bd74be767fa4
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:b749a63a-932f-4d42-9c3e-bd74be767fa4
+Error Number:207,State:1,Class:16
+2021-07-22 16:21:09.925 +07:00 [INF] Starting web host
+2021-07-22 16:21:17.485 +07:00 [ERR] Failed executing DbCommand (53ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN [ss].[SnapPolicy] AS [s0] ON [s].[Id] = [s0].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [s0].[Id]
+2021-07-22 16:21:17.525 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:c010292b-f335-48ce-9a9f-63d9a3fc06eb
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:c010292b-f335-48ce-9a9f-63d9a3fc06eb
+Error Number:207,State:1,Class:16
+2021-07-22 16:22:22.367 +07:00 [INF] Starting web host
+2021-07-22 16:22:28.199 +07:00 [ERR] Failed executing DbCommand (63ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN [ss].[SnapPolicy] AS [s0] ON [s].[Id] = [s0].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [s0].[Id]
+2021-07-22 16:22:28.244 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:39603474-1ec8-4d57-97d8-11e9bfcd4ad0
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:39603474-1ec8-4d57-97d8-11e9bfcd4ad0
+Error Number:207,State:1,Class:16
+2021-07-22 16:22:56.059 +07:00 [INF] Starting web host
+2021-07-22 16:23:01.641 +07:00 [ERR] Failed executing DbCommand (44ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN [ss].[SnapPolicy] AS [s0] ON [s].[Id] = [s0].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [s0].[Id]
+2021-07-22 16:23:01.677 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:f809ad31-41f8-43c9-a3f1-97324d92d41a
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustomerDetailPersonId'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:f809ad31-41f8-43c9-a3f1-97324d92d41a
+Error Number:207,State:1,Class:16
+2021-07-22 16:26:04.575 +07:00 [INF] Starting web host
+2021-07-22 16:26:37.124 +07:00 [INF] Starting web host
+2021-07-22 16:27:13.712 +07:00 [INF] Starting web host
+2021-07-22 16:27:23.050 +07:00 [ERR] Failed executing DbCommand (44ms) [Parameters=[@__filter_LastName_0='?' (Size = 100), @__filter_IdentityCard_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[Birthdate], [s].[Customer_guid], [s].[Email], [s].[FirstName], [s].[IdentityCard], [s].[LastName], [s].[LastUpdated], [s].[LineID], [s].[PersonId], [s].[PrimaryPhone], [s].[SecondaryPhone], [s].[TitleId], [t].[Id], [t].[ApplicationCode], [t].[CustName], [t].[CustPersonId], [t].[CustomerDetailPersonId], [t].[Customer_SnapshotId], [t].[Customer_guid], [t].[LastUpdated], [t].[PayerName], [t].[PayerPersonId], [t].[Payer_guid], [t].[Premium], [t].[Product], [t].[ProductType], [t].[PersonId], [t].[Birthdate], [t].[Customer_guid0], [t].[Email], [t].[FirstName], [t].[IdentityCard], [t].[LastName], [t].[LineID], [t].[PrimaryPhone], [t].[SecondaryPhone], [t].[TitleId]
+FROM [ss].[SnapCustomer] AS [s]
+LEFT JOIN (
+    SELECT [s0].[Id], [s0].[ApplicationCode], [s0].[CustName], [s0].[CustPersonId], [s0].[CustomerDetailPersonId], [s0].[Customer_SnapshotId], [s0].[Customer_guid], [s0].[LastUpdated], [s0].[PayerName], [s0].[PayerPersonId], [s0].[Payer_guid], [s0].[Premium], [s0].[Product], [s0].[ProductType], [g].[PersonId], [g].[Birthdate], [g].[Customer_guid] AS [Customer_guid0], [g].[Email], [g].[FirstName], [g].[IdentityCard], [g].[LastName], [g].[LineID], [g].[PrimaryPhone], [g].[SecondaryPhone], [g].[TitleId]
+    FROM [ss].[SnapPolicy] AS [s0]
+    LEFT JOIN [GetCustomerDto] AS [g] ON [s0].[CustomerDetailPersonId] = [g].[PersonId]
+) AS [t] ON [s].[Id] = [t].[Customer_SnapshotId]
+WHERE (([s].[LastName] = @__filter_LastName_0) AND ([s].[IdentityCard] = @__filter_IdentityCard_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[SnapPolicy] AS [s1]
+    WHERE [s].[Id] = [s1].[Customer_SnapshotId]) > 0)
+ORDER BY [s].[Id], [t].[Id]
+2021-07-22 16:27:23.087 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'CustomerProFileAPI.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'GetCustomerDto'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:5f360d6c-7a90-4102-8da3-e44c5316d2ee
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'GetCustomerDto'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:5f360d6c-7a90-4102-8da3-e44c5316d2ee
+Error Number:208,State:1,Class:16
+2021-07-22 17:04:08.940 +07:00 [INF] Starting web host
+2021-07-22 17:08:16.073 +07:00 [INF] Starting web host
+2021-07-22 19:58:48.827 +07:00 [INF] Starting web host
+2021-07-22 20:04:36.770 +07:00 [INF] Starting web host
+2021-07-22 20:46:15.314 +07:00 [INF] Starting web host
+2021-07-22 20:48:06.115 +07:00 [INF] Starting web host
+2021-07-22 20:49:44.229 +07:00 [INF] Starting web host
+2021-07-22 21:19:45.678 +07:00 [INF] Starting web host
+2021-07-22 21:23:36.375 +07:00 [INF] Starting web host
+2021-07-22 21:24:53.305 +07:00 [INF] Starting web host
+2021-07-22 21:39:12.958 +07:00 [INF] Starting web host
+2021-07-22 21:43:37.142 +07:00 [INF] Starting web host
+2021-07-22 21:44:42.934 +07:00 [INF] Starting web host

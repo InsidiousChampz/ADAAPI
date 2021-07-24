@@ -14,7 +14,5 @@ namespace CustomerProFileAPI.DTOs.Customer_Infomations
         [StringLength(100)]
         public string LoginLastName { get; set; }
 
-        [StringLength(255)]
-        public string LoginRefCode { get; set; }
     }
 }

@@ -49,8 +49,7 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
             {
                 var customerHeader = await _dbContext.Customer_Headers
                 .FirstOrDefaultAsync(x => x.LoginIdentityCard == filter.LoginIdentityCard
-                    && x.LoginLastName == filter.LoginLastName
-                    && x.LoginRefCode == filter.LoginRefCode.Trim());
+                    && x.LoginLastName == filter.LoginLastName);
 
                 if (customerHeader == null)
                 {

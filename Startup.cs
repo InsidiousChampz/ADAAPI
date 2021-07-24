@@ -36,7 +36,7 @@ namespace CustomerProFileAPI
 {
     public class Startup
     {
-        private const string _projectName = "Customer Profiles API";
+        private const string _projectName = "SMS Update Customer API";
         private const string _connectionString = "CustomerProfilesConnection";
         private const string _rootSwagger = "/swagger/v1/swagger.json";
 

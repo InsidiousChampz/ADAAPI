@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomerProFileAPI.DTOs.Customer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CustomerProFileAPI.Models.Customer_Snapshots
 {
-    [Table("SnapPolicy", Schema = "ss")]
+    [Table("PolicySnapshot", Schema = "ss")]
     public class Policy_Snapshot
     {
         [Key]
@@ -32,8 +33,8 @@ namespace CustomerProFileAPI.Models.Customer_Snapshots
 
         [StringLength(255)]
         public string CustName { get; set; }
-
-        public int? PersonId { get; set; } //PayerPersonId
+        
+        public int? PayerPersonId { get; set; } 
 
         public Guid? Payer_guid { get; set; }
 
@@ -42,9 +43,10 @@ namespace CustomerProFileAPI.Models.Customer_Snapshots
 
         [Column(TypeName = "datetime")]
         public DateTime LastUpdated { get; set; }
+        public int? Payer_SnapshotId { get; set; }
 
-        public int? Customer_SnapshotId { get; set; }
-        public virtual Customer_Snapshot Customer_Snapshot { get; set; }
-
+        //Ref back to Customer
+        public virtual Customer_Snapshot CustomerDetail { get; set; }
+        
     }
 }

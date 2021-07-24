@@ -21,6 +21,7 @@ namespace CustomerProFileAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            
             modelBuilder.Entity<Policy_Snapshot>()
                  .Property(x => x.Premium)
                  .HasColumnType("decimal(16,2)");
@@ -28,7 +29,7 @@ namespace CustomerProFileAPI.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Customer_Snapshot> Customer_Snapshots { get; set; }
+        public DbSet<Payer_Snapshot> Customer_Snapshots { get; set; }
         public DbSet<Policy_Snapshot> Policy_Snapshots { get; set; }
         public DbSet<Customer_Header> Customer_Headers { get; set; }
         public DbSet<Customer_Detail> Customer_Details { get; set; }

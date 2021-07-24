@@ -12,6 +12,14 @@ namespace CustomerProFileAPI.DTOs.Customer_Infomations
         
         public int? PayerPersonId { get; set; }
 
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime Birthdate { get; set; }
+
         [StringLength(13)]
         public string LoginIdentityCard { get; set; }
 
@@ -20,6 +28,9 @@ namespace CustomerProFileAPI.DTOs.Customer_Infomations
 
         [StringLength(255)]
         public string LoginRefCode { get; set; }
+
+        [StringLength(255)]
+        public string SMSFormat { get; set; }
 
         [StringLength(40)]
         public string PrimaryPhone { get; set; }

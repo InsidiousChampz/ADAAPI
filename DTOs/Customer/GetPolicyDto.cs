@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomerProFileAPI.Models.Customer_Snapshots;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +12,11 @@ namespace CustomerProFileAPI.DTOs.Customer
     {
         [StringLength(255)]
         public string ApplicationCode { get; set; }
+        public int? CustPersonId { get; set; }
+        //public Guid? Customer_guid { get; set; }
+
+        [StringLength(255)]
+        public string CustName { get; set; }
 
         [StringLength(255)]
         public string ProductType { get; set; }
@@ -21,18 +27,13 @@ namespace CustomerProFileAPI.DTOs.Customer
         [Column(TypeName = "decimal(16, 2)")]
         public decimal? Premium { get; set; }
 
-        public int? CustPersonId { get; set; }
+        //public int? PayerPersonId { get; set; }
 
-        public Guid? Customer_guid { get; set; }
-
-        [StringLength(255)]
-        public string CustName { get; set; }
-
-        public int? PersonId { get; set; }
-
-        public Guid? Payer_guid { get; set; }
+        //public Guid? Payer_guid { get; set; }
 
         [StringLength(255)]
         public string PayerName { get; set; }
+
+        public Customer_Snapshot CustomerDetail { get; set; }
     }
 }

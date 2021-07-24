@@ -11,6 +11,9 @@ namespace CustomerProFileAPI.Services.Customer
     {
         Task<ServiceResponse<GetCustomerDto>> GetCustomerByPersonId(int personId);
 
-        Task<ServiceResponse<List<GetCustomerListDto>>> GetCustomerAndPoliciesByPersonId(int personId);
+        Task<ServiceResponse<List<GetCustomerProfileDto>>> GetCustomerAndPoliciesByPersonId(int personId);
+
+        Task<ServiceResponse<List<GetCustomerProfileDto>>> GetCustomerAndPoliciesByIdentityAndLastName(GetByIdentityAndLastNameDto filter);
+
     }
 }

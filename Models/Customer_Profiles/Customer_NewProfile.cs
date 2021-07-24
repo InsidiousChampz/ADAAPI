@@ -41,31 +41,6 @@ namespace CustomerProFileAPI.Models.Customer_Profiles
         [StringLength(255)]
         public string LineID { get; set; }
 
-        public int? WorkAddressId { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddressName { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddress1 { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddress2 { get; set; }
-
-        [StringLength(20)]
-        public string WorkAddressSubDistrictCode { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddressSubDistrict { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddressDistrict { get; set; }
-
-        [StringLength(255)]
-        public string WorkAddressProvince { get; set; }
-
-        [StringLength(5)]
-        public string WorkAddressZipCode { get; set; }
 
         [StringLength(255)]
         public string ImagePath { get; set; }

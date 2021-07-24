@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P/i7cJX+7mtgOOb76sTKy+kiD7bIN/hD3wdz7JlivPf6UR5GXH+C4COL1OGPQuvSfgzuHlKpkVMuG+MNNkoZOQ==",
+  "dgSpecHash": "7kjlCh2Dc5IDfDwdCJPmx2/HSN2mYWHJkjfe8YsOcRUE/Yr+evZ4CT698rnTruGf3VtxsF2I3d9p7N73ij8DPg==",
   "success": true,
-  "projectFilePath": "D:\\Work\\SSB SOURCE PROJECT\\SSB CUSTOMER PROFILES\\CUSTOMERPROFILE\\CustomerProFileAPI.csproj",
+  "projectFilePath": "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\SmsUpdateCustomer_Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",

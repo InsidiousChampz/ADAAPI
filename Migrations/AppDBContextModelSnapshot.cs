@@ -51,8 +51,15 @@ namespace CustomerProFileAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("date");
+
                     b.Property<DateTime>("ConfirmDate")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsAgentConfirm")
                         .HasColumnType("bit");
@@ -62,6 +69,10 @@ namespace CustomerProFileAPI.Migrations
 
                     b.Property<bool>("IsSMSSended")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("LoginIdentityCard")
                         .HasColumnType("nvarchar(13)")
@@ -85,6 +96,10 @@ namespace CustomerProFileAPI.Migrations
                     b.Property<DateTime>("ReplyDate")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("SMSFormat")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<DateTime>("SentDate")
                         .HasColumnType("datetime");
 
@@ -101,7 +116,69 @@ namespace CustomerProFileAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Birthdate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("Customer_guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("IdentityCard")
+                        .HasColumnType("nvarchar(13)")
+                        .HasMaxLength(13);
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("LineID")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Policy_SnapshotId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrimaryPhone")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("SecondaryPhone")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<int?>("TitleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Policy_SnapshotId")
+                        .IsUnique()
+                        .HasFilter("[Policy_SnapshotId] IS NOT NULL");
+
+                    b.ToTable("CustomerSnapshot","ss");
+                });
+
+            modelBuilder.Entity("CustomerProFileAPI.Models.Customer_Snapshots.Payer_Snapshot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("date");
 
                     b.Property<Guid>("Customer_guid")
                         .HasColumnType("uniqueidentifier");
@@ -143,44 +220,9 @@ namespace CustomerProFileAPI.Migrations
                     b.Property<int?>("TitleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("WorkAddress1")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("WorkAddress2")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("WorkAddressDistrict")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<int?>("WorkAddressId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkAddressName")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("WorkAddressProvince")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("WorkAddressSubDistrict")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("WorkAddressSubDistrictCode")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("WorkAddressZipCode")
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
-
                     b.HasKey("Id");
 
-                    b.ToTable("SnapCustomer","ss");
+                    b.ToTable("PayerSnapshot","ss");
                 });
 
             modelBuilder.Entity("CustomerProFileAPI.Models.Customer_Snapshots.Policy_Snapshot", b =>
@@ -201,7 +243,7 @@ namespace CustomerProFileAPI.Migrations
                     b.Property<int?>("CustPersonId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("Cust_guid")
+                    b.Property<Guid?>("Customer_guid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastUpdated")
@@ -211,11 +253,14 @@ namespace CustomerProFileAPI.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<int?>("PayerPersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Payer_SnapshotId")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("Payer_guid")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("int");
 
                     b.Property<decimal?>("Premium")
                         .HasColumnType("decimal(16,2)");
@@ -230,7 +275,23 @@ namespace CustomerProFileAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SnapPolicy","ss");
+                    b.HasIndex("Payer_SnapshotId");
+
+                    b.ToTable("PolicySnapshot","ss");
+                });
+
+            modelBuilder.Entity("CustomerProFileAPI.Models.Customer_Snapshots.Customer_Snapshot", b =>
+                {
+                    b.HasOne("CustomerProFileAPI.Models.Customer_Snapshots.Policy_Snapshot", null)
+                        .WithOne("CustomerDetail")
+                        .HasForeignKey("CustomerProFileAPI.Models.Customer_Snapshots.Customer_Snapshot", "Policy_SnapshotId");
+                });
+
+            modelBuilder.Entity("CustomerProFileAPI.Models.Customer_Snapshots.Policy_Snapshot", b =>
+                {
+                    b.HasOne("CustomerProFileAPI.Models.Customer_Snapshots.Payer_Snapshot", null)
+                        .WithMany("Policies")
+                        .HasForeignKey("Payer_SnapshotId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,60 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>CustomerProFileAPI</name>
+        <name>SmsUpdateCustomer_Api</name>
     </assembly>
     <members>
+        <member name="M:CustomerProFileAPI.Controllers.CustomerController.GetCustomerByPersonId(System.Int32)">
+            <summary>
+                สำหรับ GET ข้อมูลผู้ชำระ ด้วย personID
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:CustomerProFileAPI.Controllers.CustomerController.GetCustomerAndPoliciesByPersonId(System.Int32)">
+            <summary>
+                สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย personID
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:CustomerProFileAPI.Controllers.CustomerController.GetCustomerAndPoliciesByIdentityAndLastname(CustomerProFileAPI.DTOs.Customer.GetByIdentityAndLastNameDto)">
+            <summary>
+                สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย หมายเลขบัตรประชาชน และ นามสกุล
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
         <member name="M:CustomerProFileAPI.Controllers.CustomerInfomationsController.GetCustomerLogin">
             <summary>
                 สำหรับ GET Customer login ทั้งหมดทุกคน.
@@ -23,7 +74,7 @@
         </member>
         <member name="M:CustomerProFileAPI.Controllers.CustomerInfomationsController.GetCustomerLoginByIdentityAndLastname(CustomerProFileAPI.DTOs.Customer_Infomations.GetCustomerHeaderWithFilter)">
             <summary>
-                สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล และ refCode จาก SMS URL.
+                สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ.
             </summary>
             <returns> 
                 List of Personal by JSON format

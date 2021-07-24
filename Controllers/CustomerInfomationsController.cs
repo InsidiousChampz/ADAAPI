@@ -54,7 +54,7 @@ namespace CustomerProFileAPI.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล และ refCode จาก SMS URL.
+        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ.
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format

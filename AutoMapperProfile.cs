@@ -25,17 +25,20 @@ namespace CustomerProFileAPI
             CreateMap<Customer_Header, GetCustomerHeaderDto>();
             CreateMap<Customer_Detail, GetCustomerHeaderDto>();
 
-
+            //Policy_Snapshot
+            CreateMap<Policy_Snapshot, GetPolicyDto>();
 
             //Customer_Snapshot
-            CreateMap<Policy_Snapshot, GetPolicyDto>();
-            CreateMap<Customer_Snapshot, GetCustomerDto>();
-            CreateMap<Customer_Snapshot, GetCustomerListDto>();
+            CreateMap<Payer_Snapshot, GetCustomerProfileDto>();
+            CreateMap<Payer_Snapshot, GetCustomerDto>();
+            CreateMap<Payer_Snapshot, GetByIdentityAndLastNameDto>();
+
+
+
 
 
             //Policy_Snapshot
             //CreateMap<Policy_Snapshot, GetPolicyDto>();
-
             ////Product
             //CreateMap<Product, GetProductDto>();
             ////ProductGroup
