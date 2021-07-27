@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Models
+namespace SmsUpdateCustomer_Api.Models
 {
     public interface IId
     {

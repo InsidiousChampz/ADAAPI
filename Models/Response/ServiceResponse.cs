@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace CustomerProFileAPI.Models
+namespace SmsUpdateCustomer_Api.Models
 {
 
     public class ServiceResponse<T>

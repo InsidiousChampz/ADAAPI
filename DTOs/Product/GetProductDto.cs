@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using CustomerProFileAPI.Models.Product;
+using SmsUpdateCustomer_Api.Models.Product;
 
-namespace CustomerProFileAPI.DTOs.Product
+namespace SmsUpdateCustomer_Api.DTOs.Product
 {
     public class GetProductDto
     {

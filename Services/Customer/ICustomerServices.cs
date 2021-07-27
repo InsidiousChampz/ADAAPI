@@ -1,19 +1,19 @@
-﻿using CustomerProFileAPI.DTOs.Customer;
-using CustomerProFileAPI.Models;
+﻿using SmsUpdateCustomer_Api.DTOs.Customer;
+using SmsUpdateCustomer_Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Services.Customer
+namespace SmsUpdateCustomer_Api.Services.Customer
 {
     public interface ICustomerServices
     {
-        Task<ServiceResponse<GetCustomerDto>> GetCustomerByPersonId(int personId);
+        Task<ServiceResponse<GetPayerDto>> GetPayerByPersonId(int personId);
 
-        Task<ServiceResponse<List<GetCustomerProfileDto>>> GetCustomerAndPoliciesByPersonId(int personId);
+        Task<ServiceResponse<List<GetPayerDto>>> GetPayerAndPoliciesByPersonId(int personId);
 
-        Task<ServiceResponse<List<GetCustomerProfileDto>>> GetCustomerAndPoliciesByIdentityAndLastName(GetByIdentityAndLastNameDto filter);
+        Task<ServiceResponse<List<GetPayerDto>>> GetPayerAndPoliciesByIdentityAndLastName(GetByIdentityAndLastNameDto filter);
 
     }
 }

@@ -1,7 +1,7 @@
-﻿using CustomerProFileAPI.DTOs;
+﻿using SmsUpdateCustomer_Api.DTOs;
 using System.Linq;
 
-namespace CustomerProFileAPI.Helpers
+namespace SmsUpdateCustomer_Api.Helpers
 {
     public static class QueryableExtensions
     {

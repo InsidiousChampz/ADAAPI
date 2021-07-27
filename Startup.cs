@@ -13,26 +13,27 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using CustomerProFileAPI.Data;
-using CustomerProFileAPI.Helpers;
+using SmsUpdateCustomer_Api.Data;
+using SmsUpdateCustomer_Api.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CustomerProFileAPI.Services.Product;
-using CustomerProFileAPI.Services;
-using CustomerProFileAPI.Models.Product;
+using SmsUpdateCustomer_Api.Services.Product;
+using SmsUpdateCustomer_Api.Services;
+using SmsUpdateCustomer_Api.Models.Product;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
-using CustomerProFileAPI.Services.Customer_Infomations;
-using CustomerProFileAPI.Services.Customer;
+using SmsUpdateCustomer_Api.Services.Customer_Infomations;
+using SmsUpdateCustomer_Api.Services.Customer;
+using SmsUpdateCustomer_Api.Services.Customer_Profiles;
 
-namespace CustomerProFileAPI
+namespace SmsUpdateCustomer_Api
 {
     public class Startup
     {
@@ -94,7 +95,10 @@ namespace CustomerProFileAPI
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             services.AddScoped<ICustomerInfomationServices, CustomerInfomationServices>();
+            services.AddScoped<ICustomerProfileServices, CustomerProfileServices>();
             services.AddScoped<ICustomerServices, CustomerServices>();
+            
+            
             //------End: Service------
 
             AddFormatters(services);

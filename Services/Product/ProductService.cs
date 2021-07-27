@@ -6,16 +6,16 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using CustomerProFileAPI.Data;
-using CustomerProFileAPI.DTOs.Product;
-using CustomerProFileAPI.Helpers;
-using CustomerProFileAPI.Models;
-using mProduct = CustomerProFileAPI.Models.Product.Product;
-using mProductGroup = CustomerProFileAPI.Models.Product.ProductGroup;
-using mProductAudit = CustomerProFileAPI.Models.Product.ProductAudit;
+using SmsUpdateCustomer_Api.Data;
+using SmsUpdateCustomer_Api.DTOs.Product;
+using SmsUpdateCustomer_Api.Helpers;
+using SmsUpdateCustomer_Api.Models;
+using mProduct = SmsUpdateCustomer_Api.Models.Product.Product;
+using mProductGroup = SmsUpdateCustomer_Api.Models.Product.ProductGroup;
+using mProductAudit = SmsUpdateCustomer_Api.Models.Product.ProductAudit;
 using System.Linq.Dynamic.Core;
 
-namespace CustomerProFileAPI.Services.Product
+namespace SmsUpdateCustomer_Api.Services.Product
 {
     public class ProductService : ServiceBase, IProductService
     {

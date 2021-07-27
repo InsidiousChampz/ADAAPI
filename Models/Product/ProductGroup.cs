@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomerProFileAPI.Models.Product
+namespace SmsUpdateCustomer_Api.Models.Product
 {
     public class ProductGroup
     {

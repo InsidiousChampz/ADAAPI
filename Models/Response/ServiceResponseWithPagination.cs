@@ -1,6 +1,6 @@
-﻿using CustomerProFileAPI.DTOs;
+﻿using SmsUpdateCustomer_Api.DTOs;
 
-namespace CustomerProFileAPI.Models
+namespace SmsUpdateCustomer_Api.Models
 {
     public class ServiceResponseWithPagination<T> : ServiceResponse<T>
     {

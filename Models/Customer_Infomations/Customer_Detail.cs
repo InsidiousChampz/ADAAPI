@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Models.Customer_Infomations
+namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
 {
     [Table("DetailCustomer", Schema = "ifo")]
     public class Customer_Detail

@@ -1,11 +1,11 @@
-﻿using CustomerProFileAPI.DTOs.Customer_Infomations;
-using CustomerProFileAPI.Models;
+﻿using SmsUpdateCustomer_Api.DTOs.Customer_Infomations;
+using SmsUpdateCustomer_Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Services.Customer_Infomations
+namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
 {
     public interface ICustomerInfomationServices
     {

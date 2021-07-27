@@ -1,12 +1,12 @@
-﻿using CustomerProFileAPI.Services.Customer;
-using CustomerProFileAPI.DTOs.Customer;
+﻿using SmsUpdateCustomer_Api.Services.Customer;
+using SmsUpdateCustomer_Api.DTOs.Customer;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Controllers
+namespace SmsUpdateCustomer_Api.Controllers
 {
     
     [ApiController]
@@ -38,9 +38,9 @@ namespace CustomerProFileAPI.Controllers
         /// <response code="500"> Internal Server Error </response>
 
         [HttpGet("Customer/{personId}")]
-        public async Task<IActionResult> GetCustomerByPersonId(int personId)
+        public async Task<IActionResult> GetPayerByPersonId(int personId)
         {
-            var ret = await _customerService.GetCustomerByPersonId(personId);
+            var ret = await _customerService.GetPayerByPersonId(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -70,9 +70,9 @@ namespace CustomerProFileAPI.Controllers
         /// <response code="500"> Internal Server Error </response>
 
         [HttpGet("CustomerPolicy/{personId}")]
-        public async Task<IActionResult> GetCustomerAndPoliciesByPersonId(int personId)
+        public async Task<IActionResult> GetPayerAndPoliciesByPersonId(int personId)
         {
-            var ret = await _customerService.GetCustomerAndPoliciesByPersonId(personId);
+            var ret = await _customerService.GetPayerAndPoliciesByPersonId(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -101,11 +101,11 @@ namespace CustomerProFileAPI.Controllers
         /// <response code="500"> Internal Server Error </response>
 
         [HttpGet("CustomerPolicyWithLastName/filter")]
-        public async Task<IActionResult> GetCustomerAndPoliciesByIdentityAndLastname([FromQuery] GetByIdentityAndLastNameDto filter)
+        public async Task<IActionResult> GetPayerAndPoliciesByIdentityAndLastname([FromQuery] GetByIdentityAndLastNameDto filter)
         {
             //filter.IdentityCard = "3220100218353";
             //filter.LastName = "พวงแก้ว";
-            var ret = await _customerService.GetCustomerAndPoliciesByIdentityAndLastName(filter);
+            var ret = await _customerService.GetPayerAndPoliciesByIdentityAndLastName(filter);
 
             if (ret.IsSuccess == true)
             {

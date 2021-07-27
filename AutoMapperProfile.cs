@@ -4,23 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CustomerProFileAPI.DTOs;
-using CustomerProFileAPI.DTOs.Product;
-using CustomerProFileAPI.Models;
-using CustomerProFileAPI.Models.Product;
-using CustomerProFileAPI.DTOs.Order;
-using CustomerProFileAPI.Models.Order;
-using CustomerProFileAPI.Models.Customer_Infomations;
-using CustomerProFileAPI.DTOs.Customer_Infomations;
-using CustomerProFileAPI.Models.Customer_Snapshots;
-using CustomerProFileAPI.DTOs.Customer;
+using SmsUpdateCustomer_Api.DTOs;
+using SmsUpdateCustomer_Api.DTOs.Product;
+using SmsUpdateCustomer_Api.Models;
+using SmsUpdateCustomer_Api.Models.Product;
+using SmsUpdateCustomer_Api.DTOs.Order;
+using SmsUpdateCustomer_Api.Models.Order;
+using SmsUpdateCustomer_Api.Models.Customer_Infomations;
+using SmsUpdateCustomer_Api.DTOs.Customer_Infomations;
+using SmsUpdateCustomer_Api.Models.Customer_Snapshots;
+using SmsUpdateCustomer_Api.DTOs.Customer;
+using SmsUpdateCustomer_Api.Models.Customer_Profiles;
+using SmsUpdateCustomer_Api.DTOs.Customer_Profiles;
 
-namespace CustomerProFileAPI
+namespace SmsUpdateCustomer_Api
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
+            // Customer Profile            
+            CreateMap<Customer_NewProfile, GetProfileDto>();
+            CreateMap<Customer_NewProfile, AddProfileDto>();
+            
+
             // Customer infomations
             CreateMap<Customer_Header, GetCustomerHeaderDto>();
             CreateMap<Customer_Detail, GetCustomerHeaderDto>();
@@ -28,29 +35,18 @@ namespace CustomerProFileAPI
             //Policy_Snapshot
             CreateMap<Policy_Snapshot, GetPolicyDto>();
 
-            //Customer_Snapshot
-            CreateMap<Payer_Snapshot, GetCustomerProfileDto>();
+            //Payer_Snapshot
+            CreateMap<Payer_Snapshot, GetPayerDto>();
             CreateMap<Payer_Snapshot, GetCustomerDto>();
             CreateMap<Payer_Snapshot, GetByIdentityAndLastNameDto>();
 
+            //Customer_Snapshot
+            CreateMap<Customer_Snapshot, GetProfileDto>();
+
+            //Customer_Transaction
+            CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
 
 
-
-
-            //Policy_Snapshot
-            //CreateMap<Policy_Snapshot, GetPolicyDto>();
-            ////Product
-            //CreateMap<Product, GetProductDto>();
-            ////ProductGroup
-            //CreateMap<ProductGroup, GetProductGroupDto>();
-            ////ProductAudit
-            //CreateMap<ProductAudit, GetProductAuditDto>();
-            ////ProductAuditType
-            //CreateMap<ProductAuditType, GetProductAuditTypeDto>();
-            ////OrderList
-            //CreateMap<OrderList, GetOrderListDto>();
-            ////Order
-            //CreateMap<Order, GetOrderDto>();
         }
     }
 }

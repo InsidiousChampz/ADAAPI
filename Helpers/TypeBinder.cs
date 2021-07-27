@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Helpers
+namespace SmsUpdateCustomer_Api.Helpers
 {
     public class TypeBinder<T> : IModelBinder
     {

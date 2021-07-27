@@ -1,4 +1,4 @@
-namespace CustomerProFileAPI.DTOs.Order
+namespace SmsUpdateCustomer_Api.DTOs.Order
 {
     public class UpdateOrderStatusDto
     {

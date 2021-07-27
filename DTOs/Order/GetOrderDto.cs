@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomerProFileAPI.DTOs.Order
+namespace SmsUpdateCustomer_Api.DTOs.Order
 {
     public class GetOrderDto
     {

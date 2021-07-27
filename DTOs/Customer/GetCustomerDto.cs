@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.DTOs.Customer
+namespace SmsUpdateCustomer_Api.DTOs.Customer
 {
     public class GetCustomerDto
     {
@@ -39,7 +39,6 @@ namespace CustomerProFileAPI.DTOs.Customer
 
         [StringLength(255)]
         public string LineID { get; set; }
-
 
     }
 }

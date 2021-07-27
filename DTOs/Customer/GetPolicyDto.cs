@@ -1,4 +1,4 @@
-﻿using CustomerProFileAPI.Models.Customer_Snapshots;
+﻿using SmsUpdateCustomer_Api.Models.Customer_Snapshots;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.DTOs.Customer
+namespace SmsUpdateCustomer_Api.DTOs.Customer
 {
     public class GetPolicyDto
     {

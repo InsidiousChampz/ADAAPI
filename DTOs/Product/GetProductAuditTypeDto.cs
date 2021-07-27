@@ -1,4 +1,4 @@
-namespace CustomerProFileAPI.DTOs.Product
+namespace SmsUpdateCustomer_Api.DTOs.Product
 {
     public class GetProductAuditTypeDto
     {

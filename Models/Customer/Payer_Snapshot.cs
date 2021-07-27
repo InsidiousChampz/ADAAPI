@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Models.Customer_Snapshots
+namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
 {
     [Table("PayerSnapshot", Schema ="ss")]
     public class Payer_Snapshot

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using CustomerProFileAPI.DTOs;
+using SmsUpdateCustomer_Api.DTOs;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Helpers
+namespace SmsUpdateCustomer_Api.Helpers
 {
     public static class HttpContextExtensions
     {

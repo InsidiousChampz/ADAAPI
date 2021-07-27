@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.DTOs.Customer
+namespace SmsUpdateCustomer_Api.DTOs.Customer
 {
-    public class GetCustomerProfileDto
+    public class GetPayerDto
     {
         public int? PersonId { get; set; }
         public Guid Customer_guid { get; set; }

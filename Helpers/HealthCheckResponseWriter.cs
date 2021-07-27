@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Helpers
+namespace SmsUpdateCustomer_Api.Helpers
 {
     public static class HealthCheckResponseWriter
     {

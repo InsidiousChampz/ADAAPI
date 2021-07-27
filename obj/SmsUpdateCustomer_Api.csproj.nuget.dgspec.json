@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\SmsUpdateCustomer_Api.csproj": {}
+    "D:\\Work\\SSB SOURCE PROJECT\\SSB SMS UPDATE CUSTOMER API\\SmsUpdateCustomer_Api.csproj": {}
   },
   "projects": {
-    "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\SmsUpdateCustomer_Api.csproj": {
+    "D:\\Work\\SSB SOURCE PROJECT\\SSB SMS UPDATE CUSTOMER API\\SmsUpdateCustomer_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\SmsUpdateCustomer_Api.csproj",
+        "projectUniqueName": "D:\\Work\\SSB SOURCE PROJECT\\SSB SMS UPDATE CUSTOMER API\\SmsUpdateCustomer_Api.csproj",
         "projectName": "SmsUpdateCustomer_Api",
-        "projectPath": "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\SmsUpdateCustomer_Api.csproj",
+        "projectPath": "D:\\Work\\SSB SOURCE PROJECT\\SSB SMS UPDATE CUSTOMER API\\SmsUpdateCustomer_Api.csproj",
         "packagesPath": "C:\\Users\\Insidious_Laptop\\.nuget\\packages\\",
-        "outputPath": "D:\\Work\\New folder\\SSB CUSTOMER PROFILES\\SmsUpdateCustomer_Api\\obj\\",
+        "outputPath": "D:\\Work\\SSB SOURCE PROJECT\\SSB SMS UPDATE CUSTOMER API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

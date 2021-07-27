@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using CustomerProFileAPI.Data;
-using CustomerProFileAPI.DTOs.Order;
-using CustomerProFileAPI.Models;
-using CustomerProFileAPI.Models.Order;
-using mOrder = CustomerProFileAPI.Models.Order.Order;
+using SmsUpdateCustomer_Api.Data;
+using SmsUpdateCustomer_Api.DTOs.Order;
+using SmsUpdateCustomer_Api.Models;
+using SmsUpdateCustomer_Api.Models.Order;
+using mOrder = SmsUpdateCustomer_Api.Models.Order.Order;
 using System.Linq.Dynamic.Core;
 using System;
 using Microsoft.AspNetCore.Http;
-using CustomerProFileAPI.Helpers;
+using SmsUpdateCustomer_Api.Helpers;
 
-namespace CustomerProFileAPI.Services.Order
+namespace SmsUpdateCustomer_Api.Services.Order
 {
     public class OrdersService : ServiceBase, IOrdersService
     {
