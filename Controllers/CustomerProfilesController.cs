@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace SmsUpdateCustomer_Api.Controllers
 {
     [ApiController]
@@ -154,5 +155,23 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
 
+
+        
+
+              [HttpGet("PureAPI")]
+        public async Task<IActionResult> PureAPI()
+        {
+
+            var ret = await _customerProfileService.PureAPI();
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
     }
 }
