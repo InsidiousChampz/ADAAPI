@@ -32,6 +32,7 @@ using Newtonsoft.Json;
 using SmsUpdateCustomer_Api.Services.Customer_Infomations;
 using SmsUpdateCustomer_Api.Services.Customer;
 using SmsUpdateCustomer_Api.Services.Customer_Profiles;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace SmsUpdateCustomer_Api
 {
@@ -76,7 +77,10 @@ namespace SmsUpdateCustomer_Api
 
             //------DBContext------
             services.AddDbContext<AppDBContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(_connectionString)));
+                options.UseSqlServer(Configuration.GetConnectionString(_connectionString))
+                .ConfigureWarnings(w => w.Throw(RelationalEventId.QueryClientEvaluationWarning)));
+            
+            //.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
             //------End: DBContext------
 
             //------Swagger------

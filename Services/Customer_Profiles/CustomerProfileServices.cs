@@ -9,11 +9,15 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+//using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using SmsUpdateCustomer_Api.Models.Customer_Snapshots;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
+using SmsUpdateCustomer_Api.Helpers;
+using SmsUpdateCustomer_Api.DTOs;
+using SmsUpdateCustomer_Api.DTOs.Customer;
 
 namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 {
@@ -23,6 +27,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
         private readonly IMapper _mapper;
         private readonly ILogger<ICustomerProfileServices> _log;
         private readonly IHttpContextAccessor _httpcontext;
+
         private const string TEXTSUCCESS = "Success";
         public CustomerProfileServices(AppDBContext dbContext, IMapper mapper, ILogger<ICustomerProfileServices> log, IHttpContextAccessor httpcontext) : base(dbContext, mapper, httpcontext)
         {
@@ -30,6 +35,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
             _mapper = mapper;
             _log = log;
             _httpcontext = httpcontext;
+
         }
 
         public async Task<ServiceResponse<GetHotlineDto>> AddCustomerHotline(AddHotlineDto newhotline)
@@ -682,6 +688,97 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
         }
 
-      
+        public async Task<ServiceResponseWithPagination<List<GetProfileDto>>> PureAPI()
+        {
+            try
+            {
+                //" Enum to Query it's Work"
+                //" List to List  it's Work"
+                //" Enum to Enum  it's Not Work b'cause datareader open also."
+
+                // Return IEnumerable
+                var enumTable = _dbContext.Policy_Snapshots
+                    //.AsQueryable();
+                    //.ToList();
+                    .AsEnumerable();
+
+
+                // Return IQueryable
+                var queryTable = _dbContext.Payer_Snapshots
+                    .AsQueryable();
+                    //.ToList();
+                    //.AsEnumerable();
+
+                #region "Example 1"
+                //var result = queryTable
+                //            .Join(enumTable
+                //            , q => q.PersonId
+                //            , e => e.PayerPersonId
+                //            , (q, e) => new GetProfileDto
+                //            {
+                //                PersonId = q.PersonId,
+                //                FirstName = e.PayerName,
+                //                LastName = q.LastName,
+                //                TitleId = e.CustPersonId,
+                //                LineID = e.ApplicationCode,
+                //            }).AsQueryable();
+                #endregion
+
+                #region "Example 2"
+                //Example 2
+                var result =
+                           (from q in queryTable
+                            join e in enumTable
+                            on q.PersonId equals e.PayerPersonId
+                            select new GetProfileDto
+                            {
+                                PersonId = q.PersonId,
+                                FirstName = e.PayerName,
+                                LastName = q.LastName,
+                                TitleId = e.CustPersonId,
+                                LineID = e.ApplicationCode,
+                                OrderingField = "LineID",
+                                AscendingOrder = true,
+                            } 
+                           ) 
+                           .AsQueryable();
+                #endregion
+
+                #region "Filter"
+                //filter
+                //result = result.Where(x => x.LineID.Contains("MT6403")); //MT64030009
+
+                //if (!string.IsNullOrWhiteSpace("LineID"))
+                //{
+                //    try
+                //    {
+                //        GetProfileDto gdto = new GetProfileDto
+                //        {
+                //            OrderingField = "LineID",
+                //            AscendingOrder = true,
+                //        };
+
+                //        result = result.OrderBy($"{gdto.OrderingField} {(gdto.AscendingOrder ? "ascending" : "descending")}");
+
+                //    }
+                //    catch
+                //    {
+                //        return ResponseResultWithPagination.Failure<List<GetProfileDto>>("Ordering Fail");
+                //    }
+                //}
+                #endregion
+
+                var pagination = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(result, 1, 1);
+                PaginationDto pdto = new PaginationDto();
+                var dto = result.Paginate(pdto).ToList();
+                return ResponseResultWithPagination.Success(dto, pagination);
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseResultWithPagination.Failure<List<GetProfileDto>>(ex.Message);
+
+            }
+        }
     }
 }
