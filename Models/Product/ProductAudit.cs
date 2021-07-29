@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CustomerProFileAPI.Models.Product
+namespace SmsUpdateCustomer_Api.Models.Product
 {
     public class ProductAudit
     {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using CustomerProFileAPI.Validations;
+using SmsUpdateCustomer_Api.Validations;
 
-namespace CustomerProFileAPI.DTOs.Product
+namespace SmsUpdateCustomer_Api.DTOs.Product
 {
     public class GetProductAuditFilterDto : PaginationDto
     {

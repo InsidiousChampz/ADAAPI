@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomerProFileAPI.Models.Order
+namespace SmsUpdateCustomer_Api.Models.Order
 {
     public class Order
     {

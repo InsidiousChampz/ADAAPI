@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CustomerProFileAPI.Data;
-using CustomerProFileAPI.DTOs.Customer_Infomations;
-using CustomerProFileAPI.Models;
+using SmsUpdateCustomer_Api.Data;
+using SmsUpdateCustomer_Api.DTOs.Customer_Infomations;
+using SmsUpdateCustomer_Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Services.Customer_Infomations
+namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
 {
     public class CustomerInfomationServices : ServiceBase, ICustomerInfomationServices
     {
@@ -19,6 +19,8 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
         private readonly IMapper _mapper;
         private readonly ILogger<ICustomerInfomationServices> _log;
         private readonly IHttpContextAccessor _httpcontext;
+
+        private const string TEXTSUCCESS = "Success";
         public CustomerInfomationServices(AppDBContext dBContext, IMapper mapper, ILogger<ICustomerInfomationServices> log, IHttpContextAccessor httpcontext) : base(dBContext, mapper, httpcontext)
         {
             _dbContext = dBContext;
@@ -34,7 +36,7 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
                 .AsNoTracking()
                 .ToListAsync();
                 var dto = _mapper.Map<List<GetCustomerHeaderDto>>(customerHeader);
-                return ResponseResult.Success(dto);
+                return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
             {
@@ -47,6 +49,15 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
         {
             try
             {
+                //Validate
+                (bool,string) retval = ValidationsforCustomerLogin(filter);
+
+                if (retval.Item1 == false)
+                {
+                    ResponseResult.Failure<GetCustomerHeaderDto>(retval.Item2);
+                }
+
+                //Process
                 var customerHeader = await _dbContext.Customer_Headers
                 .FirstOrDefaultAsync(x => x.LoginIdentityCard == filter.LoginIdentityCard
                     && x.LoginLastName == filter.LoginLastName);
@@ -58,7 +69,7 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
                 else
                 {
                     var dto = _mapper.Map<GetCustomerHeaderDto>(customerHeader);
-                    return ResponseResult.Success(dto);
+                    return ResponseResult.Success(dto, TEXTSUCCESS);
                 }
 
             }
@@ -68,6 +79,60 @@ namespace CustomerProFileAPI.Services.Customer_Infomations
                 
             }
             
+        }
+
+        private static bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (Microsoft.VisualBasic.Information.IsNumeric(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static (bool,string) ValidationsforCustomerLogin(GetCustomerHeaderWithFilter filter)
+        {
+
+            // For GetCustomerLoginByIdentityAndLastname Method.
+
+            try
+            {
+              
+                if (filter.LoginIdentityCard == null)
+                {
+                    return (false, "IdentityCard is invalid.");
+                }
+
+                if (filter.LoginLastName == null)
+                {
+                    return (false, "LastName is invalid.");
+                }
+
+                bool checkIdentityNumberIsNumberOnly = Microsoft.VisualBasic.Information.IsNumeric(filter.LoginIdentityCard);
+
+                bool checklastNameIsStringOnly = IsDigitsOnly(filter.LoginLastName);
+
+                if (checkIdentityNumberIsNumberOnly == false)
+                {
+                    return (false, "IdentityCard Number have a charactor.");
+                }
+
+                if (checklastNameIsStringOnly == false)
+                {
+                    return (false, "Lastname have a number.");
+                }
+
+                return (true, "Success");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message);
+            }
         }
     }
 }

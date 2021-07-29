@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using CustomerProFileAPI.Data;
-using CustomerProFileAPI.DTOs;
-using CustomerProFileAPI.Helpers;
-using CustomerProFileAPI.Models;
+using SmsUpdateCustomer_Api.Data;
+using SmsUpdateCustomer_Api.DTOs;
+using SmsUpdateCustomer_Api.Helpers;
+using SmsUpdateCustomer_Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Services
+namespace SmsUpdateCustomer_Api.Services
 {
     public class ServiceBase
     {

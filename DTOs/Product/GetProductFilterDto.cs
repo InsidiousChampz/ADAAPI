@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomerProFileAPI.DTOs.Product
+namespace SmsUpdateCustomer_Api.DTOs.Product
 {
     public class GetProductFilterDto : PaginationDto
     {

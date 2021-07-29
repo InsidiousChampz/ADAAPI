@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Models.Customer_Snapshots
+namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
 {
     [Table("CustomerSnapshot", Schema ="ss")]
     public class Customer_Snapshot
@@ -45,7 +45,6 @@ namespace CustomerProFileAPI.Models.Customer_Snapshots
         public DateTime LastUpdated { get; set; }
 
         public int? Policy_SnapshotId { get; set; }
-
 
 
 

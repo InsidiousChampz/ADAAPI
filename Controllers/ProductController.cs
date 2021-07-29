@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CustomerProFileAPI.DTOs.Product;
-using CustomerProFileAPI.Models.Product;
-using CustomerProFileAPI.Services.Product;
-namespace CustomerProFileAPI.Controllers
+using SmsUpdateCustomer_Api.DTOs.Product;
+using SmsUpdateCustomer_Api.Models.Product;
+using SmsUpdateCustomer_Api.Services.Product;
+namespace SmsUpdateCustomer_Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

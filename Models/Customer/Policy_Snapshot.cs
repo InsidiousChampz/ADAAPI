@@ -1,4 +1,4 @@
-﻿using CustomerProFileAPI.DTOs.Customer;
+﻿using SmsUpdateCustomer_Api.DTOs.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Models.Customer_Snapshots
+namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
 {
     [Table("PolicySnapshot", Schema = "ss")]
     public class Policy_Snapshot
@@ -43,6 +43,7 @@ namespace CustomerProFileAPI.Models.Customer_Snapshots
 
         [Column(TypeName = "datetime")]
         public DateTime LastUpdated { get; set; }
+        
         public int? Payer_SnapshotId { get; set; }
 
         //Ref back to Customer

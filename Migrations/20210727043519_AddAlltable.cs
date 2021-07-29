@@ -1,14 +1,17 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CustomerProFileAPI.Migrations
+namespace SmsUpdateCustomer_Api.Migrations
 {
-    public partial class AddAllSnapTable : Migration
+    public partial class AddAlltable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "ifo");
+
+            migrationBuilder.EnsureSchema(
+                name: "scp");
 
             migrationBuilder.EnsureSchema(
                 name: "ss");
@@ -56,6 +59,57 @@ namespace CustomerProFileAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HeaderCustomer", x => x.HeaderCustomerID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerProfile",
+                schema: "scp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(nullable: true),
+                    Customer_guid = table.Column<Guid>(nullable: false),
+                    TitleId = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    Birthdate = table.Column<DateTime>(type: "date", nullable: false),
+                    IdentityCard = table.Column<string>(maxLength: 13, nullable: false),
+                    PrimaryPhone = table.Column<string>(maxLength: 40, nullable: false),
+                    SecondaryPhone = table.Column<string>(maxLength: 40, nullable: true),
+                    Email = table.Column<string>(maxLength: 255, nullable: true),
+                    LineID = table.Column<string>(maxLength: 255, nullable: true),
+                    ImagePath = table.Column<string>(maxLength: 255, nullable: true),
+                    ImageReferenceId = table.Column<string>(maxLength: 255, nullable: true),
+                    DocumentId = table.Column<string>(maxLength: 255, nullable: true),
+                    EditorId = table.Column<int>(nullable: true),
+                    IsUpdated = table.Column<bool>(nullable: false),
+                    ListMergeFrom = table.Column<string>(maxLength: 255, nullable: true),
+                    ListMergeTo = table.Column<string>(maxLength: 255, nullable: true),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerProfile", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerTransaction",
+                schema: "scp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(nullable: false),
+                    FieldData = table.Column<string>(maxLength: 255, nullable: true),
+                    BeforeChange = table.Column<string>(maxLength: 255, nullable: true),
+                    AfterChange = table.Column<string>(maxLength: 255, nullable: true),
+                    EditorId = table.Column<int>(nullable: false),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerTransaction", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,7 +166,7 @@ namespace CustomerProFileAPI.Migrations
                         principalSchema: "ss",
                         principalTable: "PayerSnapshot",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,7 +199,7 @@ namespace CustomerProFileAPI.Migrations
                         principalSchema: "ss",
                         principalTable: "PolicySnapshot",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -172,6 +226,14 @@ namespace CustomerProFileAPI.Migrations
             migrationBuilder.DropTable(
                 name: "HeaderCustomer",
                 schema: "ifo");
+
+            migrationBuilder.DropTable(
+                name: "CustomerProfile",
+                schema: "scp");
+
+            migrationBuilder.DropTable(
+                name: "CustomerTransaction",
+                schema: "scp");
 
             migrationBuilder.DropTable(
                 name: "CustomerSnapshot",

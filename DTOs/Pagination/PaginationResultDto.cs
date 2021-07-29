@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.DTOs
+namespace SmsUpdateCustomer_Api.DTOs
 {
     public class PaginationResultDto
     {

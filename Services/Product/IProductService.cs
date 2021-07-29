@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CustomerProFileAPI.DTOs.Product;
-using CustomerProFileAPI.Models;
-using CustomerProFileAPI.Models.Product;
+using SmsUpdateCustomer_Api.DTOs.Product;
+using SmsUpdateCustomer_Api.Models;
+using SmsUpdateCustomer_Api.Models.Product;
 
-namespace CustomerProFileAPI.Services.Product
+namespace SmsUpdateCustomer_Api.Services.Product
 {
     public interface IProductService
     {

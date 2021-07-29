@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CustomerProFileAPI.DTOs.Order;
-using CustomerProFileAPI.Models;
+using SmsUpdateCustomer_Api.DTOs.Order;
+using SmsUpdateCustomer_Api.Models;
 
-namespace CustomerProFileAPI.Services.Order
+namespace SmsUpdateCustomer_Api.Services.Order
 {
     public interface IOrdersService
     {

@@ -1,5 +1,5 @@
-﻿using CustomerProFileAPI.DTOs.Customer_Infomations;
-using CustomerProFileAPI.Services.Customer_Infomations;
+﻿using SmsUpdateCustomer_Api.DTOs.Customer_Infomations;
+using SmsUpdateCustomer_Api.Services.Customer_Infomations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomerProFileAPI.Controllers
+namespace SmsUpdateCustomer_Api.Controllers
 {
     //[Produces("application/json")]
     [ApiController]

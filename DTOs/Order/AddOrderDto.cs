@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using CustomerProFileAPI.Models.Order;
+using SmsUpdateCustomer_Api.Models.Order;
 
-namespace CustomerProFileAPI.DTOs.Order
+namespace SmsUpdateCustomer_Api.DTOs.Order
 {
     public class AddOrderDto
     {

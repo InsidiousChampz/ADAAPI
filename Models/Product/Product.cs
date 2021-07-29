@@ -1,6 +1,6 @@
 using System;
 
-namespace CustomerProFileAPI.Models.Product
+namespace SmsUpdateCustomer_Api.Models.Product
 {
 
     public class Product
