@@ -146,6 +146,38 @@ namespace SmsUpdateCustomer_Api.Controllers
 
         }
 
+        /// <summary>
+        ///     สำหรับ แสดงข้อมูลการเปลี่ยนแปลงของแต่ละคน
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        [HttpGet("CustomerHistory/{personId}")]
+        public async Task<IActionResult> GetCustomerHistory(int personId)
+        {
+            var ret = await _adminServices.GetCustomerHistory(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+        
 
     }
 }
