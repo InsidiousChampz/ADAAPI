@@ -15,6 +15,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomer(int personId);
         Task<ServiceResponse<List<GetMergeDto>>> GetMergeDataOfCustomer(int personId);
         Task<ServiceResponse<List<GetMergeDto>>> UpdateMergeDataOfCustomer(UpdateMergeDto update);
-        
+
+        Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId);
+
     }
 }

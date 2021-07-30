@@ -49,8 +49,9 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_Snapshot, GetProfileDto>();
 
             //Customer_Transaction
+            
+            CreateMap<Customer_Profile_Transaction, GetHistoryCustomerDto>();
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
-
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
 
 

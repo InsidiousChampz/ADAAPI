@@ -34,6 +34,90 @@ namespace SmsUpdateCustomer_Api.Services.Admin
             _httpcontext = httpcontext;
         }
 
+        private static bool AssignBeforeData(IEnumerable<Customer_Profile_Transaction> reload, List<GetCompareDto> original)
+        {
+            {
+                try
+                {
+                    foreach (var item in reload)
+                    {
+                        switch (item.FieldData)
+                        {
+                            case "TitleId":
+                                original[0].TitleId = int.Parse(item.BeforeChange.ToString());
+                                break;
+                            case "FirstName":
+                                original[0].FirstName = item.BeforeChange.ToString();
+                                break;
+                            case "LastName":
+                                original[0].LastName = item.BeforeChange.ToString();
+                                break;
+                            case "IdentityCard":
+                                original[0].IdentityCard = item.BeforeChange.ToString();
+                                break;
+                            case "Birthdate":
+                                original[0].Birthdate = Convert.ToDateTime(item.BeforeChange);
+                                break;
+                            case "PrimaryPhone":
+                                original[0].PrimaryPhone = item.BeforeChange.ToString();
+                                break;
+                            case "SecondaryPhone":
+                                original[0].SecondaryPhone = item.BeforeChange.ToString();
+                                break;
+                            case "Email":
+                                original[0].Email = item.BeforeChange.ToString();
+                                break;
+                            case "LineID":
+                                original[0].LineID = item.BeforeChange.ToString();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public async Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId)
+        {
+            try
+            {
+                var history = (from o in await _dbContext.Customer_Profile_Transactions.ToListAsync()
+                                join s in await _dbContext.Payer_Snapshots.ToListAsync()
+                                on o.PersonId equals s.PersonId
+                                where (o.PersonId == personId)
+                                select new GetHistoryCustomerDto
+                                {
+                                    PersonId = s.PersonId,
+                                    FullName = s.FirstName + " " + s.LastName,
+                                    LastUpdate = o.LastUpdated,
+                                    FieldData = o.FieldData,
+                                    BeforeChanged = o.BeforeChange,
+                                    AfterChanged = o.AfterChange,
+                                });
+
+                if (history == null)
+                {
+                    return ResponseResult.Failure<List<GetHistoryCustomerDto>>("Can't Get Data");
+                }
+
+                var dto = _mapper.Map<List<GetHistoryCustomerDto>>(history);
+                return ResponseResult.Success(dto, TEXTSUCCESS);
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseResult.Failure<List<GetHistoryCustomerDto>>(ex.Message);
+
+            }
+        }
+
         public async Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomer(int personId)
         {
             try
@@ -119,7 +203,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
 
                 var dto = _mapper.Map<List<GetCompareDto>>(customer);
-                return ResponseResult.Success(dto, "Success");
+                return ResponseResult.Success(dto, TEXTSUCCESS);
 
             }
             catch (Exception ex)
@@ -201,7 +285,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                     var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(customer, filter.RecordsPerPage, filter.Page);
                     var dto = await customer.Paginate(filter).ToListAsync();
-                    return ResponseResultWithPagination.Success(dto, paginationResult);
+                    return ResponseResultWithPagination.Success(dto, paginationResult, TEXTSUCCESS);
                 }
 
             }
@@ -210,56 +294,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>(ex.Message);
 
             }
-        }
-        private static bool AssignBeforeData(IEnumerable<Customer_Profile_Transaction> reload, List<GetCompareDto> original)
-        {
-            {
-                try
-                {
-                    foreach (var item in reload)
-                    {
-                        switch (item.FieldData)
-                        {
-                            case "TitleId":
-                                original[0].TitleId = int.Parse(item.BeforeChange.ToString());
-                                break;
-                            case "FirstName":
-                                original[0].FirstName = item.BeforeChange.ToString();
-                                break;
-                            case "LastName":
-                                original[0].LastName = item.BeforeChange.ToString();
-                                break;
-                            case "IdentityCard":
-                                original[0].IdentityCard = item.BeforeChange.ToString();
-                                break;
-                            case "Birthdate":
-                                original[0].Birthdate = Convert.ToDateTime(item.BeforeChange);
-                                break;
-                            case "PrimaryPhone":
-                                original[0].PrimaryPhone = item.BeforeChange.ToString();
-                                break;
-                            case "SecondaryPhone":
-                                original[0].SecondaryPhone = item.BeforeChange.ToString();
-                                break;
-                            case "Email":
-                                original[0].Email = item.BeforeChange.ToString();
-                                break;
-                            case "LineID":
-                                original[0].LineID = item.BeforeChange.ToString();
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-            }
-        }
+        }   
         public async Task<ServiceResponse<List<GetMergeDto>>> GetMergeDataOfCustomer(int personId)
         {
             try
@@ -305,7 +340,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
 
                 var dto = _mapper.Map<List<GetMergeDto>>(lst);
-                return ResponseResult.Success(dto, "Success");
+                return ResponseResult.Success(dto, TEXTSUCCESS);
 
             }
             catch (Exception ex)
@@ -328,7 +363,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 await _dbContext.SaveChangesAsync();
                 var dto = _mapper.Map<List<GetMergeDto>>(customer);
-                return ResponseResult.Success(dto, "Success");
+                return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
             {
