@@ -13,8 +13,8 @@ namespace SmsUpdateCustomer_Api.Helpers
         {
             if (httpContext == null) { throw new ArgumentNullException(nameof(httpContext)); }
 
-            //double totalAmountRecords = await queryable.CountAsync();
-            double totalAmountRecords = queryable.Count();
+            double totalAmountRecords = await queryable.CountAsync();
+            //double totalAmountRecords = queryable.Count();
             double totalAmountPages = Math.Ceiling(totalAmountRecords / recordsPerPage);
 
             PaginationResultDto resultDto = new PaginationResultDto()

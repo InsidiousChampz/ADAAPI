@@ -10,8 +10,8 @@ using SmsUpdateCustomer_Api.Data;
 namespace SmsUpdateCustomer_Api.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20210727110241_AddHotline")]
-    partial class AddHotline
+    [Migration("20210729074948_AddAllTable")]
+    partial class AddAllTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -370,7 +370,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimaryPhone")

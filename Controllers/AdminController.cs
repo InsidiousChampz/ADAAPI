@@ -1,28 +1,27 @@
-﻿using SmsUpdateCustomer_Api.DTOs.Customer_Profiles;
-using SmsUpdateCustomer_Api.Services.Customer_Profiles;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SmsUpdateCustomer_Api.DTOs.Admin;
+using SmsUpdateCustomer_Api.DTOs.Customer_Profiles;
+using SmsUpdateCustomer_Api.Services.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace SmsUpdateCustomer_Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CustomerProfilesController : ControllerBase
+    public class AdminController : ControllerBase
     {
-        private readonly ICustomerProfileServices _customerProfileService;
+        private readonly IAdminServices _adminServices;
 
-        public CustomerProfilesController(ICustomerProfileServices customerProfileService)
+        public AdminController(IAdminServices adminServices)
         {
-            _customerProfileService = customerProfileService;
+            _adminServices = adminServices;
         }
 
-
         /// <summary>
-        ///     สำหรับ GET ข้อมูลลูกค้าในกรณีที่เคยทำการแก้ไขข้อมูลแล้ว ด้วย personID
+        ///     สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ทำการแก้ไข
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -36,11 +35,11 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        /// 
-        [HttpGet("CustomerProfile/{personId}")]
-        public async Task<IActionResult> GetCustomerProfile(int personId)
+
+        [HttpGet("EditCustomer/filter")]
+        public async Task<IActionResult> GetEditedCustomer([FromQuery] GetEditCustomerByFilterDto filter)
         {
-            var ret = await _customerProfileService.GetCustomerProfile(personId);
+            var ret = await _adminServices.GetEditedCustomer(filter);
 
             if (ret.IsSuccess == true)
             {
@@ -52,8 +51,9 @@ namespace SmsUpdateCustomer_Api.Controllers
             return NotFound(ret);
         }
 
+
         /// <summary>
-        ///     สำหรับ การแก้ไขข้อมูลลูกค้า ไม่ว่าจะเป็น ผู้เอาประกัน หรือ ผุ้ชำระ ใช้ Method นี้
+        ///     สำหรับ แสดงข้อมูลเพื่อเปรียบเทียบการแก้ไขข้อมูล
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -67,13 +67,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        /// 
-
-        [HttpPost("AddCustomerProfile")]
-        public async Task<IActionResult> AddCustomerProfile(AddProfileDto newProfile)
+        [HttpGet("CompareCustomer/{personId}")]
+        public async Task<IActionResult> GetCompareDataOfCustomer( int personId)
         {
-
-            var ret = await _customerProfileService.AddCustomerProfile(newProfile);
+            var ret = await _adminServices.GetCompareDataOfCustomer(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -87,7 +84,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ การให้ลุกค้าระบุข้อมูลเพื่อให้เราติดต่อกลับ ใช้ Method นี้
+        ///     สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -101,13 +98,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        /// 
-
-        [HttpPost("AddCustomerHotline")]
-        public async Task<IActionResult> AddCustomerHotline(AddHotlineDto newHotline)
+        [HttpGet("MergeCustomer/{personId}")]
+        public async Task<IActionResult> GetMergeDataOfCustomer(int personId)
         {
-
-            var ret = await _customerProfileService.AddCustomerHotline(newHotline);
+            var ret = await _adminServices.GetMergeDataOfCustomer(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -119,9 +113,10 @@ namespace SmsUpdateCustomer_Api.Controllers
             return NotFound(ret);
 
         }
+
 
         /// <summary>
-        ///     สำหรับ ปุ่ม ยืนยันทั้งหมด ไม่ว่าจะแก้ไขข้อมูลผู้เอาประกัน ผู้ชำระ Method นี้ ใช้เพื่อยืนยันการแก้ไข
+        ///     สำหรับ ยืนยันข้อมูลการรวมข้อมูลลูกค้าของ Admin
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -135,13 +130,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        /// 
-
-        [HttpPost("ConfirmCustomerProfile")]
-        public async Task<IActionResult> ConfirmCustomerProfile(int EditorId)
+        [HttpGet("UpdateMergeCustomer/filter")]
+        public async Task<IActionResult> UpdateMergeDataOfCustomer([FromQuery] UpdateMergeDto filter)
         {
-
-            var ret = await _customerProfileService.ConfirmCustomerProfile(EditorId);
+            var ret = await _adminServices.UpdateMergeDataOfCustomer(filter);
 
             if (ret.IsSuccess == true)
             {
@@ -153,6 +145,7 @@ namespace SmsUpdateCustomer_Api.Controllers
             return NotFound(ret);
 
         }
+
 
     }
 }

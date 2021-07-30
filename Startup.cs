@@ -33,6 +33,7 @@ using SmsUpdateCustomer_Api.Services.Customer_Infomations;
 using SmsUpdateCustomer_Api.Services.Customer;
 using SmsUpdateCustomer_Api.Services.Customer_Profiles;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using SmsUpdateCustomer_Api.Services.Admin;
 
 namespace SmsUpdateCustomer_Api
 {
@@ -101,8 +102,9 @@ namespace SmsUpdateCustomer_Api
             services.AddScoped<ICustomerInfomationServices, CustomerInfomationServices>();
             services.AddScoped<ICustomerProfileServices, CustomerProfileServices>();
             services.AddScoped<ICustomerServices, CustomerServices>();
-            
-            
+            services.AddScoped<IAdminServices, AdminServices>();
+
+
             //------End: Service------
 
             AddFormatters(services);

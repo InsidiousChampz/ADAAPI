@@ -14,7 +14,5 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
         Task<ServiceResponse<GetProfileDto>> AddCustomerProfile(AddProfileDto newProfile);
         Task<ServiceResponse<GetHotlineDto>> AddCustomerHotline(AddHotlineDto newhotline);
         Task<ServiceResponse<List<GetProfileDto>>> ConfirmCustomerProfile(int EditorId);
-
-        Task<ServiceResponseWithPagination<List<GetProfileDto>>> PureAPI();
     }
 }
