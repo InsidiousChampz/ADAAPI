@@ -16,6 +16,7 @@ using SmsUpdateCustomer_Api.Models.Customer_Snapshots;
 using SmsUpdateCustomer_Api.DTOs.Customer;
 using SmsUpdateCustomer_Api.Models.Customer_Profiles;
 using SmsUpdateCustomer_Api.DTOs.Customer_Profiles;
+using SmsUpdateCustomer_Api.DTOs.Admin;
 
 namespace SmsUpdateCustomer_Api
 {
@@ -24,6 +25,8 @@ namespace SmsUpdateCustomer_Api
         public AutoMapperProfile()
         {
             // Customer Profile            
+            
+            CreateMap<Customer_NewProfile, GetMergeDto>();
             CreateMap<Customer_NewProfile, GetProfileDto>();
             CreateMap<Customer_NewProfile, AddProfileDto>();
             
@@ -36,6 +39,8 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Policy_Snapshot, GetPolicyDto>();
 
             //Payer_Snapshot
+            CreateMap<Payer_Snapshot, GetEditCustomerByFilterDto>();
+
             CreateMap<Payer_Snapshot, GetPayerDto>();
             CreateMap<Payer_Snapshot, GetCustomerDto>();
             CreateMap<Payer_Snapshot, GetByIdentityAndLastNameDto>();
@@ -44,6 +49,8 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_Snapshot, GetProfileDto>();
 
             //Customer_Transaction
+            CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
+
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
 
 

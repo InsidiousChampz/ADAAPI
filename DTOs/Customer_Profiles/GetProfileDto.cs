@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 {
-    public class GetProfileDto : PaginationDto
+    public class GetProfileDto 
     {
         public int? PersonId { get; set; }
         public Guid Customer_guid { get; set; }
@@ -41,9 +41,5 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
         public bool IsUpdated { get; set; }
 
         public DateTime LastUpdated { get; set; }
-
-        public string OrderingField { get; set; }
-        public bool AscendingOrder { get; set; } = true;
-
     }
 }

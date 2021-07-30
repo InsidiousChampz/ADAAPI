@@ -39,18 +39,22 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
         [StringLength(40)]
         public string PrimaryPhone { get; set; }
 
+        public bool IsAgentConfirm { get; set; } = false;
         public bool IsCustomerReply { get; set; } = false;
         public bool IsSMSSended { get; set; } = false;
-        public bool IsAgentConfirm { get; set; } = false;
+
+        [Column(TypeName = "datetime")]
+        public DateTime ConfirmDate { get; set; } = new DateTime(1900 - 01 - 01);
 
         [Column(TypeName = "datetime")]
         public DateTime ReplyDate { get; set; } = new DateTime(1900 - 01 - 01);
 
         [Column(TypeName = "datetime")]
         public DateTime SentDate { get; set; } = new DateTime(1900 - 01 - 01);
+        
 
-        [Column(TypeName = "datetime")]
-        public DateTime ConfirmDate { get; set; } = new DateTime(1900 - 01 - 01);
+        
+
 
     }
 }

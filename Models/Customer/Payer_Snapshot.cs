@@ -13,7 +13,7 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int? PersonId { get; set; }
+        public int PersonId { get; set; }
         public Guid Customer_guid { get; set; }
         public int? TitleId { get; set; }
 

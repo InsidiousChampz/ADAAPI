@@ -5,16 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
+namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 {
-    [Table("CustomerProfile", Schema = "scp")]
-    public class Customer_NewProfile
+    public class GetMergeDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Caption { get; set; }
         public int? PersonId { get; set; }
-        public Guid Customer_guid { get; set; }
         public int? TitleId { get; set; }
 
         [Required(ErrorMessage = "FirstName is invalid."), StringLength(100)]
@@ -41,30 +37,6 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
 
         [StringLength(255)]
         public string LineID { get; set; }
-
-        [StringLength(255)]
-        public string ImagePath { get; set; }
-
-        [StringLength(255)]
-        public string ImageReferenceId { get; set; }
-
-        [StringLength(255)]
-        public string DocumentId { get; set; }
-
-        public int? EditorId { get; set; }
-        
-        public bool IsUpdated { get; set; }
-
-        [StringLength(255)]
-        public string ListMergeFrom { get; set; }
-
-        [StringLength(255)]
-        public string ListMergeTo { get; set; }
-
-        public DateTime LastUpdated { get; set; }
-
-       
-
 
     }
 }

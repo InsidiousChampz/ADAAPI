@@ -36,6 +36,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
         {
             try
             {
+
                 #region efCore
                 //Payer is must have a policies if not found policies that mean a customer not a payer
                 var customer = await _dbContext.Payer_Snapshots
@@ -45,120 +46,6 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                     .Include(x => x.Policies)
                     .ThenInclude(o => o.CustomerDetail)
                     .ToListAsync();
-                #endregion
-
-                #region Linq Join Example 1
-                //var customer = from e in _dbContext.Customer_Snapshots
-                //               join d in _dbContext.Policy_Snapshots on e.PersonId equals d.PayerPersonId into table1
-                //               from d in table1.ToList()
-                //               join i in _dbContext.Customer_Snapshots on d.CustPersonId equals i.PersonId into table2
-                //               from i in table2.ToList()
-                //               select new 
-                //               {
-                //                   PersonId = e.PersonId,
-                //                   Customer_guid = e.Customer_guid,
-                //                   TitleId = e.TitleId,
-                //                   FirstName = e.FirstName,
-                //                   LastName = e.LastName,
-                //                   Birthdate = e.Birthdate,
-                //                   IdentityCard = e.IdentityCard,
-                //                   PrimaryPhone = e.PrimaryPhone,
-                //                   SecondaryPhone = e.SecondaryPhone,
-                //                   Email = e.Email,
-                //                   LineID = e.LineID,
-
-                //                   ApplicationCode = d.ApplicationCode,
-                //                   dCustomer_guid = d.Customer_guid,
-                //                   ProductType = d.ProductType,
-                //                   Product = d.Product,
-                //                   Premium = d.Premium,
-                //                   CustPersonId = d.CustPersonId,
-                //                   CustName = d.CustName,
-                //                   PayerName = d.PayerName,
-
-                //                   iPersonId = i.PersonId,
-                //                   iTitleId = i.TitleId,
-                //                   iFirstName = i.FirstName,
-                //                   iLastName = i.LastName,
-                //                   iBirthdate = i.Birthdate,
-                //                   iIdentityCard = i.IdentityCard,
-                //                   iPrimaryPhone =  i.PrimaryPhone,
-                //                   iSecondaryPhone =  i.SecondaryPhone,
-                //                   iEmail =  i.Email,
-                //                   iLineID = i.LineID,
-                //               };
-
-
-                //foreach (var item in customer)
-                //{
-                //    var GetPayerDto = new GetPayerDto
-                //    {
-                //        PersonId = item.PersonId,
-                //        Customer_guid = item.Customer_guid,
-                //        TitleId = item.TitleId,
-                //        FirstName = item.FirstName,
-                //        LastName = item.LastName,
-                //        Birthdate = item.Birthdate,
-                //        IdentityCard = item.IdentityCard,
-                //        PrimaryPhone = item.PrimaryPhone,
-                //        SecondaryPhone = item.SecondaryPhone,
-                //        Email = item.Email,
-                //        LineID = item.LineID,
-                //    };
-                //};
-                #endregion
-
-
-                #region Linq Join Example 2
-                //var customer = await _dbContext.Customer_Snapshots
-                //    .Join(_dbContext.Policy_Snapshots
-                //    , cs => cs.PersonId
-                //    , ps => ps.PayerPersonId
-                //    , (cs, ps) => new GetPayerDto
-                //    {
-                //        PersonId = cs.PersonId,
-                //        Customer_guid = cs.Customer_guid,
-                //        TitleId = cs.TitleId,
-                //        FirstName = cs.FirstName,
-                //        LastName = cs.LastName,
-                //        Birthdate = cs.Birthdate,
-                //        IdentityCard = cs.IdentityCard,
-                //        PrimaryPhone = cs.PrimaryPhone,
-                //        SecondaryPhone = cs.SecondaryPhone,
-                //        Email = cs.Email,
-                //        LineID = cs.LineID,
-                //        Policies = new List<GetPolicyDto>
-                //    {
-                //        new GetPolicyDto
-                //        {
-                //            ApplicationCode = ps.ApplicationCode,
-                //            Customer_guid = ps.Customer_guid,
-                //            ProductType = ps.ProductType,
-                //            Product = ps.Product,
-                //            Premium = ps.Premium,
-                //            CustPersonId = ps.CustPersonId,
-                //            CustName = ps.CustName,
-                //            PayerName = ps.PayerName,
-
-                //            CustomerDetail = new GetCustomerDto
-                //            {
-                //                PersonId = ps.CustPersonId,
-                //                TitleId = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.TitleId).FirstOrDefault(),
-                //                FirstName = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.FirstName).FirstOrDefault(),
-                //                LastName = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.LastName).FirstOrDefault(),
-                //                Birthdate = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.Birthdate).FirstOrDefault(),
-                //                IdentityCard = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.IdentityCard).FirstOrDefault(),
-                //                PrimaryPhone = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.PrimaryPhone).FirstOrDefault(),
-                //                SecondaryPhone = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.SecondaryPhone).FirstOrDefault(),
-                //                Email = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.Email).FirstOrDefault(),
-                //                LineID = (_dbContext.Customer_Snapshots.Where(x => x.PersonId == ps.CustPersonId)).Select(x => x.LineID).FirstOrDefault(),
-                //            }
-                //        }
-                //    }
-                //    }).Where(x => x.LastName == filter.LastName
-                //     && x.IdentityCard == filter.IdentityCard)
-                // .GroupBy(x => x.PersonId)
-                //.ToListAsync();
                 #endregion
 
                 if (customer == null)

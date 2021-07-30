@@ -9,7 +9,6 @@ using SmsUpdateCustomer_Api.Models.Customer_Snapshots;
 using SmsUpdateCustomer_Api.Models.Customer_Infomations;
 using SmsUpdateCustomer_Api.Models.Customer_Profiles;
 
-
 namespace SmsUpdateCustomer_Api.Data
 {
     public class AppDBContext : DbContext
@@ -29,13 +28,29 @@ namespace SmsUpdateCustomer_Api.Data
             base.OnModelCreating(modelBuilder);
         }
 
+
+        // for payer.
         public DbSet<Payer_Snapshot> Payer_Snapshots { get; set; }
+
+        // fpr policy.
         public DbSet<Policy_Snapshot> Policy_Snapshots { get; set; }
+
+        //for customerDetail.
         public DbSet<Customer_Snapshot> Customer_Snapshots { get; set; }
+
+        // for Log SMS.
         public DbSet<Customer_Header> Customer_Headers { get; set; }
+
+        // for now don't use.
         public DbSet<Customer_Detail> Customer_Details { get; set; }
+
+        //for keep new record of customer.
         public DbSet<Customer_NewProfile> Customer_NewProfiles { get; set; }
+
+        //for keep record hotline.
         public DbSet<Customer_Profile_Hotline> Customer_Profile_Hotlines { get; set; }
+
+        //for keep transaction what's changed.
         public DbSet<Customer_Profile_Transaction> Customer_Profile_Transactions { get; set; }
 
         

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmsUpdateCustomer_Api.Migrations
 {
-    public partial class AddAlltable : Migration
+    public partial class AddAllTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,16 +49,37 @@ namespace SmsUpdateCustomer_Api.Migrations
                     LoginRefCode = table.Column<string>(maxLength: 255, nullable: true),
                     SMSFormat = table.Column<string>(maxLength: 255, nullable: true),
                     PrimaryPhone = table.Column<string>(maxLength: 40, nullable: true),
+                    IsAgentConfirm = table.Column<bool>(nullable: false),
                     IsCustomerReply = table.Column<bool>(nullable: false),
                     IsSMSSended = table.Column<bool>(nullable: false),
-                    IsAgentConfirm = table.Column<bool>(nullable: false),
+                    ConfirmDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     ReplyDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    SentDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ConfirmDate = table.Column<DateTime>(type: "datetime", nullable: false)
+                    SentDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HeaderCustomer", x => x.HeaderCustomerID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerHotline",
+                schema: "scp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(nullable: true),
+                    TitleId = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    PrimaryPhone = table.Column<string>(maxLength: 40, nullable: false),
+                    Email = table.Column<string>(maxLength: 255, nullable: true),
+                    Remark = table.Column<string>(maxLength: 255, nullable: true),
+                    LastUpdated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerHotline", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +140,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(nullable: true),
+                    PersonId = table.Column<int>(nullable: false),
                     Customer_guid = table.Column<Guid>(nullable: false),
                     TitleId = table.Column<int>(nullable: true),
                     FirstName = table.Column<string>(maxLength: 100, nullable: true),
@@ -166,7 +187,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         principalSchema: "ss",
                         principalTable: "PayerSnapshot",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,7 +220,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         principalSchema: "ss",
                         principalTable: "PolicySnapshot",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,6 +247,10 @@ namespace SmsUpdateCustomer_Api.Migrations
             migrationBuilder.DropTable(
                 name: "HeaderCustomer",
                 schema: "ifo");
+
+            migrationBuilder.DropTable(
+                name: "CustomerHotline",
+                schema: "scp");
 
             migrationBuilder.DropTable(
                 name: "CustomerProfile",

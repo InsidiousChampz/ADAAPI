@@ -38,6 +38,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
         }
 
+        #region "Services" 
         public async Task<ServiceResponse<GetHotlineDto>> AddCustomerHotline(AddHotlineDto newhotline)
         {
             try
@@ -84,6 +85,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 {
                     return ResponseResult.Failure<GetProfileDto>(retval.Item2);
                 }
+
 
                 //Process
                 var _profile = new Customer_NewProfile
@@ -138,7 +140,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 {
                     //Check in customer newprofile if found that mean some peaple edited this person before.
                     //then get data from newprofile
-                    
+
                     var customerPreviousEditor = await _dbContext.Customer_NewProfiles
                        .Where(x => x.PersonId == item.PersonId && x.EditorId != editorId)
                        .OrderByDescending(x => x.LastUpdated).FirstOrDefaultAsync();
@@ -146,10 +148,10 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (customerPreviousEditor == null)
                     {
                         //So if not found in customer_newprofile that mean nobody edit this person before.
-                        //then get data from snapshot
-                        var snapcustomer = await _dbContext.Customer_Snapshots
+                        //then get data from payer snapshot only!!
+                        var snapcustomer = await _dbContext.Payer_Snapshots
                         .Where(x => x.PersonId == item.PersonId).ToListAsync();
-                        
+
                         //Save Transaction
                         var addExcept = VerifyData(item, snapcustomer);
                         if (addExcept.Count > 0)
@@ -207,10 +209,50 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                             }
                         }
                     }
+
+                    // update table payer_snapshot and customer_snapshot for new information
+                    var payersnap = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == item.PersonId);
+                    if (payersnap == null)
+                    {
+                        return ResponseResult.Failure<List<GetProfileDto>>("Can't Update Payer Snapshot");
+                    }
+                    else
+                    {
+                        payersnap.FirstName = item.FirstName;
+                        payersnap.LastName = item.LastName;
+                        payersnap.TitleId = item.TitleId;
+                        payersnap.Birthdate = item.Birthdate;
+                        payersnap.IdentityCard = item.IdentityCard;
+                        payersnap.PrimaryPhone = item.PrimaryPhone;
+                        payersnap.SecondaryPhone = item.SecondaryPhone;
+                        payersnap.Email = item.Email;
+                        payersnap.LineID = item.LineID;
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+                    var customersnap = await _dbContext.Customer_Snapshots.Where(x => x.PersonId == item.PersonId).ToListAsync();
+                    if (customersnap == null)
+                    {
+                        return ResponseResult.Failure<List<GetProfileDto>>("Can't Update Customer Snapshot");
+                    }
+                    else
+                    {
+
+                        foreach (var custsnap in customersnap)
+                        {
+                            custsnap.FirstName = item.FirstName;
+                            custsnap.LastName = item.LastName;
+                            custsnap.TitleId = item.TitleId;
+                            custsnap.Birthdate = item.Birthdate;
+                            custsnap.IdentityCard = item.IdentityCard;
+                            custsnap.PrimaryPhone = item.PrimaryPhone;
+                            custsnap.SecondaryPhone = item.SecondaryPhone;
+                            custsnap.Email = item.Email;
+                            custsnap.LineID = item.LineID;
+                            await _dbContext.SaveChangesAsync();
+                        }                      
+                    }
                 }
-
-
-
                 customer[0].IsUpdated = true;
                 await _dbContext.SaveChangesAsync();
 
@@ -256,7 +298,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
             }
         }
-        private static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, List<Customer_Snapshot> snapcustomer)
+        private static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, List<Payer_Snapshot> snapcustomer)
         {
             try
             {
@@ -270,7 +312,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.FirstName != item.FirstName)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "FirstName:";
+                        addItem.FieldData = "FirstName";
                         addItem.BeforeChange = itemsnap.FirstName;
                         addItem.AfterChange = item.FirstName;
                         addExcept.Add(addItem);
@@ -279,7 +321,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.LastName != item.LastName)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "LastName:";
+                        addItem.FieldData = "LastName";
                         addItem.BeforeChange = itemsnap.LastName;
                         addItem.AfterChange = item.LastName;
                         addExcept.Add(addItem);
@@ -288,7 +330,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.IdentityCard != item.IdentityCard)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "IdentityCard:";
+                        addItem.FieldData = "IdentityCard";
                         addItem.BeforeChange = itemsnap.IdentityCard;
                         addItem.AfterChange = item.IdentityCard;
                         addExcept.Add(addItem);
@@ -297,7 +339,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.Birthdate != item.Birthdate)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "Birthdate:";
+                        addItem.FieldData = "Birthdate";
                         addItem.BeforeChange = itemsnap.Birthdate.ToString();
                         addItem.AfterChange = item.Birthdate.ToString();
                         addExcept.Add(addItem);
@@ -306,7 +348,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.PrimaryPhone != item.PrimaryPhone)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "PrimaryPhone:";
+                        addItem.FieldData = "PrimaryPhone";
                         addItem.BeforeChange = itemsnap.PrimaryPhone;
                         addItem.AfterChange = item.PrimaryPhone;
                         addExcept.Add(addItem);
@@ -315,7 +357,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.SecondaryPhone != item.SecondaryPhone)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "SecondaryPhone:";
+                        addItem.FieldData = "SecondaryPhone";
                         addItem.BeforeChange = itemsnap.SecondaryPhone;
                         addItem.AfterChange = item.SecondaryPhone;
                         addExcept.Add(addItem);
@@ -324,7 +366,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.Email != item.Email)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "Email:";
+                        addItem.FieldData = "Email";
                         addItem.BeforeChange = itemsnap.Email;
                         addItem.AfterChange = item.Email;
                         addExcept.Add(addItem);
@@ -334,7 +376,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     if (itemsnap.LineID != item.LineID)
                     {
                         addItem = new GetProfileTransaction();
-                        addItem.FieldData = "LineID:";
+                        addItem.FieldData = "LineID";
                         addItem.BeforeChange = itemsnap.LineID;
                         addItem.AfterChange = item.LineID;
                         addExcept.Add(addItem);
@@ -360,7 +402,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.FirstName != item.FirstName)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "FirstName:";
+                    addItem.FieldData = "FirstName";
                     addItem.BeforeChange = prevoiuscustomer.FirstName;
                     addItem.AfterChange = item.FirstName;
                     addExcept.Add(addItem);
@@ -369,7 +411,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.LastName != item.LastName)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "LastName:";
+                    addItem.FieldData = "LastName";
                     addItem.BeforeChange = prevoiuscustomer.LastName;
                     addItem.AfterChange = item.LastName;
                     addExcept.Add(addItem);
@@ -378,7 +420,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.IdentityCard != item.IdentityCard)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "IdentityCard:";
+                    addItem.FieldData = "IdentityCard";
                     addItem.BeforeChange = prevoiuscustomer.IdentityCard;
                     addItem.AfterChange = item.IdentityCard;
                     addExcept.Add(addItem);
@@ -387,7 +429,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.Birthdate != item.Birthdate)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "Birthdate:";
+                    addItem.FieldData = "Birthdate";
                     addItem.BeforeChange = prevoiuscustomer.Birthdate.ToString();
                     addItem.AfterChange = item.Birthdate.ToString();
                     addExcept.Add(addItem);
@@ -396,7 +438,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.PrimaryPhone != item.PrimaryPhone)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "PrimaryPhone:";
+                    addItem.FieldData = "PrimaryPhone";
                     addItem.BeforeChange = prevoiuscustomer.PrimaryPhone;
                     addItem.AfterChange = item.PrimaryPhone;
                     addExcept.Add(addItem);
@@ -405,7 +447,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.SecondaryPhone != item.SecondaryPhone)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "SecondaryPhone:";
+                    addItem.FieldData = "SecondaryPhone";
                     addItem.BeforeChange = prevoiuscustomer.SecondaryPhone;
                     addItem.AfterChange = item.SecondaryPhone;
                     addExcept.Add(addItem);
@@ -414,7 +456,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.Email != item.Email)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "Email:";
+                    addItem.FieldData = "Email";
                     addItem.BeforeChange = prevoiuscustomer.Email;
                     addItem.AfterChange = item.Email;
                     addExcept.Add(addItem);
@@ -424,7 +466,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (prevoiuscustomer.LineID != item.LineID)
                 {
                     addItem = new GetProfileTransaction();
-                    addItem.FieldData = "LineID:";
+                    addItem.FieldData = "LineID";
                     addItem.BeforeChange = prevoiuscustomer.LineID;
                     addItem.AfterChange = item.LineID;
                     addExcept.Add(addItem);
@@ -439,6 +481,9 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 return default;
             }
         }
+        #endregion
+
+        #region "Method"
         private static (bool, string) ValidationsforAddCustomerProfile(AddProfileDto filter)
         {
 
@@ -533,17 +578,6 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
                 return (false, ex.Message);
             }
-        }
-        private static bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (Microsoft.VisualBasic.Information.IsNumeric(c))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
         private static (bool, string) IsValidateEmail(string email)
         {
@@ -687,98 +721,18 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
             }
 
         }
-
-        public async Task<ServiceResponseWithPagination<List<GetProfileDto>>> PureAPI()
+        private static bool IsDigitsOnly(string str)
         {
-            try
+            foreach (char c in str)
             {
-                //" Enum to Query it's Work"
-                //" List to List  it's Work"
-                //" Enum to Enum  it's Not Work b'cause datareader open also."
-
-                // Return IEnumerable
-                var enumTable = _dbContext.Policy_Snapshots
-                    //.AsQueryable();
-                    //.ToList();
-                    .AsEnumerable();
-
-
-                // Return IQueryable
-                var queryTable = _dbContext.Payer_Snapshots
-                    .AsQueryable();
-                    //.ToList();
-                    //.AsEnumerable();
-
-                #region "Example 1"
-                //var result = queryTable
-                //            .Join(enumTable
-                //            , q => q.PersonId
-                //            , e => e.PayerPersonId
-                //            , (q, e) => new GetProfileDto
-                //            {
-                //                PersonId = q.PersonId,
-                //                FirstName = e.PayerName,
-                //                LastName = q.LastName,
-                //                TitleId = e.CustPersonId,
-                //                LineID = e.ApplicationCode,
-                //            }).AsQueryable();
-                #endregion
-
-                #region "Example 2"
-                //Example 2
-                var result =
-                           (from q in queryTable
-                            join e in enumTable
-                            on q.PersonId equals e.PayerPersonId
-                            select new GetProfileDto
-                            {
-                                PersonId = q.PersonId,
-                                FirstName = e.PayerName,
-                                LastName = q.LastName,
-                                TitleId = e.CustPersonId,
-                                LineID = e.ApplicationCode,
-                                OrderingField = "LineID",
-                                AscendingOrder = true,
-                            } 
-                           ) 
-                           .AsQueryable();
-                #endregion
-
-                #region "Filter"
-                //filter
-                //result = result.Where(x => x.LineID.Contains("MT6403")); //MT64030009
-
-                //if (!string.IsNullOrWhiteSpace("LineID"))
-                //{
-                //    try
-                //    {
-                //        GetProfileDto gdto = new GetProfileDto
-                //        {
-                //            OrderingField = "LineID",
-                //            AscendingOrder = true,
-                //        };
-
-                //        result = result.OrderBy($"{gdto.OrderingField} {(gdto.AscendingOrder ? "ascending" : "descending")}");
-
-                //    }
-                //    catch
-                //    {
-                //        return ResponseResultWithPagination.Failure<List<GetProfileDto>>("Ordering Fail");
-                //    }
-                //}
-                #endregion
-
-                var pagination = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(result, 1, 1);
-                PaginationDto pdto = new PaginationDto();
-                var dto = result.Paginate(pdto).ToList();
-                return ResponseResultWithPagination.Success(dto, pagination);
-
+                if (Microsoft.VisualBasic.Information.IsNumeric(c))
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                return ResponseResultWithPagination.Failure<List<GetProfileDto>>(ex.Message);
-
-            }
+            return true;
         }
+        #endregion
+        
     }
 }
