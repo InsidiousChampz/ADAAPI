@@ -6,7 +6,7 @@
     <members>
         <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetEditedCustomer(SmsUpdateCustomer_Api.DTOs.Admin.GetEditCustomerByFilterDto)">
             <summary>
-                สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ทำการแก้ไข [UI7 : Datatable]
+                สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ทำการแก้ไข
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -23,7 +23,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCompareDataOfCustomer(System.Int32)">
             <summary>
-                สำหรับ แสดงข้อมูลเพื่อเปรียบเทียบการแก้ไขข้อมูล [UI7 : Tab1]
+                สำหรับ แสดงข้อมูลเพื่อเปรียบเทียบการแก้ไขข้อมูล
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -40,7 +40,24 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetMergeDataOfCustomer(System.Int32)">
             <summary>
-                สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า [UI7 : Tab2]
+                สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.UpdateMergeDataOfCustomer(SmsUpdateCustomer_Api.DTOs.Customer_Profiles.UpdateMergeDto)">
+            <summary>
+                สำหรับ ยืนยันข้อมูลการรวมข้อมูลลูกค้าของ Admin
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -57,24 +74,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCustomerHistory(System.Int32)">
             <summary>
-                สำหรับ แสดงข้อมูลการเปลี่ยนแปลงของแต่ละคน [UI7 : Tab 4]
-            </summary>
-            <returns> 
-                List of Personal by JSON format
-            </returns>
-            <remarks>
-                
-            </remarks>
-            <response code="200"> Success </response>
-            <response code="400"> Bad Request </response>
-            <response code="401"> Unauthorize </response>
-            <response code="403"> Forbidden </response>
-            <response code="404"> Not Found </response>
-            <response code="500"> Internal Server Error </response>
-        </member>
-        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.ConfirmByAdmin(SmsUpdateCustomer_Api.DTOs.Admin.ConfirmAdminDto)">
-            <summary>
-                สำหรับ ใช้สำหรับยืนยันการแก้ไขของ admin [UI7 : Button]
+                สำหรับ แสดงข้อมูลการเปลี่ยนแปลงของแต่ละคน
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -91,7 +91,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerController.GetPayerByPersonId(System.Int32)">
             <summary>
-                สำหรับ ดึงข้อมูล ผูู้ชำระ ในกรณีที่เข้าระบบมาครั้งแรกด้วย personID [UI3]
+                สำหรับ GET ข้อมูลผู้ชำระ ด้วย personID
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -108,7 +108,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerController.GetPayerAndPoliciesByPersonId(System.Int32)">
             <summary>
-                สำหรับ ดึงข้อมูล ผู้ชำระ พร้อมกับ ข้อมูล Policy และผู้เอาประกัน ในกรณีที่เข้าระบบมาครั้งแรกด้วย personID [UI3]
+                สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย personID
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -125,7 +125,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerController.GetPayerAndPoliciesByIdentityAndLastname(SmsUpdateCustomer_Api.DTOs.Customer.GetByIdentityAndLastNameDto)">
             <summary>
-                สำหรับ ดึงข้อมูล ผู้ชำระ พร้อมกับ ข้อมูล Policy และผู้เอาประกัน ในกรณีที่เข้าระบบมาครั้งแรกด้วย หมายเลขบัตรประชาชน และ นามสกุล (Recommended) [UI3]
+                สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย หมายเลขบัตรประชาชน และ นามสกุล
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -142,7 +142,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerInfomationsController.GetCustomerLogin">
             <summary>
-                สำหรับ GET Customer login ทั้งหมดทุกคน ในหน้า Login [UI2]
+                สำหรับ GET Customer login ทั้งหมดทุกคน.
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -159,7 +159,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerInfomationsController.GetCustomerLoginByIdentityAndLastname(SmsUpdateCustomer_Api.DTOs.Customer_Infomations.GetCustomerHeaderWithFilter)">
             <summary>
-                สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ. ในหน้า Login (Recommended) [UI2]
+                สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ.
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -176,7 +176,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerProfilesController.GetCustomerProfile(System.Int32)">
             <summary>
-                ใช้สำหรับ ปุ่มแก้ไข เพื่อดึงข้อมูลลูกค้าเพื่อเอาไปแก้ไข [UI4]
+                สำหรับ GET ข้อมูลลูกค้าในกรณีที่เคยทำการแก้ไขข้อมูลแล้ว ด้วย personID
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -194,7 +194,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerProfilesController.AddCustomerProfile(SmsUpdateCustomer_Api.DTOs.Customer_Profiles.AddProfileDto)">
             <summary>
-               ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ได้กดทำการแก้ไขไปแล้วแต่ยังไม่ได้ยืนยัน [UI4]
+                สำหรับ การแก้ไขข้อมูลลูกค้า ไม่ว่าจะเป็น ผู้เอาประกัน หรือ ผุ้ชำระ ใช้ Method นี้
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -212,7 +212,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerProfilesController.AddCustomerHotline(SmsUpdateCustomer_Api.DTOs.Customer_Profiles.AddHotlineDto)">
             <summary>
-                ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ต้องการให้เจ้าหน้าที่ติดต่อกลับ  [UI2] + [UI5]
+                สำหรับ การให้ลุกค้าระบุข้อมูลเพื่อให้เราติดต่อกลับ ใช้ Method นี้
             </summary>
             <returns> 
                 List of Personal by JSON format
@@ -230,7 +230,7 @@
         </member>
         <member name="M:SmsUpdateCustomer_Api.Controllers.CustomerProfilesController.ConfirmCustomerProfile(System.Int32)">
             <summary>
-                ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ได้กดทำการแก้ไขไป "เพื่อ" ยืนยันความถูกต้อง [UI5]
+                สำหรับ ปุ่ม ยืนยันทั้งหมด ไม่ว่าจะแก้ไขข้อมูลผู้เอาประกัน ผู้ชำระ Method นี้ ใช้เพื่อยืนยันการแก้ไข
             </summary>
             <returns> 
                 List of Personal by JSON format

@@ -420,7 +420,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                             var dtos = _mapper.Map<GetProfileTransaction>(cpt);
                             if (dtos == null)
                             {
-                                return ResponseResult.Failure<ConfirmAdminDto>("Can't Insert Transaction");
+                                return ResponseResult.Failure<ConfirmAdminDto>("Can't Insert Transaction.");
                             }
                         }
                     }
