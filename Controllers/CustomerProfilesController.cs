@@ -22,7 +22,7 @@ namespace SmsUpdateCustomer_Api.Controllers
 
 
         /// <summary>
-        ///     สำหรับ GET ข้อมูลลูกค้าในกรณีที่เคยทำการแก้ไขข้อมูลแล้ว ด้วย personID
+        ///     ใช้สำหรับ ปุ่มแก้ไข เพื่อดึงข้อมูลลูกค้าเพื่อเอาไปแก้ไข [UI4]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -53,7 +53,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ การแก้ไขข้อมูลลูกค้า ไม่ว่าจะเป็น ผู้เอาประกัน หรือ ผุ้ชำระ ใช้ Method นี้
+        ///    ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ได้กดทำการแก้ไขไปแล้วแต่ยังไม่ได้ยืนยัน [UI4]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -87,7 +87,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ การให้ลุกค้าระบุข้อมูลเพื่อให้เราติดต่อกลับ ใช้ Method นี้
+        ///     ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ต้องการให้เจ้าหน้าที่ติดต่อกลับ  [UI2] + [UI5]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -121,7 +121,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ ปุ่ม ยืนยันทั้งหมด ไม่ว่าจะแก้ไขข้อมูลผู้เอาประกัน ผู้ชำระ Method นี้ ใช้เพื่อยืนยันการแก้ไข
+        ///     ใช้สำหรับ บันทึกข้อมูลลูกค้าที่ได้กดทำการแก้ไขไป "เพื่อ" ยืนยันความถูกต้อง [UI5]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
