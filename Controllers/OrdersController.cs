@@ -42,12 +42,12 @@ namespace SmsUpdateCustomer_Api.Controllers
         //    return Ok(await _orderService.GetOrderWithFilterByDate(filter));
         //}
 
-
         //[HttpPost("addorder")]
         //public async Task<IActionResult> AddOrder(AddOrderDto newOrder)
         //{
         //    return Ok(await _orderService.AddOrder(newOrder));
         //}
+
         ////Order list
         ////TODO: Get order list
 

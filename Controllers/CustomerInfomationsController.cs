@@ -22,7 +22,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET Customer login ทั้งหมดทุกคน.
+        ///     สำหรับ GET Customer login ทั้งหมดทุกคน ในหน้า Login [UI2]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -36,7 +36,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        
+
         [HttpGet("CustomerHeader")]       
         //[ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         public async Task<IActionResult> GetCustomerLogin()
@@ -54,7 +54,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ.
+        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ. ในหน้า Login (Recommended) [UI2]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format

@@ -12,11 +12,11 @@ namespace SmsUpdateCustomer_Api.Services.Admin
     public interface IAdminServices
     {
         Task<ServiceResponseWithPagination<List<GetEditCustomerDto>>> GetEditedCustomer(GetEditCustomerByFilterDto filter);
+        Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId);
         Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomer(int personId);
         Task<ServiceResponse<List<GetMergeDto>>> GetMergeDataOfCustomer(int personId);
-        Task<ServiceResponse<List<GetMergeDto>>> UpdateMergeDataOfCustomer(UpdateMergeDto update);
+        Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(ConfirmAdminDto confirm);
 
-        Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId);
 
     }
 }

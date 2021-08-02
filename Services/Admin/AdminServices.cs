@@ -117,7 +117,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-
         public async Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomer(int personId)
         {
             try
@@ -248,7 +247,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 else
                 {
 
-                    if (filter.IsAgentConfirm)
+                    if (filter.IsAgentConfirm == true || filter.IsAgentConfirm == false)
                     {
                         customer = customer.Where(x => x.IsAgentConfirm == filter.IsAgentConfirm);
                     }
@@ -349,26 +348,91 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-        public async Task<ServiceResponse<List<GetMergeDto>>> UpdateMergeDataOfCustomer(UpdateMergeDto update)
+        public async Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(ConfirmAdminDto confirm)
         {
             try
             {
-                var customer = await _dbContext.Customer_NewProfiles.Where(x => x.PersonId == update.personId).ToListAsync();
 
-                foreach (var item in customer)
+                if (confirm.PersonData == null && confirm.MergeData == null)
                 {
-                    item.ListMergeFrom = update.ListMergFrom;
-                    item.ListMergeTo = update.ListMergeTo;
+                    var dtos = _mapper.Map<ConfirmAdminDto>(confirm);
+                    return ResponseResult.Success(dtos, TEXTSUCCESS);
                 }
 
+
+                //update personData 
+                var snapdata = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonData.PersonId);
+                var editdata = await _dbContext.Customer_NewProfiles.Where(x => x.PersonId == confirm.PersonData.PersonId).ToListAsync();
+
+                if (editdata == null)
+                {
+                    return ResponseResult.Failure<ConfirmAdminDto>("Can't Update person, Please Check this person in customer newprofile. ");
+                }
+
+
+                // add transaction what is different field.
+
+                foreach (var item in editdata)
+                {
+                    // update new data into customer newprofile
+                    item.FirstName = confirm.PersonData.FirstName;
+                    item.LastName = confirm.PersonData.LastName;
+                    item.TitleId = confirm.PersonData.TitleId;
+                    item.IdentityCard = confirm.PersonData.IdentityCard;
+                    item.Birthdate = confirm.PersonData.Birthdate;
+                    item.PrimaryPhone = confirm.PersonData.PrimaryPhone;
+                    item.SecondaryPhone = confirm.PersonData.SecondaryPhone;
+                    item.Email = confirm.PersonData.Email;
+                    item.LineID = confirm.PersonData.LineID;
+                    item.ImagePath = confirm.PersonData.ImagePath;
+                    item.ImageReferenceId = confirm.PersonData.ImageReferenceId;
+                    item.DocumentId = confirm.PersonData.DocumentId;
+                    item.EditorId = confirm.PersonData.EditorId;
+                    item.ListMergeFrom = confirm.MergeData.ListMergFrom;
+                    item.ListMergeTo = confirm.MergeData.ListMergeTo;
+                    item.IsUpdated = true;
+                    item.LastUpdated = DateTime.Now;
+                }
                 await _dbContext.SaveChangesAsync();
-                var dto = _mapper.Map<List<GetMergeDto>>(customer);
+
+
+                
+                // after editdata have a new value the get different field and keep in transaction.
+                foreach (var item in editdata)
+                {
+                    var addExcept = Customer_Profiles.CustomerProfileServices.VerifyData(item, snapdata);
+                    if (addExcept.Count > 0)
+                    {
+                        foreach (var itemexcept in addExcept)
+                        {
+                            var cpt = new Customer_Profile_Transaction
+                            {
+                                PersonId = item.PersonId.Value,
+                                EditorId = item.EditorId.Value,
+                                FieldData = itemexcept.FieldData,
+                                BeforeChange = itemexcept.BeforeChange,
+                                AfterChange = itemexcept.AfterChange,
+                                LastUpdated = Now()
+                            };
+
+                            _dbContext.Customer_Profile_Transactions.Add(cpt);
+                            await _dbContext.SaveChangesAsync();
+                            var dtos = _mapper.Map<GetProfileTransaction>(cpt);
+                            if (dtos == null)
+                            {
+                                return ResponseResult.Failure<ConfirmAdminDto>("Can't Insert Transaction.");
+                            }
+                        }
+                    }
+                }
+                
+
+                var dto = _mapper.Map<ConfirmAdminDto>(confirm);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
             {
-                return ResponseResult.Failure<List<GetMergeDto>>(ex.Message);
-
+                return ResponseResult.Failure<ConfirmAdminDto>(ex.Message);
             }
         }
     }

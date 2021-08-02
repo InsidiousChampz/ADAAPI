@@ -130,16 +130,19 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 var customer = await _dbContext.Customer_NewProfiles
                     .Where(x => x.IsUpdated == false && x.EditorId == editorId).ToListAsync();
 
+                // if no record change just exit.
                 if (customer.Count == 0)
                 {
                     return ResponseResult.Failure<List<GetProfileDto>>("Not found record to change.");
                 }
 
-                //Compare
+
+
+
+                // start Compare data.
                 foreach (var item in customer)
                 {
-                    //Check in customer newprofile if found that mean some peaple edited this person before.
-                    //then get data from newprofile
+                    // Check in customer newprofile if found that mean some peaple edited this person before then get data from newprofile.
 
                     var customerPreviousEditor = await _dbContext.Customer_NewProfiles
                        .Where(x => x.PersonId == item.PersonId && x.EditorId != editorId)
@@ -147,8 +150,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
                     if (customerPreviousEditor == null)
                     {
-                        //So if not found in customer_newprofile that mean nobody edit this person before.
-                        //then get data from payer snapshot only!!
+                        // So if not found in customer_newprofile that mean nobody edit this person before then get data from payer_snapshot only!!.
                         var snapcustomer = await _dbContext.Payer_Snapshots
                         .Where(x => x.PersonId == item.PersonId).ToListAsync();
 
@@ -393,7 +395,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 return default;
             }
         }
-        private static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, Customer_NewProfile prevoiuscustomer)
+        public static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, Customer_NewProfile prevoiuscustomer)
         {
             try
             {

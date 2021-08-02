@@ -22,7 +22,7 @@ namespace SmsUpdateCustomer_Api.Controllers
 
 
         /// <summary>
-        ///     สำหรับ GET ข้อมูลผู้ชำระ ด้วย personID
+        ///     สำหรับ ดึงข้อมูล ผูู้ชำระ ในกรณีที่เข้าระบบมาครั้งแรกด้วย personID [UI3]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -54,7 +54,7 @@ namespace SmsUpdateCustomer_Api.Controllers
 
 
         /// <summary>
-        ///     สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย personID
+        ///     สำหรับ ดึงข้อมูล ผู้ชำระ พร้อมกับ ข้อมูล Policy และผู้เอาประกัน ในกรณีที่เข้าระบบมาครั้งแรกด้วย personID [UI3]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -85,7 +85,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET ข้อมูลผู้ชำระ และผู้เอาประกันของเค้า ด้วย หมายเลขบัตรประชาชน และ นามสกุล
+        ///     สำหรับ ดึงข้อมูล ผู้ชำระ พร้อมกับ ข้อมูล Policy และผู้เอาประกัน ในกรณีที่เข้าระบบมาครั้งแรกด้วย หมายเลขบัตรประชาชน และ นามสกุล (Recommended) [UI3]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
