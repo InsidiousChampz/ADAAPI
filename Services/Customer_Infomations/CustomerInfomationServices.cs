@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmsUpdateCustomer_Api.Validations;
 
 namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
 {
@@ -44,17 +45,16 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
             }
             
         }
-
         public async Task<ServiceResponse<GetCustomerHeaderDto>> GetCustomerLoginByIdentityAndLastname(GetCustomerHeaderWithFilter filter)
         {
             try
             {
                 //Validate
-                (bool,string) retval = ValidationsforCustomerLogin(filter);
+                (bool,string) retval = ControlValidator.ValidationsforCustomerLogin(filter);
 
                 if (retval.Item1 == false)
                 {
-                    ResponseResult.Failure<GetCustomerHeaderDto>(retval.Item2);
+                    return ResponseResult.Failure<GetCustomerHeaderDto>(retval.Item2);
                 }
 
                 //Process
@@ -81,58 +81,8 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
             
         }
 
-        private static bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (Microsoft.VisualBasic.Information.IsNumeric(c))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        
 
-        private static (bool,string) ValidationsforCustomerLogin(GetCustomerHeaderWithFilter filter)
-        {
-
-            // For GetCustomerLoginByIdentityAndLastname Method.
-
-            try
-            {
-              
-                if (filter.LoginIdentityCard == null)
-                {
-                    return (false, "IdentityCard is invalid.");
-                }
-
-                if (filter.LoginLastName == null)
-                {
-                    return (false, "LastName is invalid.");
-                }
-
-                bool checkIdentityNumberIsNumberOnly = Microsoft.VisualBasic.Information.IsNumeric(filter.LoginIdentityCard);
-
-                bool checklastNameIsStringOnly = IsDigitsOnly(filter.LoginLastName);
-
-                if (checkIdentityNumberIsNumberOnly == false)
-                {
-                    return (false, "IdentityCard Number have a charactor.");
-                }
-
-                if (checklastNameIsStringOnly == false)
-                {
-                    return (false, "Lastname have a number.");
-                }
-
-                return (true, "Success");
-
-            }
-            catch (Exception ex)
-            {
-
-                return (false, ex.Message);
-            }
-        }
+        
     }
 }

@@ -8,10 +8,10 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Infomations
 {
     public class GetCustomerHeaderWithFilter
     {
-        [StringLength(13)]
+        [Required(ErrorMessage = "IdentityCard is not correct."), StringLength(13)]
         public string LoginIdentityCard { get; set; }
 
-        [StringLength(100)]
+        [Required(ErrorMessage = "LastName is invalid."), StringLength(100)]
         public string LoginLastName { get; set; }
 
     }
