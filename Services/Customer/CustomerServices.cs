@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using SmsUpdateCustomer_Api.Validations;
 
 namespace SmsUpdateCustomer_Api.Services.Customer
 {
@@ -30,12 +31,20 @@ namespace SmsUpdateCustomer_Api.Services.Customer
             _httpcontext = httpcontext;
         }
 
-       
-
         public async Task<ServiceResponse<List<GetPayerDto>>> GetPayerAndPoliciesByIdentityAndLastName(GetByIdentityAndLastNameDto filter)
         {
             try
             {
+                //Validate
+                (bool, string) retval = ControlValidator.ValidationsforPayerAndPoliciesByIdentityAndLastName(filter);
+
+                if (retval.Item1 == false)
+                {
+                    return ResponseResult.Failure<List<GetPayerDto>>(retval.Item2);
+                }
+
+
+
 
                 #region efCore
                 //Payer is must have a policies if not found policies that mean a customer not a payer
@@ -63,7 +72,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                     }
                     // 200
                     var dtos = _mapper.Map<List<GetPayerDto>>(customer);
-                    return ResponseResult.Success(dtos, "Payer Not Found.");
+                    return ResponseResult.Failure<List<GetPayerDto>>("Payer Not Found.");
 
                 }
 

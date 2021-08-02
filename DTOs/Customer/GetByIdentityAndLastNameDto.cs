@@ -8,10 +8,11 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer
 {
     public class GetByIdentityAndLastNameDto
     {
-        [StringLength(13)]
+
+        [Required(ErrorMessage = "IdentityCard is not correct."),StringLength(13)]
         public string IdentityCard { get; set; }
 
-        [StringLength(100)]
+        [Required(ErrorMessage = "LastName is invalid."),StringLength(100)]
         public string LastName { get; set; }
 
         
