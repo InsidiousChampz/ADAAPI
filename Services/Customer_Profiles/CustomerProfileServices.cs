@@ -137,9 +137,6 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     return ResponseResult.Failure<List<GetProfileDto>>("Not found record to change.");
                 }
 
-
-
-
                 // start Compare data.
                 foreach (var item in customer)
                 {
@@ -259,7 +256,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 customer[0].IsUpdated = true;
                 await _dbContext.SaveChangesAsync();
 
-                var dto = _mapper.Map<List<GetProfileDto>>(customer);
+                 var dto = _mapper.Map<List<GetProfileDto>>(customer);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
@@ -485,10 +482,6 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
             }
         }
         #endregion
-
-        #region "Method"
        
-        #endregion
-        
     }
 }
