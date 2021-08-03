@@ -4,7 +4,7 @@
         <name>SmsUpdateCustomer_Api</name>
     </assembly>
     <members>
-        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetEditedCustomer(SmsUpdateCustomer_Api.DTOs.Admin.GetEditCustomerByFilterDto)">
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCustomerbyAdmin(SmsUpdateCustomer_Api.DTOs.Admin.GetEditCustomerByFilterDto)">
             <summary>
                 สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ทำการแก้ไข [UI7 : Datatable]
             </summary>
@@ -75,6 +75,74 @@
         <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.ConfirmByAdmin(SmsUpdateCustomer_Api.DTOs.Admin.ConfirmAdminDto)">
             <summary>
                 สำหรับ ใช้สำหรับยืนยันการแก้ไขของ admin [UI7 : Button]
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCompareDataAllCustomer(System.Int32)">
+            <summary>
+                สำหรับ สำหรับ ใช้สำหรับเปรียบเทียบข้อมูลทั้งหมดของผู้ชำและผู้เอา สำหรับadmin [UI8]
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCustomerbyCallCenter(SmsUpdateCustomer_Api.DTOs.Admin.GetEditCustomerByFilterDto)">
+            <summary>
+                สำหรับ ดูรายละเอียดอัพเดทข้อมูลลุกค้าของ CallCenter [UI8 + UI9 : Datatable]
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.GetCompareLoginOfCustomer(System.Int32)">
+            <summary>
+                สำหรับ ดูข้อมูล Login ของลูกค้าสำหรับ CallCenter [UI9]
+            </summary>
+            <returns> 
+                List of Personal by JSON format
+            </returns>
+            <remarks>
+                
+            </remarks>
+            <response code="200"> Success </response>
+            <response code="400"> Bad Request </response>
+            <response code="401"> Unauthorize </response>
+            <response code="403"> Forbidden </response>
+            <response code="404"> Not Found </response>
+            <response code="500"> Internal Server Error </response>
+        </member>
+        <member name="M:SmsUpdateCustomer_Api.Controllers.AdminController.UpdateCompareLoginOfCustomer(SmsUpdateCustomer_Api.DTOs.Customer_Profiles.GetCompareLoginDto)">
+            <summary>
+                สำหรับ UpdateLogin ของลูกค้าสำหรับ CallCenter [UI9]
             </summary>
             <returns> 
                 List of Personal by JSON format

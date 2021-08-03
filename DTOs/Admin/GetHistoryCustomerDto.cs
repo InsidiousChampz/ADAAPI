@@ -9,6 +9,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
     public class GetHistoryCustomerDto
     {
         public int PersonId { get; set; }
+        public int EditorId { get; set; }
         [StringLength(100)]
         public string FullName { get; set; }
         public DateTime LastUpdate { get; set; }

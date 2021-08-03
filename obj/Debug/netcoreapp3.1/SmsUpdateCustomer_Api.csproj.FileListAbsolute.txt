@@ -253,7 +253,6 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\r
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.csproj.AssemblyReference.cache
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.AssemblyInfoInputs.cache
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.AssemblyInfo.cs
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.csproj.CoreCompileInputs.cache
@@ -267,3 +266,4 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\S
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.pdb
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.genruntimeconfig.cache
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Debug\netcoreapp3.1\SmsUpdateCustomer_Api.csproj.AssemblyReference.cache

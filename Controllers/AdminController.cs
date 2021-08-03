@@ -36,10 +36,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
 
-        [HttpGet("EditCustomer/filter")]
-        public async Task<IActionResult> GetEditedCustomer([FromQuery] GetEditCustomerByFilterDto filter)
+        [HttpGet("EditCustomerByAdmin/filter")]
+        public async Task<IActionResult> GetCustomerbyAdmin([FromQuery] GetEditCustomerByFilterDto filter)
         {
-            var ret = await _adminServices.GetEditedCustomer(filter);
+            var ret = await _adminServices.GetCustomerbyAdmin(filter);
 
             if (ret.IsSuccess == true)
             {
@@ -50,7 +50,6 @@ namespace SmsUpdateCustomer_Api.Controllers
             // 404
             return NotFound(ret);
         }
-
 
         /// <summary>
         ///     สำหรับ แสดงข้อมูลเพื่อเปรียบเทียบการแก้ไขข้อมูล [UI7 : Tab1]
@@ -164,6 +163,129 @@ namespace SmsUpdateCustomer_Api.Controllers
         public async Task<IActionResult> ConfirmByAdmin(ConfirmAdminDto confirm)
         {
             var ret = await _adminServices.ConfirmByAdmin(confirm);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+
+        /// <summary>
+        ///     สำหรับ สำหรับ ใช้สำหรับเปรียบเทียบข้อมูลทั้งหมดของผู้ชำและผู้เอา สำหรับadmin [UI8]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        [HttpGet("CompareAllCustomer/{personId}")]
+        public async Task<IActionResult> GetCompareDataAllCustomer(int personId)
+        {
+            var ret = await _adminServices.GetCompareDataAllCustomer(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+        /// <summary>
+        ///     สำหรับ ดูรายละเอียดอัพเดทข้อมูลลุกค้าของ CallCenter [UI8 + UI9 : Datatable]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+
+        [HttpGet("EditCustomerByCallCenter/filter")]
+        public async Task<IActionResult> GetCustomerbyCallCenter([FromQuery] GetEditCustomerByFilterDto filter)
+        {
+            var ret = await _adminServices.GetCustomerbyCallCenter(filter);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+        /// <summary>
+        ///     สำหรับ ดูข้อมูล Login ของลูกค้าสำหรับ CallCenter [UI9]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        [HttpGet("GetCompareLoginOfCustomer/{personId}")]
+        public async Task<IActionResult> GetCompareLoginOfCustomer(int personId)
+        {
+            var ret = await _adminServices.GetCompareLoginOfCustomer(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+        /// <summary>
+        ///     สำหรับ UpdateLogin ของลูกค้าสำหรับ CallCenter [UI9]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        [HttpPost("UpdateCompareLoginOfCustomer/update")]
+        public async Task<IActionResult> UpdateCompareLoginOfCustomer([FromQuery]GetCompareLoginDto update)
+        {
+            var ret = await _adminServices.UpdateCompareLoginOfCustomer(update);
 
             if (ret.IsSuccess == true)
             {

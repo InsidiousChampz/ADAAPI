@@ -29,9 +29,10 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_NewProfile, GetMergeDto>();
             CreateMap<Customer_NewProfile, GetProfileDto>();
             CreateMap<Customer_NewProfile, AddProfileDto>();
-            
+
 
             // Customer infomations
+            CreateMap<Customer_Header, GetCompareLoginDto>();
             CreateMap<Customer_Header, GetCustomerHeaderDto>();
             CreateMap<Customer_Detail, GetCustomerHeaderDto>();
 
@@ -53,6 +54,8 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_Profile_Transaction, GetHistoryCustomerDto>();
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
+
+            
 
 
         }
