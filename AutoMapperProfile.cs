@@ -40,11 +40,12 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Policy_Snapshot, GetPolicyDto>();
 
             //Payer_Snapshot
-            CreateMap<Payer_Snapshot, GetEditCustomerByFilterDto>();
-
-            CreateMap<Payer_Snapshot, GetPayerDto>();
-            CreateMap<Payer_Snapshot, GetCustomerDto>();
             CreateMap<Payer_Snapshot, GetByIdentityAndLastNameDto>();
+            CreateMap<Payer_Snapshot, GetEditCustomerByFilterDto>();
+            CreateMap<Payer_Snapshot, GetCustomerDto>();
+            CreateMap<Payer_Snapshot, GetProfileDto>();
+            CreateMap<Payer_Snapshot, GetPayerDto>();
+            
 
             //Customer_Snapshot
             CreateMap<Customer_Snapshot, GetProfileDto>();
@@ -55,7 +56,9 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
             CreateMap<Customer_Profile_Transaction, GetProfileTransaction>();
 
-            
+            CreateMap<Customer_Profile_Hotline, AddHotlineDto>();
+            CreateMap<Customer_Profile_Hotline, GetHotlineDto>();
+
 
 
         }

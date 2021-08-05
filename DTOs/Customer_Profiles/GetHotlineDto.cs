@@ -10,21 +10,20 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
     {
         public int PersonId { get; set; }
 
-        [StringLength(100)]
+        [Required(ErrorMessage = "FirstName is invalid."), StringLength(100)]
         public string FirstName { get; set; }
 
-        [StringLength(100)]
+        [Required(ErrorMessage = "LastName is invalid."), StringLength(100)]
         public string LastName { get; set; }
 
-        [StringLength(40)]
+        [Required(ErrorMessage = "PrimaryPhone is not invalid."), StringLength(40)]
         public string PrimaryPhone { get; set; }
 
-        [StringLength(255)]
+        [StringLength(255), RegularExpression("^(.+)@(.+)$", ErrorMessage = "Email Format is not Correct.")]
         public string Email { get; set; }
 
         [StringLength(255)]
         public string Remark { get; set; }
-
         public DateTime LastUpdated { get; set; }
     }
 }

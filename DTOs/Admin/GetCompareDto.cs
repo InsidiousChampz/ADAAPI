@@ -10,6 +10,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
     public class GetCompareDto
     {
         public string Caption { get; set; }
+        public bool IsPayer { get; set; }
         public int? PersonId { get; set; }
         public int? TitleId { get; set; }
 

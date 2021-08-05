@@ -14,16 +14,18 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PersonId { get; set; }
+        public int EditorId { get; set; }
 
         [StringLength(255)]
         public string FieldData { get; set; }
+
         [StringLength(255)]
         public string BeforeChange { get; set; }
+
         [StringLength(255)]
         public string AfterChange { get; set; }
 
-        public int EditorId { get; set; }
-
+        [Column(TypeName = "datetime")]
         public DateTime LastUpdated { get; set; }
     }
 }

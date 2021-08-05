@@ -8,7 +8,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Admin
 {
     public class ConfirmAdminDto
     {
-        public AddProfileDto PersonData { get; set; }
+        public AddMergeDto PersonData { get; set; }
         public UpdateMergeDto MergeData { get; set; }
     }
 }

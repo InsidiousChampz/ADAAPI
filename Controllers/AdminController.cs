@@ -21,7 +21,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ทำการแก้ไข [UI7 : Datatable]
+        ///     สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ถูกทำการแก้ไข [UI7 : Datatable]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -174,38 +174,6 @@ namespace SmsUpdateCustomer_Api.Controllers
             return NotFound(ret);
         }
 
-
-        /// <summary>
-        ///     สำหรับ สำหรับ ใช้สำหรับเปรียบเทียบข้อมูลทั้งหมดของผู้ชำและผู้เอา สำหรับadmin [UI8]
-        /// </summary>
-        /// <returns> 
-        ///     List of Personal by JSON format
-        /// </returns>
-        /// <remarks>
-        ///     
-        /// </remarks>
-        /// <response code="200"> Success </response>
-        /// <response code="400"> Bad Request </response>
-        /// <response code="401"> Unauthorize </response>
-        /// <response code="403"> Forbidden </response>
-        /// <response code="404"> Not Found </response>
-        /// <response code="500"> Internal Server Error </response>
-        [HttpGet("CompareAllCustomer/{personId}")]
-        public async Task<IActionResult> GetCompareDataAllCustomer(int personId)
-        {
-            var ret = await _adminServices.GetCompareDataAllCustomer(personId);
-
-            if (ret.IsSuccess == true)
-            {
-                // 200
-                return Ok(ret);
-            }
-
-            // 404
-            return NotFound(ret);
-
-        }
-
         /// <summary>
         ///     สำหรับ ดูรายละเอียดอัพเดทข้อมูลลุกค้าของ CallCenter [UI8 + UI9 : Datatable]
         /// </summary>
@@ -235,6 +203,38 @@ namespace SmsUpdateCustomer_Api.Controllers
 
             // 404
             return NotFound(ret);
+        }
+
+        /// <summary>
+        ///     สำหรับ สำหรับ ใช้สำหรับเปรียบเทียบข้อมูลทั้งหมดของผู้ชำและผู้เอา สำหรับadmin [UI8]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        
+        [HttpGet("CompareAllCustomer/{personId}")]
+        public async Task<IActionResult> GetCompareDataAllCustomer(int personId)
+        {
+            var ret = await _adminServices.GetCompareDataAllCustomer(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
         }
 
         /// <summary>

@@ -1,0 +1,110 @@
+2021-08-04 09:17:22.462 +07:00 [INF] Starting web host
+2021-08-04 09:23:42.797 +07:00 [INF] Starting web host
+2021-08-04 09:25:25.349 +07:00 [INF] Starting web host
+2021-08-04 09:27:39.453 +07:00 [INF] Starting web host
+2021-08-04 09:33:08.329 +07:00 [INF] Starting web host
+2021-08-04 10:31:08.651 +07:00 [INF] Starting web host
+2021-08-04 10:33:05.278 +07:00 [INF] Starting web host
+2021-08-04 10:35:09.680 +07:00 [INF] Starting web host
+2021-08-04 10:40:34.700 +07:00 [INF] Starting web host
+2021-08-04 10:47:41.080 +07:00 [INF] Starting web host
+2021-08-04 10:56:58.352 +07:00 [INF] Starting web host
+2021-08-04 10:58:56.348 +07:00 [INF] Starting web host
+2021-08-04 11:12:33.277 +07:00 [INF] Starting web host
+2021-08-04 11:15:21.800 +07:00 [INF] Starting web host
+2021-08-04 11:38:10.319 +07:00 [INF] Starting web host
+2021-08-04 11:39:46.175 +07:00 [INF] Starting web host
+2021-08-04 11:46:41.844 +07:00 [INF] Starting web host
+2021-08-04 11:48:16.554 +07:00 [INF] Starting web host
+2021-08-04 12:34:46.147 +07:00 [INF] Starting web host
+2021-08-04 13:30:54.054 +07:00 [INF] Starting web host
+2021-08-04 13:34:28.679 +07:00 [INF] Starting web host
+2021-08-04 13:35:00.134 +07:00 [INF] Starting web host
+2021-08-04 13:39:57.216 +07:00 [INF] Starting web host
+2021-08-04 13:40:05.764 +07:00 [INF] Starting web host
+2021-08-04 13:45:26.154 +07:00 [INF] Starting web host
+2021-08-04 14:37:47.429 +07:00 [INF] Starting web host
+2021-08-04 14:41:31.343 +07:00 [INF] Starting web host
+2021-08-04 14:45:07.412 +07:00 [INF] Starting web host
+2021-08-04 14:46:05.874 +07:00 [INF] Starting web host
+2021-08-04 14:48:39.505 +07:00 [INF] Starting web host
+2021-08-04 14:52:46.744 +07:00 [INF] Starting web host
+2021-08-04 15:08:12.920 +07:00 [INF] Starting web host
+2021-08-04 15:27:03.064 +07:00 [INF] Starting web host
+2021-08-04 15:31:58.632 +07:00 [INF] Starting web host
+2021-08-04 15:34:10.223 +07:00 [INF] Starting web host
+2021-08-04 15:37:17.194 +07:00 [INF] Starting web host
+2021-08-04 16:52:11.986 +07:00 [INF] Starting web host
+2021-08-04 17:05:08.800 +07:00 [INF] Starting web host
+2021-08-04 17:23:55.974 +07:00 [INF] Starting web host
+2021-08-04 17:24:53.141 +07:00 [INF] Starting web host
+2021-08-04 19:45:45.817 +07:00 [INF] Starting web host
+2021-08-04 20:08:00.851 +07:00 [INF] Starting web host
+2021-08-04 20:12:55.866 +07:00 [INF] Starting web host
+2021-08-04 20:13:51.438 +07:00 [INF] Starting web host
+2021-08-04 20:15:16.657 +07:00 [INF] Starting web host
+2021-08-04 20:16:19.105 +07:00 [INF] Starting web host
+2021-08-04 20:17:24.656 +07:00 [ERR] Failed executing DbCommand (36ms) [Parameters=[@p0='?' (DbType = Date), @p1='?' (DbType = DateTime), @p2='?' (DbType = Guid), @p3='?' (Size = 255), @p4='?' (DbType = Int32), @p5='?' (Size = 255), @p6='?' (Size = 100), @p7='?' (Size = 13), @p8='?' (Size = 255), @p9='?' (Size = 255), @p10='?' (DbType = Boolean), @p11='?' (DbType = Boolean), @p12='?' (Size = 100), @p13='?' (DbType = DateTime), @p14='?' (Size = 255), @p15='?' (Size = 255), @p16='?' (Size = 255), @p17='?' (DbType = Int32), @p18='?' (Size = 40), @p19='?' (Size = 40), @p20='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [scp].[CustomerProfile] ([Birthdate], [ConfirmDate], [Customer_guid], [DocumentId], [EditorId], [Email], [FirstName], [IdentityCard], [ImagePath], [ImageReferenceId], [IsConfirm], [IsUpdated], [LastName], [LastUpdated], [LineID], [ListMergeFrom], [ListMergeTo], [PersonId], [PrimaryPhone], [SecondaryPhone], [TitleId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20);
+SELECT [Id]
+FROM [scp].[CustomerProfile]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();
+2021-08-04 20:17:24.708 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'SmsUpdateCustomer_Api.Data.AppDBContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at SmsUpdateCustomer_Api.Services.Customer_Profiles.CustomerProfileServices.AddCustomerProfile(AddProfileDto newProfile) in D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\Services\Customer_Profiles\CustomerProfileServices.cs:line 166
+2021-08-04 20:18:57.057 +07:00 [INF] Starting web host
+2021-08-04 20:21:10.541 +07:00 [INF] Starting web host
+2021-08-04 20:52:24.381 +07:00 [INF] Starting web host
+2021-08-04 20:53:17.049 +07:00 [INF] Starting web host
+2021-08-04 20:55:37.753 +07:00 [INF] Starting web host
+2021-08-04 21:05:23.626 +07:00 [INF] Starting web host
+2021-08-04 21:08:13.787 +07:00 [INF] Starting web host
+2021-08-04 21:13:43.727 +07:00 [INF] Starting web host
+2021-08-04 21:14:21.577 +07:00 [INF] Starting web host
+2021-08-04 21:17:21.238 +07:00 [INF] Starting web host
+2021-08-04 21:42:14.102 +07:00 [INF] Starting web host
