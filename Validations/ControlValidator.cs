@@ -151,6 +151,7 @@ namespace SmsUpdateCustomer_Api.Validations
                     return (false, EmailValidate.Item2);
                 }
 
+
                 return (true, "Success");
 
             }
@@ -268,9 +269,9 @@ namespace SmsUpdateCustomer_Api.Validations
         {
             try
             {
-                if (Name == null)
+                if (Name == null || Name.Length == 0)
                 {
-                    return (false, "Can not Blank in ");
+                    return (false, "Can not blank space in ");
                 }
 
                 if (Name.Any(char.IsWhiteSpace))

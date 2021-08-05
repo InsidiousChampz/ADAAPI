@@ -58,7 +58,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     PersonId = newhotline.PersonId,                   
                     FirstName = newhotline.FirstName,
                     LastName = newhotline.LastName,                  
-                    PrimaryPhone = newhotline.PrimaryPhone,
+                    PrimaryPhone = newhotline.PrimaryPhone.Trim(),
                     Email = newhotline.Email,
                     Remark = newhotline.Remark,
                     LastUpdated = Now(),
@@ -88,33 +88,89 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 }
 
 
-                //Process
-                var _profile = new Customer_NewProfile
-                {
-                    PersonId = newProfile.PersonId,
-                    Customer_guid = newProfile.Customer_guid,
-                    TitleId = newProfile.TitleId,
-                    FirstName = newProfile.FirstName,
-                    LastName = newProfile.LastName,
-                    Birthdate = newProfile.Birthdate,
-                    IdentityCard = newProfile.IdentityCard,
-                    PrimaryPhone = newProfile.PrimaryPhone,
-                    SecondaryPhone = newProfile.SecondaryPhone,
-                    Email=newProfile.Email,
-                    LineID=newProfile.LineID,
-                    ImagePath = newProfile.ImagePath,
-                    ImageReferenceId = newProfile.ImageReferenceId,
-                    DocumentId = newProfile.DocumentId,
-                    EditorId = newProfile.EditorId,
-                    ListMergeFrom = newProfile.ListMergeFrom,
-                    ListMergeTo = newProfile.ListMergeTo,
-                    IsUpdated = false,
-                    LastUpdated = Now(),
-                };
+                ////Validate Document
+                //var imgDoc = newProfile.ImagePath;
+                //var imgRef = newProfile.ImageReferenceId;
+                //var docId = newProfile.DocumentId;
 
-                _dbContext.Customer_NewProfiles.Add(_profile);
-                await _dbContext.SaveChangesAsync();
-                var dto = _mapper.Map<GetProfileDto>(_profile);
+                //if (string.IsNullOrEmpty(imgDoc) || string.IsNullOrEmpty(imgRef) || string.IsNullOrEmpty(docId))
+                //{
+                //    var chkField = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == newProfile.PersonId);
+                //    if (chkField.FirstName != newProfile.FirstName ||
+                //        chkField.LastName != newProfile.LastName ||
+                //        chkField.Birthdate != newProfile.Birthdate ||
+                //        chkField.IdentityCard != newProfile.IdentityCard ||
+                //        chkField.PrimaryPhone != newProfile.PrimaryPhone)
+                //    {
+                //        return ResponseResult.Failure<GetProfileDto>("Found Mandatory Field Changed Please Upload Document.");
+                //    }
+                //}
+
+                GetProfileDto dto = default;
+
+                var customer = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == newProfile.PersonId);
+
+                if (customer != null)
+                {
+                    //Update
+                    customer.PersonId = newProfile.PersonId;
+                    customer.Customer_guid = newProfile.Customer_guid;
+                    customer.TitleId = newProfile.TitleId;
+                    customer.FirstName = newProfile.FirstName;
+                    customer.LastName = newProfile.LastName;
+                    customer.Birthdate = newProfile.Birthdate;
+                    customer.IdentityCard = newProfile.IdentityCard;
+                    customer.PrimaryPhone = newProfile.PrimaryPhone;
+                    customer.SecondaryPhone = newProfile.SecondaryPhone;
+                    customer.Email = newProfile.Email;
+                    customer.LineID = newProfile.LineID;
+                    customer.ImagePath = newProfile.ImagePath;
+                    customer.ImageReferenceId = newProfile.ImageReferenceId;
+                    customer.DocumentId = newProfile.DocumentId;
+                    customer.EditorId = newProfile.EditorId;
+                    customer.ListMergeFrom = newProfile.ListMergeFrom;
+                    customer.ListMergeTo = newProfile.ListMergeTo;
+                    customer.IsUpdated = false;
+                    customer.IsConfirm = false;
+                    customer.ConfirmDate = new DateTime(1900,01,01);
+                    customer.LastUpdated = Now();
+
+                    await _dbContext.SaveChangesAsync();
+                    dto = _mapper.Map<GetProfileDto>(customer);
+                }
+                else
+                {
+                    //Add
+                    var _profile = new Customer_NewProfile
+                    {
+                        PersonId = newProfile.PersonId,
+                        Customer_guid = newProfile.Customer_guid,
+                        TitleId = newProfile.TitleId,
+                        FirstName = newProfile.FirstName,
+                        LastName = newProfile.LastName,
+                        Birthdate = newProfile.Birthdate,
+                        IdentityCard = newProfile.IdentityCard,
+                        PrimaryPhone = newProfile.PrimaryPhone,
+                        SecondaryPhone = newProfile.SecondaryPhone,
+                        Email = newProfile.Email,
+                        LineID = newProfile.LineID,
+                        ImagePath = newProfile.ImagePath,
+                        ImageReferenceId = newProfile.ImageReferenceId,
+                        DocumentId = newProfile.DocumentId,
+                        EditorId = newProfile.EditorId,
+                        ListMergeFrom = newProfile.ListMergeFrom,
+                        ListMergeTo = newProfile.ListMergeTo,
+                        IsUpdated = false,
+                        IsConfirm = false,
+                        ConfirmDate = new DateTime(1900, 01, 01),
+                        LastUpdated = Now(),
+                    };
+
+                    _dbContext.Customer_NewProfiles.Add(_profile);
+                    await _dbContext.SaveChangesAsync();
+                    dto = _mapper.Map<GetProfileDto>(_profile);
+                }
+
                 return ResponseResult.Success(dto,TEXTSUCCESS);
             }
             catch (Exception ex)
@@ -160,7 +216,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                             {
                                 var cpt = new Customer_Profile_Transaction
                                 {
-                                    PersonId = item.PersonId.Value,
+                                    PersonId = item.PersonId,
                                     EditorId = item.EditorId.Value,
                                     FieldData = itemexcept.FieldData,
                                     BeforeChange = itemexcept.BeforeChange,
@@ -190,7 +246,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                             {
                                 var cpt = new Customer_Profile_Transaction
                                 {
-                                    PersonId = item.PersonId.Value,
+                                    PersonId = item.PersonId,
                                     EditorId = item.EditorId.Value,
                                     FieldData = itemexcept.FieldData,
                                     BeforeChange = itemexcept.BeforeChange,
@@ -252,9 +308,13 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                             await _dbContext.SaveChangesAsync();
                         }                      
                     }
+
+
+                    int idx = customer.FindIndex(x => x.PersonId == item.PersonId);
+                    customer[idx].IsUpdated = true;
+                    await _dbContext.SaveChangesAsync();
                 }
-                customer[0].IsUpdated = true;
-                await _dbContext.SaveChangesAsync();
+                
 
                  var dto = _mapper.Map<List<GetProfileDto>>(customer);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
@@ -278,10 +338,15 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 if (editcustomer == null)
                 {
                     //Get from SnapShot
-                    //You can get from Customer_snapshot or Payer_Snapshot also because it a same data.
 
-                    var oldcustomer = await _dbContext.Customer_Snapshots
+                    var oldcustomer = await _dbContext.Payer_Snapshots
                     .FirstOrDefaultAsync(x => x.PersonId == personId);
+
+                    if (oldcustomer == null)
+                    {
+                        return ResponseResult.Failure<GetProfileDto>("Not found customer.");
+                    }
+
                     var dto = _mapper.Map<GetProfileDto>(oldcustomer);
                     return ResponseResult.Success(dto, "Success");
                 }
@@ -382,6 +447,34 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                         addExcept.Add(addItem);
                     }
 
+                    if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        addItem = new GetProfileTransaction();
+                        addItem.FieldData = "ImagePath";
+                        addItem.BeforeChange = "";
+                        addItem.AfterChange = item.ImagePath;
+                        addExcept.Add(addItem);
+                    }
+
+                    if (!string.IsNullOrEmpty(item.ImageReferenceId))
+                    {
+                        addItem = new GetProfileTransaction();
+                        addItem.FieldData = "ImageReferenceId";
+                        addItem.BeforeChange = "";
+                        addItem.AfterChange = item.ImageReferenceId;
+                        addExcept.Add(addItem);
+                    }
+
+                    if (!string.IsNullOrEmpty(item.DocumentId))
+                    {
+                        addItem = new GetProfileTransaction();
+                        addItem.FieldData = "DocumentId";
+                        addItem.BeforeChange = "";
+                        addItem.AfterChange = item.DocumentId;
+                        addExcept.Add(addItem);
+                    }
+
+
                 }
 
                 return addExcept.ToList();
@@ -469,6 +562,33 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     addItem.FieldData = "LineID";
                     addItem.BeforeChange = prevoiuscustomer.LineID;
                     addItem.AfterChange = item.LineID;
+                    addExcept.Add(addItem);
+                }
+
+                if (prevoiuscustomer.ImagePath != item.ImagePath)
+                {
+                    addItem = new GetProfileTransaction();
+                    addItem.FieldData = "ImagePath";
+                    addItem.BeforeChange = prevoiuscustomer.ImagePath;
+                    addItem.AfterChange = item.ImagePath;
+                    addExcept.Add(addItem);
+                }
+
+                if (prevoiuscustomer.ImagePath != item.ImageReferenceId)
+                {
+                    addItem = new GetProfileTransaction();
+                    addItem.FieldData = "ImageReferenceId";
+                    addItem.BeforeChange = prevoiuscustomer.ImageReferenceId;
+                    addItem.AfterChange = item.ImageReferenceId;
+                    addExcept.Add(addItem);
+                }
+
+                if (prevoiuscustomer.ImagePath != item.DocumentId)
+                {
+                    addItem = new GetProfileTransaction();
+                    addItem.FieldData = "DocumentId";
+                    addItem.BeforeChange = prevoiuscustomer.DocumentId;
+                    addItem.AfterChange = item.DocumentId;
                     addExcept.Add(addItem);
                 }
 

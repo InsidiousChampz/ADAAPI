@@ -38,7 +38,6 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
 
         [StringLength(40)]
         public string PrimaryPhone { get; set; }
-
         public bool IsAgentConfirm { get; set; } = false;
         public bool IsCustomerReply { get; set; } = false;
         public bool IsSMSSended { get; set; } = false;

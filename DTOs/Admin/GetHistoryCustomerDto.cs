@@ -10,8 +10,12 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
     {
         public int PersonId { get; set; }
         public int EditorId { get; set; }
+
         [StringLength(100)]
-        public string FullName { get; set; }
+        public string PersonFullName { get; set; }
+
+        [StringLength(100)]
+        public string EditorFullName { get; set; }
         public DateTime LastUpdate { get; set; }
         [StringLength(255)]
         public string FieldData { get; set; }

@@ -13,7 +13,7 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int? PersonId { get; set; }
+        public int PersonId { get; set; }
         public Guid Customer_guid { get; set; }
         public int? TitleId { get; set; }
 
@@ -55,15 +55,21 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
         
         public bool IsUpdated { get; set; }
 
+        public bool IsConfirm { get; set; }
+
         [StringLength(255)]
         public string ListMergeFrom { get; set; }
 
         [StringLength(255)]
         public string ListMergeTo { get; set; }
 
+        [Column(TypeName = "datetime")]
         public DateTime LastUpdated { get; set; }
 
-       
+        [Column(TypeName = "datetime")]
+        public DateTime ConfirmDate { get; set; }
+
+
 
 
     }

@@ -9,7 +9,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 {
     public class AddProfileDto
     {
-        public int? PersonId { get; set; }
+        public int PersonId { get; set; }
         public Guid Customer_guid { get; set; }
         public int? TitleId { get; set; }
 

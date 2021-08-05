@@ -118,6 +118,9 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("ConfirmDate")
+                        .HasColumnType("datetime");
+
                     b.Property<Guid>("Customer_guid")
                         .HasColumnType("uniqueidentifier");
 
@@ -150,6 +153,9 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<bool>("IsConfirm")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsUpdated")
                         .HasColumnType("bit");
 
@@ -159,7 +165,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasMaxLength(100);
 
                     b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("LineID")
                         .HasColumnType("nvarchar(255)")
@@ -173,7 +179,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimaryPhone")
@@ -215,9 +221,9 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasMaxLength(100);
 
                     b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimaryPhone")
@@ -228,9 +234,6 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
-
-                    b.Property<int?>("TitleId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -260,7 +263,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasMaxLength(255);
 
                     b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");

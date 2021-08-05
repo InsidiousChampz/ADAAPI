@@ -15,7 +15,6 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
             [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int Id { get; set; }
             public int? PersonId { get; set; }
-            public int? TitleId { get; set; }
 
             [Required(ErrorMessage = "FirstName is invalid."), StringLength(100)]
             public string FirstName { get; set; }
@@ -31,6 +30,8 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
 
             [StringLength(255)]
             public string Remark { get; set; }
+
+            [Column(TypeName = "datetime")]
             public DateTime LastUpdated { get; set; }
         }
 }

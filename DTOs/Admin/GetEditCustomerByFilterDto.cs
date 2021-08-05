@@ -8,16 +8,18 @@ namespace SmsUpdateCustomer_Api.DTOs.Admin
 {
     public class GetEditCustomerByFilterDto: PaginationDto
     {
-        public bool IsAgentConfirm { get; set; }
 
         [StringLength(255)]
         public string FullName { get; set; }
 
         [StringLength(13)]
         public string IdentityCard { get; set; }
+        
         [StringLength(40)]
         public string PrimaryPhone { get; set; }
-       
+
+        public bool IsConfirm { get; set; }
+
         public string OrderingField { get; set; }
 
         public bool AscendingOrder { get; set; } = true;

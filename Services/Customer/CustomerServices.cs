@@ -49,8 +49,8 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                 #region efCore
                 //Payer is must have a policies if not found policies that mean a customer not a payer
                 var customer = await _dbContext.Payer_Snapshots
-                    .Where(x => x.LastName == filter.LastName
-                     && x.IdentityCard == filter.IdentityCard
+                    .Where(x => x.LastName.Trim() == filter.LastName.Trim()
+                     && x.IdentityCard.Trim() == filter.IdentityCard.Trim()
                      && x.Policies.Count > 0)
                     .Include(x => x.Policies)
                     .ThenInclude(o => o.CustomerDetail)

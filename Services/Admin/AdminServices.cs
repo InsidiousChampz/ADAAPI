@@ -138,28 +138,42 @@ namespace SmsUpdateCustomer_Api.Services.Admin
             try
             {
 
-                var customerx = (from ps in _dbContext.Payer_Snapshots
-                                 join ct in _dbContext.Customer_Profile_Transactions
-                                 on ps.PersonId equals ct.PersonId
-                                 join hc in _dbContext.Customer_Headers
-                                 on ct.PersonId equals hc.PayerPersonId
-                                 select new GetEditCustomerDto
-                                 {
-                                     PersonId = ps.PersonId,
-                                     FirstName = ps.FirstName,
-                                     LastName = ps.LastName,
-                                     FullName = ps.FirstName + " " + ps.LastName,
-                                     IdentityCard = ps.IdentityCard,
-                                     PrimaryPhone = ps.PrimaryPhone,
-                                     IsCustomerReply = hc.IsCustomerReply,
-                                     IsSMSSended = hc.IsSMSSended,
-                                     IsAgentConfirm = hc.IsAgentConfirm,
-                                     OrderingField = filter.OrderingField,
-                                     AscendingOrder = filter.AscendingOrder,
-                                 }
-                          ).AsQueryable();
+                //var customerx = (from ps in _dbContext.Payer_Snapshots
+                //                 join ct in _dbContext.Customer_Profile_Transactions
+                //                 on ps.PersonId equals ct.PersonId
+                //                 join hc in _dbContext.Customer_Headers
+                //                 on ct.PersonId equals hc.PayerPersonId
+                //                 select new GetEditCustomerDto
+                //                 {
+                //                     PersonId = ps.PersonId,
+                //                     FirstName = ps.FirstName,
+                //                     LastName = ps.LastName,
+                //                     FullName = ps.FirstName + " " + ps.LastName,
+                //                     IdentityCard = ps.IdentityCard,
+                //                     PrimaryPhone = ps.PrimaryPhone,
+                //                     IsCustomerReply = hc.IsCustomerReply,
+                //                     IsSMSSended = hc.IsSMSSended,
+                //                     IsAgentConfirm = hc.IsAgentConfirm,
+                //                     OrderingField = filter.OrderingField,
+                //                     AscendingOrder = filter.AscendingOrder,
+                //                 }
+                //          ).AsQueryable();
 
-                var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+                //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+
+                var customer = (from cp in _dbContext.Customer_NewProfiles
+                                where cp.IsUpdated == true
+                                select new GetEditCustomerDto
+                                {
+                                    PersonId = cp.PersonId,
+                                    FirstName = cp.FirstName,
+                                    LastName = cp.LastName,
+                                    FullName = cp.FirstName + " " + cp.LastName,
+                                    IdentityCard = cp.IdentityCard,
+                                    PrimaryPhone = cp.PrimaryPhone,
+                                    LastUpdated = cp.LastUpdated,
+                                    IsConfirm = cp.IsConfirm,
+                                }).AsQueryable();
 
                 if (customer == null)
                 {
@@ -169,16 +183,15 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 else
                 {
 
-                    if (filter.IsAgentConfirm == true || filter.IsAgentConfirm == false)
+                    if (filter.IsConfirm == true || filter.IsConfirm == false)
                     {
-                        customer = customer.Where(x => x.IsAgentConfirm == filter.IsAgentConfirm);
+                        customer = customer.Where(x => x.IsConfirm == filter.IsConfirm);
                     }
 
                     if (!string.IsNullOrWhiteSpace(filter.FullName))
                     {
                         customer = customer.Where(x => x.FullName.Contains(filter.FullName));
                     }
-
 
                     if (!string.IsNullOrWhiteSpace(filter.IdentityCard))
                     {
@@ -246,6 +259,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                 select new GetCompareDto
                                 {
                                     Caption = "Before",
+                                    IsPayer = o.PersonId != personId ? false : true,
                                     PersonId = o.PersonId,
                                     TitleId = o.TitleId,
                                     FirstName = o.FirstName,
@@ -283,6 +297,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                    select new GetCompareDto
                                    {
                                        Caption = "After",
+                                       IsPayer = o.PersonId != personId ? false : true,
                                        PersonId = o.PersonId,
                                        TitleId = o.TitleId,
                                        FirstName = o.FirstName,
@@ -293,9 +308,9 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                        SecondaryPhone = o.SecondaryPhone,
                                        Email = o.Email,
                                        LineID = o.LineID,
-                                       ImagePath = o.ImagePath,
-                                       ImageReferenceId = o.ImageReferenceId,
-                                       DocumentId = o.DocumentId,
+                                       ImagePath = o.ImagePath != null ? o.ImagePath : "", //o.ImagePath,
+                                       ImageReferenceId = o.ImageReferenceId != null ? o.ImageReferenceId : "",//o.ImageReferenceId,
+                                       DocumentId = o.DocumentId != null ? o.DocumentId : "",//o.DocumentId,
                                    }).ToList();
 
                 var customer = original.Union(newcustomer);
@@ -328,6 +343,12 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 }
 
                 int[] inq = customer[0].ListMergeFrom.Split(',').Select(Int32.Parse).ToArray();
+
+                if (inq.Count() <= 1)
+                {
+                    return ResponseResult.Failure<List<GetMergeDto>>("No data to merge.");
+                }
+
                 int ind = int.Parse(customer[0].ListMergeTo);
 
                 var result = from o in _dbContext.Payer_Snapshots
@@ -392,7 +413,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 //                    BeforeChanged = o.BeforeChange,
                 //                    AfterChanged = o.AfterChange,
                 //                });
-
+                var personName = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == personId);
                 var history = (from o in await _dbContext.Customer_Profile_Transactions.ToListAsync()
                                join s in await _dbContext.Payer_Snapshots.ToListAsync()
                                on o.EditorId equals s.PersonId
@@ -400,8 +421,9 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                select new GetHistoryCustomerDto
                                {
                                    PersonId = s.PersonId,
+                                   PersonFullName = personName.FirstName + " " + personName.LastName,
                                    EditorId = o.EditorId,
-                                   FullName = s.FirstName + " " + s.LastName,
+                                   EditorFullName = s.FirstName + " " + s.LastName,
                                    LastUpdate = o.LastUpdated,
                                    FieldData = o.FieldData,
                                    BeforeChanged = o.BeforeChange,
@@ -428,15 +450,15 @@ namespace SmsUpdateCustomer_Api.Services.Admin
             try
             {
 
-                if (confirm.PersonData == null && confirm.MergeData == null)
-                {
+                //if (confirm.PersonData == null && confirm.MergeData == null)
+                //{
 
-                    // Update admin confirm in customer_header
-                    await UpdateAdminConfirm(confirm.PersonData.EditorId);
+                //    // Update admin confirm in customer_header
+                //    await UpdateAdminConfirm(confirm.PersonData.EditorId);
 
-                    var dtos = _mapper.Map<ConfirmAdminDto>(confirm);
-                    return ResponseResult.Success(dtos, TEXTSUCCESS);
-                }
+                //    var dtos = _mapper.Map<ConfirmAdminDto>(confirm);
+                //    return ResponseResult.Success(dtos, TEXTSUCCESS);
+                //}
 
 
                 //update personData 
@@ -449,9 +471,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 }
 
 
-                // add transaction what is different field.
-
-                foreach (var item in editdata)
+               foreach (var item in editdata)
                 {
                     // update new data into customer newprofile
                     item.FirstName = confirm.PersonData.FirstName;
@@ -471,6 +491,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     item.ListMergeTo = confirm.MergeData.ListMergeTo;
                     item.IsUpdated = true;
                     item.LastUpdated = DateTime.Now;
+                    item.IsConfirm = true;
+                    item.ConfirmDate = DateTime.Now;
                 }
                 await _dbContext.SaveChangesAsync();
 
@@ -486,7 +508,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         {
                             var cpt = new Customer_Profile_Transaction
                             {
-                                PersonId = item.PersonId.Value,
+                                PersonId = item.PersonId,
                                 EditorId = item.EditorId.Value,
                                 FieldData = itemexcept.FieldData,
                                 BeforeChange = itemexcept.BeforeChange,
@@ -547,28 +569,41 @@ namespace SmsUpdateCustomer_Api.Services.Admin
             try
             {
 
-                var customerx = (from ps in _dbContext.Payer_Snapshots
-                                 join ct in _dbContext.Customer_Profile_Transactions
-                                 on ps.PersonId equals ct.EditorId
-                                 join hc in _dbContext.Customer_Headers
-                                 on ct.EditorId equals hc.PayerPersonId
-                                 select new GetEditCustomerDto
-                                 {
-                                     PersonId = ps.PersonId,
-                                     FirstName = ps.FirstName,
-                                     LastName = ps.LastName,
-                                     FullName = ps.FirstName + " " + ps.LastName,
-                                     IdentityCard = ps.IdentityCard,
-                                     PrimaryPhone = ps.PrimaryPhone,
-                                     IsCustomerReply = hc.IsCustomerReply,
-                                     IsSMSSended = hc.IsSMSSended,
-                                     IsAgentConfirm = hc.IsAgentConfirm,
-                                     OrderingField = filter.OrderingField,
-                                     AscendingOrder = filter.AscendingOrder,
-                                 }
-                          ).AsQueryable();
+                //var customerx = (from ps in _dbContext.Payer_Snapshots
+                //                 join ct in _dbContext.Customer_Profile_Transactions
+                //                 on ps.PersonId equals ct.EditorId
+                //                 join hc in _dbContext.Customer_Headers
+                //                 on ct.EditorId equals hc.PayerPersonId
+                //                 select new GetEditCustomerDto
+                //                 {
+                //                     PersonId = ps.PersonId,
+                //                     FirstName = ps.FirstName,
+                //                     LastName = ps.LastName,
+                //                     FullName = ps.FirstName + " " + ps.LastName,
+                //                     IdentityCard = ps.IdentityCard,
+                //                     PrimaryPhone = ps.PrimaryPhone,
+                //                     OrderingField = filter.OrderingField,
+                //                     AscendingOrder = filter.AscendingOrder,
+                //                 }
+                //          ).AsQueryable();
 
-                var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+                //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+
+                var customer = (from cp in _dbContext.Customer_NewProfiles
+                                join ct in _dbContext.Policy_Snapshots
+                                on cp.PersonId equals ct.PayerPersonId
+                                where cp.IsUpdated == true
+                                select new GetEditCustomerDto
+                                {
+                                    PersonId = cp.PersonId,
+                                    FirstName = cp.FirstName,
+                                    LastName = cp.LastName,
+                                    FullName = cp.FirstName + " " + cp.LastName,
+                                    IdentityCard = cp.IdentityCard,
+                                    PrimaryPhone = cp.PrimaryPhone,
+                                    LastUpdated = cp.LastUpdated,
+                                    IsConfirm = cp.IsConfirm,
+                                }).AsQueryable();
 
                 if (customer == null)
                 {
@@ -577,13 +612,10 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 }
                 else
                 {
-
-
                     if (!string.IsNullOrWhiteSpace(filter.FullName))
                     {
                         customer = customer.Where(x => x.FullName.Contains(filter.FullName));
                     }
-
 
                     if (!string.IsNullOrWhiteSpace(filter.IdentityCard))
                     {
@@ -621,7 +653,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-
         public async Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataAllCustomer(int personId)
         {
             try
@@ -630,16 +661,27 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 var IsInvalid = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == personId && x.IsUpdated == true);
                 if (IsInvalid == null)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Not found record confirm from customer.");
+                    return ResponseResult.Failure<List<GetCompareDto>>("Not found customer.");
                 }
 
-
                 // get payerId and customerId 
-                var idData = (from ps in await _dbContext.Payer_Snapshots.ToListAsync()
+                var idDatax = (from ps in await _dbContext.Payer_Snapshots.ToListAsync()
                               join pss in await _dbContext.Policy_Snapshots.ToListAsync()
                               on ps.PersonId equals pss.PayerPersonId
                               where ps.PersonId == personId
                               select pss.CustPersonId);
+                
+                IList<int> idData = new List<int>();
+                if (idDatax.Contains(personId) == false)
+                {
+                    idData.Add(personId);  
+                }
+
+                foreach (var item in idDatax)
+                {
+                    idData.Add(item.Value);
+                }
+
 
                 // get personal data from every id in idData.
                 var allcustomer = await (from o in _dbContext.Payer_Snapshots
@@ -648,6 +690,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                          select new GetCompareDto
                                          {
                                              Caption = "Before",
+                                             IsPayer = o.PersonId != personId ? false : true,
                                              PersonId = o.PersonId,
                                              TitleId = o.TitleId,
                                              FirstName = o.FirstName,
@@ -669,7 +712,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     return ResponseResult.Failure<List<GetCompareDto>>("Not Found Customer.");
                 }
 
-
                 List<GetCompareDto> newList = new List<GetCompareDto>();
 
                 // Loop one by one.
@@ -680,12 +722,12 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                     select a
                                  );
 
-
                     var beforeData = allcustomer.Where(x => x.PersonId == item.PersonId).ToList();
                     var afterData = (from o in allcustomer.Where(x => x.PersonId == item.PersonId)
                                      select new GetCompareDto
                                      {
                                          Caption = "After",
+                                         IsPayer = o.PersonId != personId ? false : true,
                                          PersonId = o.PersonId,
                                          TitleId = o.TitleId,
                                          FirstName = o.FirstName,
@@ -723,7 +765,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-
         public async Task<ServiceResponse<GetCompareLoginDto>> GetCompareLoginOfCustomer(int personId)
         {
             try
@@ -753,7 +794,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-
         public async Task<ServiceResponse<GetCompareLoginDto>> UpdateCompareLoginOfCustomer(GetCompareLoginDto update)
         {
             try
