@@ -589,10 +589,10 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
 
-                var customer = (from cp in _dbContext.Customer_NewProfiles
+                var customerx = (from cp in _dbContext.Customer_NewProfiles
                                 join ct in _dbContext.Policy_Snapshots
                                 on cp.PersonId equals ct.PayerPersonId
-                                where cp.IsUpdated == true
+                                where cp.IsUpdated == true && cp.PersonId == cp.EditorId
                                 select new GetEditCustomerDto
                                 {
                                     PersonId = cp.PersonId,
@@ -604,6 +604,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                     LastUpdated = cp.LastUpdated,
                                     IsConfirm = cp.IsConfirm,
                                 }).AsQueryable();
+
+                var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
 
                 if (customer == null)
                 {
