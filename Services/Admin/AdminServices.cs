@@ -568,7 +568,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         {
             try
             {
-
+                #region OldQuery
                 //var customerx = (from ps in _dbContext.Payer_Snapshots
                 //                 join ct in _dbContext.Customer_Profile_Transactions
                 //                 on ps.PersonId equals ct.EditorId
@@ -588,7 +588,9 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 //          ).AsQueryable();
 
                 //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+                #endregion
 
+                #region NewQuery
                 var customerx = (from cp in _dbContext.Customer_NewProfiles
                                 join ct in _dbContext.Policy_Snapshots
                                 on cp.PersonId equals ct.PayerPersonId
@@ -606,6 +608,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                 }).AsQueryable();
 
                 var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+                #endregion
 
                 if (customer == null)
                 {
@@ -652,6 +655,74 @@ namespace SmsUpdateCustomer_Api.Services.Admin
             catch (Exception ex)
             {
                 return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>(ex.Message);
+
+            }
+        }
+        public async Task<ServiceResponseWithPagination<List<GetLoginCustomerDto>>> GetLoginbyCallCenter(GetEditCustomerByFilterDto filter)
+        {
+            try
+            {
+
+
+                var customer = (from cp in _dbContext.Customer_Headers
+                                 select new GetLoginCustomerDto
+                                 {
+                                     PersonId = cp.PayerPersonId,
+                                     FirstName = cp.FirstName,
+                                     LastName = cp.LastName,
+                                     FullName = cp.FirstName + " " + cp.LastName,
+                                     IdentityCard = cp.IdentityCard,
+                                     PrimaryPhone = cp.PrimaryPhone,
+                                     LoginIdentityCard = cp.LoginIdentityCard,
+                                     LoginLastName = cp.LoginLastName,
+                                     LastUpdated = cp.LastUpdated,
+                                 }).AsQueryable();
+
+                if (customer == null)
+                {
+                    // 404
+                    return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>("Customer Not Found.");
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(filter.FullName))
+                    {
+                        customer = customer.Where(x => x.FullName.Contains(filter.FullName));
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(filter.IdentityCard))
+                    {
+                        customer = customer.Where(x => x.IdentityCard == filter.IdentityCard);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(filter.PrimaryPhone))
+                    {
+                        customer = customer.Where(x => x.PrimaryPhone == filter.PrimaryPhone);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(filter.OrderingField))
+                    {
+                        try
+                        {
+                            customer = customer.OrderBy($"{filter.OrderingField} {(filter.AscendingOrder ? "ascending" : "descending")}");
+                        }
+                        catch
+                        {
+                            return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>($"Could not order by field: {filter.OrderingField}");
+                        }
+
+                      ;
+                    }
+
+                    var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(customer, filter.RecordsPerPage, filter.Page);
+                    var dto = await customer.Paginate(filter).ToListAsync();
+                    return ResponseResultWithPagination.Success(dto, paginationResult, TEXTSUCCESS);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>(ex.Message);
 
             }
         }
@@ -767,7 +838,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-        public async Task<ServiceResponse<GetCompareLoginDto>> GetCompareLoginOfCustomer(int personId)
+        public async Task<ServiceResponse<GetCompareLoginDto>> GetLoginOfCustomer(int personId)
         {
             try
             {
@@ -796,7 +867,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-        public async Task<ServiceResponse<GetCompareLoginDto>> UpdateCompareLoginOfCustomer(GetCompareLoginDto update)
+        public async Task<ServiceResponse<GetCompareLoginDto>> UpdateLoginOfCustomer(GetCompareLoginDto update)
         {
             try
             {
@@ -808,10 +879,38 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     return ResponseResult.Failure<GetCompareLoginDto>("The Customer not found.");
                 }
 
+                //First : Update Table login.
                 IsCustomer.LoginIdentityCard = update.IdentityCard;
                 IsCustomer.LoginLastName = update.LastName;
+                await _dbContext.SaveChangesAsync();
+
+                //second : Update Table Payer.
+                var payertable = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == update.PersonId);
+
+                if (payertable == null)
+                {
+                    return ResponseResult.Failure<GetCompareLoginDto>("The Payer not found.");
+                }
+
+                payertable.IdentityCard = update.IdentityCard;
+                payertable.LastName = update.LastName;
+                await _dbContext.SaveChangesAsync();
 
 
+                //third : Update Table Customer.
+                var customertable = await _dbContext.Customer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == update.PersonId);
+
+                if (customertable == null)
+                {
+                    return ResponseResult.Failure<GetCompareLoginDto>("The Customer not found.");
+                }
+
+                customertable.IdentityCard = update.IdentityCard;
+                customertable.LastName = update.LastName;
+                await _dbContext.SaveChangesAsync();
+
+
+                // Last thing : return result.
                 var dto = _mapper.Map<GetCompareLoginDto>(update);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
 
@@ -822,7 +921,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-
+        
         #endregion
     }
 }

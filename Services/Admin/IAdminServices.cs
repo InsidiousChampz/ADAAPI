@@ -21,8 +21,11 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         //UI8
         Task<ServiceResponseWithPagination<List<GetEditCustomerDto>>> GetCustomerbyCallCenter(GetEditCustomerByFilterDto filter);
         Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataAllCustomer(int personId);
-        Task<ServiceResponse<GetCompareLoginDto>> GetCompareLoginOfCustomer(int personId);
-        Task<ServiceResponse<GetCompareLoginDto>> UpdateCompareLoginOfCustomer(GetCompareLoginDto update);
+
+        //UI9
+        Task<ServiceResponseWithPagination<List<GetLoginCustomerDto>>> GetLoginbyCallCenter(GetEditCustomerByFilterDto filter);
+        Task<ServiceResponse<GetCompareLoginDto>> GetLoginOfCustomer(int personId);
+        Task<ServiceResponse<GetCompareLoginDto>> UpdateLoginOfCustomer(GetCompareLoginDto update);
 
 
     }

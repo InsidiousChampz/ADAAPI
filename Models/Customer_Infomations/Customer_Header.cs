@@ -13,13 +13,16 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int HeaderCustomerID { get; set; }
-        public int? PayerPersonId { get; set; }
+        public int PayerPersonId { get; set; }
 
         [StringLength(100)]
         public string FirstName { get; set; }
 
         [StringLength(100)]
         public string LastName { get; set; }
+
+        [StringLength(13)]
+        public string IdentityCard { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime Birthdate { get; set; }
@@ -50,9 +53,12 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
 
         [Column(TypeName = "datetime")]
         public DateTime SentDate { get; set; } = new DateTime(1900 - 01 - 01);
-        
 
-        
+        [Column(TypeName = "datetime")]
+        public DateTime LastUpdated { get; set; } = new DateTime(1900 - 01 - 01);
+
+
+
 
 
     }

@@ -18,7 +18,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Admin
         [StringLength(40)]
         public string PrimaryPhone { get; set; }
 
-        public bool IsConfirm { get; set; }
+        public bool? IsConfirm { get; set; }
 
         public string OrderingField { get; set; }
 
