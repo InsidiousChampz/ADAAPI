@@ -1,0 +1,28 @@
+2021-08-10 09:58:52.948 +07:00 [INF] Starting web host
+2021-08-10 12:47:15.100 +07:00 [INF] Starting web host
+2021-08-10 12:50:24.348 +07:00 [INF] Starting web host
+2021-08-10 12:52:52.378 +07:00 [INF] Starting web host
+2021-08-10 12:55:23.704 +07:00 [INF] Starting web host
+2021-08-10 13:00:55.897 +07:00 [INF] Starting web host
+2021-08-10 13:05:09.164 +07:00 [INF] Starting web host
+2021-08-10 13:49:28.920 +07:00 [INF] Starting web host
+2021-08-10 14:35:17.235 +07:00 [INF] Starting web host
+2021-08-10 14:35:29.392 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'SmsUpdateCustomer_Api.Data.AppDBContext'.
+System.InvalidCastException: Unable to cast object of type 'System.String' to type 'System.Int32'.
+   at Microsoft.Data.SqlClient.SqlBuffer.get_Int32()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetInt32(Int32 i)
+   at lambda_method(Closure , QueryContext , DbDataReader , ResultContext , Int32[] , ResultCoordinator )
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+System.InvalidCastException: Unable to cast object of type 'System.String' to type 'System.Int32'.
+   at Microsoft.Data.SqlClient.SqlBuffer.get_Int32()
+   at Microsoft.Data.SqlClient.SqlDataReader.GetInt32(Int32 i)
+   at lambda_method(Closure , QueryContext , DbDataReader , ResultContext , Int32[] , ResultCoordinator )
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2021-08-10 16:00:57.960 +07:00 [INF] Starting web host
+2021-08-10 16:03:32.677 +07:00 [INF] Starting web host
+2021-08-10 16:05:41.091 +07:00 [INF] Starting web host
+2021-08-10 16:06:44.417 +07:00 [INF] Starting web host
+2021-08-10 16:08:12.099 +07:00 [INF] Starting web host
+2021-08-10 21:46:49.223 +07:00 [INF] Starting web host
+2021-08-10 21:47:44.970 +07:00 [INF] Starting web host
+2021-08-10 21:56:26.581 +07:00 [INF] Starting web host

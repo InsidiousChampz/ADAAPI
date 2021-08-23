@@ -19,6 +19,132 @@ namespace SmsUpdateCustomer_Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Admin.AdminApprove", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("Customer_guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DocumentId")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("EditorId")
+                        .HasColumnType("int")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("IdentityCard")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(13)")
+                        .HasMaxLength(13);
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ImageReferenceId")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("IsCheckMerge")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUpdated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("LineID")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ListMergeFrom")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ListMergeTo")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrimaryPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("SecondaryPhone")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<int?>("TitleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminApprove","sap");
+                });
+
+            modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Admin.AdminApproveTransaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AfterChange")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("BeforeChange")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminApproveTransaction","sap");
+                });
+
             modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Infomations.Customer_Detail", b =>
                 {
                     b.Property<int>("DetailCustomerID")
@@ -44,6 +170,76 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.ToTable("DetailCustomer","ifo");
                 });
 
+            modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Infomations.Customer_FollowUp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AdminConfirm")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("AgentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AgentName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AppID")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Branch")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("CustomerConfirm")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("OrganizeName")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayerFirstName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PayerLastName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrimaryPhone")
+                        .HasColumnType("nvarchar(13)")
+                        .HasMaxLength(13);
+
+                    b.Property<string>("Province")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<bool>("Result")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FollowupCustomer","ifo");
+                });
+
             modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Infomations.Customer_Header", b =>
                 {
                     b.Property<int>("HeaderCustomerID")
@@ -54,12 +250,16 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("ConfirmDate")
+                    b.Property<DateTime?>("ConfirmDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<string>("IdentityCard")
+                        .HasColumnType("nvarchar(13)")
+                        .HasMaxLength(13);
 
                     b.Property<bool>("IsAgentConfirm")
                         .HasColumnType("bit");
@@ -74,6 +274,9 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("LoginIdentityCard")
                         .HasColumnType("nvarchar(13)")
                         .HasMaxLength(13);
@@ -86,26 +289,56 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("PayerPersonId")
+                    b.Property<int>("NumberofSended")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PayerPersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimaryPhone")
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
-                    b.Property<DateTime>("ReplyDate")
+                    b.Property<DateTime?>("ReplyDate")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("SMSCause")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("SMSFormat")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<DateTime>("SentDate")
+                    b.Property<string>("SMSResult")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("SentDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("HeaderCustomerID");
 
                     b.ToTable("HeaderCustomer","ifo");
+                });
+
+            modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Infomations.Customer_Policy_Rank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProductTypeDetail")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("ProductTypeRank")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RankPolicyCustomer","ifo");
                 });
 
             modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Profiles.Customer_NewProfile", b =>
@@ -128,7 +361,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("EditorId")
+                    b.Property<int>("EditorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -215,6 +448,9 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<DateTime>("InformDate")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -223,7 +459,7 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("PersonId")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PrimaryPhone")
@@ -235,9 +471,31 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<int>("TypeHotLine")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("CustomerHotline","scp");
+                });
+
+            modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Profiles.Customer_Profile_Hotline_Detail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("HotlineDescriptions")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("HotlineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerHotlineDetail","scp");
                 });
 
             modelBuilder.Entity("SmsUpdateCustomer_Api.Models.Customer_Profiles.Customer_Profile_Transaction", b =>
@@ -397,7 +655,22 @@ namespace SmsUpdateCustomer_Api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppStatus")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<string>("ApplicationCode")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("CancelDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CustBuildingName")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("CustDistrict")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
@@ -408,11 +681,35 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<int?>("CustPersonId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CustProvince")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("CustSubDistrict")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<Guid?>("Customer_guid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("PayerBranch")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("PayerBranchId")
+                        .HasColumnType("int")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayerBuildingName")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayerDistrict")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("PayerName")
                         .HasColumnType("nvarchar(255)")
@@ -420,6 +717,22 @@ namespace SmsUpdateCustomer_Api.Migrations
 
                     b.Property<int?>("PayerPersonId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PayerProvince")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayerStudyArea")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("PayerStudyAreaId")
+                        .HasColumnType("int")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayerSubDistrict")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<int?>("Payer_SnapshotId")
                         .HasColumnType("int");
@@ -437,6 +750,21 @@ namespace SmsUpdateCustomer_Api.Migrations
                     b.Property<string>("ProductType")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
+
+                    b.Property<string>("ProductTypeDetail")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SaleCode")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SaleName")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("StartCoverDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

@@ -133,3 +133,7 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\SmsUpdateCustomer_Api.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\SmsUpdateCustomer_Api.pdb
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\SmsUpdateCustomer_Api.genruntimeconfig.cache
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Release\netcoreapp3.1\ClosedXML.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Release\netcoreapp3.1\DocumentFormat.OpenXml.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Release\netcoreapp3.1\ExcelNumberFormat.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Release\netcoreapp3.1\System.IO.Packaging.dll

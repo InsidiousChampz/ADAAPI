@@ -61,6 +61,8 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     PrimaryPhone = newhotline.PrimaryPhone.Trim(),
                     Email = newhotline.Email,
                     Remark = newhotline.Remark,
+                    TypeHotLine = newhotline.TypeHotLine,
+                    InformDate= Now(),
                     LastUpdated = Now(),
                 };
 
@@ -130,7 +132,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     customer.EditorId = newProfile.EditorId;
                     customer.ListMergeFrom = newProfile.ListMergeFrom;
                     customer.ListMergeTo = newProfile.ListMergeTo;
-                    customer.IsUpdated = false;
+                    customer.IsUpdated = newProfile.IsUpdated != false ? true : false;
                     customer.IsConfirm = false;
                     customer.ConfirmDate = new DateTime(1900,01,01);
                     customer.LastUpdated = Now();
@@ -160,7 +162,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                         EditorId = newProfile.EditorId,
                         ListMergeFrom = newProfile.ListMergeFrom,
                         ListMergeTo = newProfile.ListMergeTo,
-                        IsUpdated = false,
+                        IsUpdated = newProfile.IsUpdated != false ? true : false,
                         IsConfirm = false,
                         ConfirmDate = new DateTime(1900, 01, 01),
                         LastUpdated = Now(),
@@ -187,17 +189,73 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 var customer = await _dbContext.Customer_NewProfiles
                     .Where(x => x.IsUpdated == false && x.EditorId == editorId).ToListAsync();
 
-                // if no record change just exit.
+                // if no record change just get data from snap.
                 if (customer.Count == 0)
                 {
-                    return ResponseResult.Failure<List<GetProfileDto>>("Not found record to change.");
+
+                    // Get data from Snapshot for Default Data
+                    var dummy_customer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == editorId);
+
+                    var dummy_listmerg = (from o in await _dbContext.Payer_Snapshots.ToListAsync()
+                                          where o.IdentityCard == dummy_customer.IdentityCard && o.LastName == dummy_customer.LastName
+                                          select new GetProfileDto {
+                                              PersonId = o.PersonId
+                                          }).ToList();
+
+                    string temp_listmergefrom = default;
+                    string temp_listmergeto = editorId.ToString();
+
+                    foreach (var item in dummy_listmerg)
+                    {
+                        temp_listmergefrom = temp_listmergefrom + item.PersonId.ToString() + ',';
+                    }
+
+                    AddProfileDto addprofile = new AddProfileDto
+                    {
+                        PersonId = dummy_customer.PersonId,
+                        Customer_guid = dummy_customer.Customer_guid,
+                        TitleId = dummy_customer.TitleId,
+                        FirstName = dummy_customer.FirstName,
+                        LastName = dummy_customer.LastName,
+                        Birthdate = dummy_customer.Birthdate,
+                        IdentityCard = dummy_customer.IdentityCard,
+                        PrimaryPhone = dummy_customer.PrimaryPhone,
+                        SecondaryPhone = dummy_customer.SecondaryPhone,
+                        Email = dummy_customer.Email,
+                        LineID = dummy_customer.LineID,
+                        EditorId = editorId,
+                        ImagePath = string.Empty,
+                        ImageReferenceId = string.Empty,
+                        DocumentId = string.Empty,
+                        ListMergeFrom = temp_listmergefrom.Substring(0, temp_listmergefrom.Length -1),
+                        ListMergeTo = temp_listmergeto,
+                        IsUpdated = true,
+                            
+                    };
+
+                    await AddCustomerProfile(addprofile);
+
+                    //Update header
+                    var header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == editorId);
+                    if (header != null)
+                    {
+                        header.ReplyDate = Now();
+                        header.IsCustomerReply = true;
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+
+                    var gpf = await _dbContext.Customer_NewProfiles.Where(x => x.PersonId == editorId).ToListAsync();
+
+                    var dtos = _mapper.Map<List<GetProfileDto>>(gpf);
+                    return ResponseResult.Success(dtos, TEXTSUCCESS);
                 }
+
 
                 // start Compare data.
                 foreach (var item in customer)
                 {
                     // Check in customer newprofile if found that mean some peaple edited this person before then get data from newprofile.
-
                     var customerPreviousEditor = await _dbContext.Customer_NewProfiles
                        .Where(x => x.PersonId == item.PersonId && x.EditorId != editorId)
                        .OrderByDescending(x => x.LastUpdated).FirstOrDefaultAsync();
@@ -217,7 +275,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                                 var cpt = new Customer_Profile_Transaction
                                 {
                                     PersonId = item.PersonId,
-                                    EditorId = item.EditorId.Value,
+                                    EditorId = item.EditorId,//item.EditorId.Value,
                                     FieldData = itemexcept.FieldData,
                                     BeforeChange = itemexcept.BeforeChange,
                                     AfterChange = itemexcept.AfterChange,
@@ -247,7 +305,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                                 var cpt = new Customer_Profile_Transaction
                                 {
                                     PersonId = item.PersonId,
-                                    EditorId = item.EditorId.Value,
+                                    EditorId = item.EditorId,//item.EditorId.Value,
                                     FieldData = itemexcept.FieldData,
                                     BeforeChange = itemexcept.BeforeChange,
                                     AfterChange = itemexcept.AfterChange,
@@ -313,10 +371,19 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     int idx = customer.FindIndex(x => x.PersonId == item.PersonId);
                     customer[idx].IsUpdated = true;
                     await _dbContext.SaveChangesAsync();
+
+                    //Update header
+                    var header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == editorId);
+                    if (header != null)
+                    {
+                        header.ReplyDate = Now();
+                        header.IsCustomerReply = true;
+                        await _dbContext.SaveChangesAsync();
+                    }
                 }
                 
 
-                 var dto = _mapper.Map<List<GetProfileDto>>(customer);
+                var dto = _mapper.Map<List<GetProfileDto>>(customer);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
@@ -363,11 +430,10 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 
             }
         }
-        private static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, List<Payer_Snapshot> snapcustomer)
+        public static List<GetProfileTransaction> VerifyData(Customer_NewProfile item, List<Payer_Snapshot> snapcustomer)
         {
             try
             {
-
                 List<GetProfileTransaction> addExcept = new List<GetProfileTransaction>();
                 GetProfileTransaction addItem = default;
                 int i = 0;

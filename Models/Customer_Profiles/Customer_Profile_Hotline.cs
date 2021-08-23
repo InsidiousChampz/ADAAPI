@@ -31,6 +31,11 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
             [StringLength(255)]
             public string Remark { get; set; }
 
+            public int TypeHotLine { get; set; } = 0;
+
+            [Column(TypeName = "datetime")]
+            public DateTime InformDate { get; set; }
+
             [Column(TypeName = "datetime")]
             public DateTime LastUpdated { get; set; }
         }

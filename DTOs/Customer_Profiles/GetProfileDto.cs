@@ -37,6 +37,20 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 
         [StringLength(255)]
         public string LineID { get; set; }
+        [StringLength(255)]
+        public string ImagePath { get; set; }
+
+        [StringLength(255)]
+        public string ImageReferenceId { get; set; }
+
+        [StringLength(255)]
+        public string DocumentId { get; set; }
+
+        [StringLength(255)]
+        public string ListMergeFrom { get; set; }
+
+        [StringLength(255)]
+        public string ListMergeTo { get; set; }
 
         public bool IsUpdated { get; set; }
 

@@ -13,10 +13,21 @@ namespace SmsUpdateCustomer_Api.Services.Admin
     {
         //UI7
         Task<ServiceResponseWithPagination<List<GetEditCustomerDto>>> GetCustomerbyAdmin(GetEditCustomerByFilterDto filter);
+        Task<ServiceResponse<GetCompareDto>> GetAdminEditRecord(int personId);
         Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId);
+        Task<ServiceResponse<List<GetHistoryAdminDto>>> GetAdminHistory(int personId);
         Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomer(int personId);
+        Task<ServiceResponse<List<GetCompareDto>>> GetCompareDataOfCustomerByAdmin(int personId);
+        Task<ServiceResponse<int>> GetCountEditRecordByAdmin(int personId);
+        Task<ServiceResponse<bool>> GetDoneEditRecordByAdmin(int personId);
+
+        Task<ServiceResponseWithPagination<List<GetPolicyCustomerDataDto>>> GetPolicyDataOfCustomer(GetPolicyCustomerFilterDto filter);
+
+        Task<ServiceResponseWithPagination<List<GetMergeDto>>> GetMergeDataOfCustomerByFilter(GetMergeByFilterDto filter);
         Task<ServiceResponse<List<GetMergeDto>>> GetMergeDataOfCustomer(int personId);
-        Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(ConfirmAdminDto confirm);
+        Task<ServiceResponse<UpdateMergeDto>> UpdateMergeDataOfCustomer(string userId, UpdateMergeDto update);
+        Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(int personId);
+        Task<ServiceResponse<GetProfileDto>> AddUpdateTempCustomerProfilebyAdmin(string userId, AddProfileDto newProfile);
 
         //UI8
         Task<ServiceResponseWithPagination<List<GetEditCustomerDto>>> GetCustomerbyCallCenter(GetEditCustomerByFilterDto filter);
@@ -26,6 +37,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         Task<ServiceResponseWithPagination<List<GetLoginCustomerDto>>> GetLoginbyCallCenter(GetEditCustomerByFilterDto filter);
         Task<ServiceResponse<GetCompareLoginDto>> GetLoginOfCustomer(int personId);
         Task<ServiceResponse<GetCompareLoginDto>> UpdateLoginOfCustomer(GetCompareLoginDto update);
+
+      
 
 
     }

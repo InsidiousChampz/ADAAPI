@@ -7,7 +7,8 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 {
     public class UpdateMergeDto
     {
-        public string ListMergFrom { get; set; }
+        public int PersonId { get; set; }
+        public string ListMergeFrom { get; set; }
         public string ListMergeTo { get; set; }
 
     }

@@ -21,9 +21,10 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
 
         [StringLength(255), RegularExpression("^(.+)@(.+)$", ErrorMessage = "Email Format is not Correct.")]
         public string Email { get; set; }
+        public int TypeHotLine { get; set; }
 
         [StringLength(255)]
         public string Remark { get; set; }
-        //public DateTime LastUpdated { get; set; }
+
     }
 }

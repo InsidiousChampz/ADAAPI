@@ -148,7 +148,10 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\S
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\APIDOCUMENT.XML
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\AutoMapper.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\ClosedXML.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\DocumentFormat.OpenXml.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\EFCore.BulkExtensions.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -220,6 +223,7 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\S
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.Linq.Dynamic.Core.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll

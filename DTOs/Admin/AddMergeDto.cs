@@ -45,8 +45,9 @@ namespace SmsUpdateCustomer_Api.DTOs.Admin
 
         [StringLength(255)]
         public string DocumentId { get; set; }
+
         public int EditorId { get; set; }
 
-      
+
     }
 }
