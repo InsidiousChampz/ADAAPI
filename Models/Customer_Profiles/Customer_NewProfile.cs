@@ -51,8 +51,8 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
         [StringLength(255)]
         public string DocumentId { get; set; }
 
-        public int? EditorId { get; set; }
-        
+        public int EditorId { get; set; }
+
         public bool IsUpdated { get; set; }
 
         public bool IsConfirm { get; set; }

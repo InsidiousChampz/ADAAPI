@@ -20,9 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmsUpdateCustomer_Api.Services.Product;
 using SmsUpdateCustomer_Api.Services;
-using SmsUpdateCustomer_Api.Models.Product;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
@@ -34,6 +32,7 @@ using SmsUpdateCustomer_Api.Services.Customer;
 using SmsUpdateCustomer_Api.Services.Customer_Profiles;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using SmsUpdateCustomer_Api.Services.Admin;
+using SmsUpdateCustomer_Api.Services.Report;
 
 namespace SmsUpdateCustomer_Api
 {
@@ -103,6 +102,7 @@ namespace SmsUpdateCustomer_Api
             services.AddScoped<ICustomerProfileServices, CustomerProfileServices>();
             services.AddScoped<ICustomerServices, CustomerServices>();
             services.AddScoped<IAdminServices, AdminServices>();
+            services.AddScoped<IReportServices, ReportServices>();
 
 
             //------End: Service------
@@ -260,7 +260,7 @@ namespace SmsUpdateCustomer_Api
         private IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Product>("Products");
+            //builder.EntitySet<Product>("Products");
             return builder.GetEdmModel();
         }
 

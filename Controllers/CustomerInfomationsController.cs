@@ -22,7 +22,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET Customer login ทั้งหมดทุกคน ในหน้า Login [UI2]
+        ///     สำหรับ GET Customer login ทั้งหมดทุกคน ในหน้า Login [UI2] [ไม่ได้ใช้]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -54,7 +54,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ. ในหน้า Login (Recommended) [UI2]
+        ///     สำหรับ GET Customer login ด้วย บัตรประชาชน, นามสกุล เพื่อเข้าสู่ระบบ. ในหน้า Login [UI2] [ไม่ได้ใช้]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format

@@ -22,6 +22,9 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
         public string ProductType { get; set; }
 
         [StringLength(255)]
+        public string ProductTypeDetail { get; set; }
+
+        [StringLength(255)]
         public string Product { get; set; }
 
         [Column(TypeName = "decimal(16, 2)")]
@@ -43,9 +46,44 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
 
         [Column(TypeName = "datetime")]
         public DateTime LastUpdated { get; set; }
-        
-        public int? Payer_SnapshotId { get; set; }
 
+        //.. new from miw.....
+        [StringLength(255)]
+        public string CustBuildingName { get; set; }
+        [StringLength(255)]
+        public string CustSubDistrict { get; set; }
+        [StringLength(255)]
+        public string CustDistrict { get; set; }
+        [StringLength(255)]
+        public string CustProvince { get; set; }
+        [StringLength(255)]
+        public string PayerBuildingName { get; set; }
+        [StringLength(255)]
+        public string PayerSubDistrict { get; set; }
+        [StringLength(255)]
+        public string PayerDistrict { get; set; }
+        [StringLength(255)]
+        public string PayerProvince { get; set; }
+        [StringLength(255)]
+        public string PayerBranch { get; set; }
+        [StringLength(255)]
+        public int? PayerBranchId { get; set; }
+        [StringLength(255)]
+        public string PayerStudyArea { get; set; }
+        [StringLength(255)]
+        public int? PayerStudyAreaId { get; set; }
+        [StringLength(255)]
+        public string SaleName { get; set; }
+        [StringLength(255)]
+        public string SaleCode { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? StartCoverDate { get; set; }
+        [StringLength(255)]
+        public string AppStatus { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? CancelDate { get; set; }
+        //....................
+        public int? Payer_SnapshotId { get; set; }
         //Ref back to Customer
         public virtual Customer_Snapshot CustomerDetail { get; set; }
         

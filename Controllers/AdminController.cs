@@ -4,6 +4,7 @@ using SmsUpdateCustomer_Api.DTOs.Customer_Profiles;
 using SmsUpdateCustomer_Api.Services.Admin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,8 +21,10 @@ namespace SmsUpdateCustomer_Api.Controllers
             _adminServices = adminServices;
         }
 
+       
+
         /// <summary>
-        ///     สำหรับ ตรวจสอบข้อมูลที่มีการแก้ไข แสดงรายชื่อของคนที่ถูกทำการแก้ไข [UI7 : Datatable]
+        ///     สำหรับ แสดงข้อมูลลุกค้าที่ได้ทำการแก้ไขทั้งผู้ชำระและผู้เอา [UI7 : Datatable]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -36,8 +39,8 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
 
-        [HttpGet("EditCustomerByAdmin/filter")]
-        public async Task<IActionResult> GetCustomerbyAdmin([FromQuery] GetEditCustomerByFilterDto filter)
+        [HttpGet("GetEditCustomerByAdmin/filter")]
+        public async Task<IActionResult> GetEditCustomerbyAdmin([FromQuery] GetEditCustomerByFilterDto filter)
         {
             var ret = await _adminServices.GetCustomerbyAdmin(filter);
 
@@ -52,7 +55,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ แสดงข้อมูลเพื่อเปรียบเทียบการแก้ไขข้อมูล [UI7 : Tab1]
+        ///     สำหรับ แสดงข้อมูลลูกค้าที่แอดมินแก้ไข [UI7]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -66,6 +69,139 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
+        /// 
+
+        [HttpGet("GetAdminEditRecord/{personId}")]
+        public async Task<IActionResult> GetAdminEditRecord(int personId)
+        {
+            var ret = await _adminServices.GetAdminEditRecord(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+        /// <summary>
+        ///     สำหรับ แสดงการเปรียบเทียบข้อมูลในส่วนที่แอดมินแก้ไขทั้งก่อนและหลัง [UI7]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+
+        [HttpGet("CompareCustomerByAdmin/{personId}")]
+        public async Task<IActionResult> GetCompareDataOfCustomerByAdmin(int personId)
+        {
+            var ret = await _adminServices.GetCompareDataOfCustomerByAdmin(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+        /// <summary>
+        ///     สำหรับ ดึงจำนวน Record เพื่อเปรียบเทียบว่าได้ทำการบันทึกไปแล้วหรือไม่ [UI7 ]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+        
+        [HttpGet("GetCountEditRecordByAdmin/{personId}")]
+        public async Task<IActionResult> GetCountEditRecordByAdmin(int personId)
+        {
+            var ret = await _adminServices.GetCountEditRecordByAdmin(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+        
+        /// <summary>
+        ///     สำหรับ Check Record ว่า Admin Confirm ไปหรือยัง [UI7 ]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        ///
+        [HttpGet("GetDoneEditRecordByAdmin/{personId}")]
+        public async Task<IActionResult> GetDoneEditRecordByAdmin(int personId)
+        {
+            var ret = await _adminServices.GetDoneEditRecordByAdmin(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+        /// <summary>
+        ///     สำหรับ แสดงการเปรียบเทียบข้อมูลในส่วนที่ลูกค้าแก้ไขทั้งก่อนและหลัง [UI7 : Tab1]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+
         [HttpGet("CompareCustomer/{personId}")]
         public async Task<IActionResult> GetCompareDataOfCustomer( int personId)
         {
@@ -83,6 +219,40 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
+        ///     สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า [UI7 : Tab2 + DataTable]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+
+        [HttpGet("MergeCustomerByFilter/filter")]
+        public async Task<IActionResult> GetMergeDataOfCustomerByFilter([FromQuery] GetMergeByFilterDto filter)
+        {
+            var ret = await _adminServices.GetMergeDataOfCustomerByFilter(filter);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
+
+        /// <summary>
         ///     สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า [UI7 : Tab2]
         /// </summary>
         /// <returns> 
@@ -97,6 +267,8 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
+        /// 
+
         [HttpGet("MergeCustomer/{personId}")]
         public async Task<IActionResult> GetMergeDataOfCustomer(int personId)
         {
@@ -112,7 +284,70 @@ namespace SmsUpdateCustomer_Api.Controllers
             return NotFound(ret);
 
         }
-             
+
+        /// <summary>
+        ///     สำหรับ บันทึกข้อมูลการเปลี่ยนแปลงของMerge Data [UI7 : Tab 2]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+        [HttpPost("UpdateMergeDataOfCustomer/{userId}")]
+        public async Task<IActionResult> UpdateMergeDataOfCustomer(string userId, UpdateMergeDto update)
+        {
+            var ret = await _adminServices.UpdateMergeDataOfCustomer(userId,update);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+       
+        /// <summary>
+        ///     สำหรับ ข้อมูล policy ลูกค้า [UI7 : Tab 3]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        ///
+        [HttpGet("GetPolicyDataOfCustomer/filter")]
+        public async Task<IActionResult> GetPolicyDataOfCustomer([FromQuery] GetPolicyCustomerFilterDto filter)
+        {
+            var ret = await _adminServices.GetPolicyDataOfCustomer(filter);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+
         /// <summary>
         ///     สำหรับ แสดงข้อมูลการเปลี่ยนแปลงของแต่ละคน [UI7 : Tab 4]
         /// </summary>
@@ -128,6 +363,8 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
+        /// 
+
         [HttpGet("CustomerHistory/{personId}")]
         public async Task<IActionResult> GetCustomerHistory(int personId)
         {
@@ -145,6 +382,71 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
+        ///     สำหรับ แสดงข้อมูลการเปลี่ยนแปลงของแต่ละคนที่แอดมินแก้ไข [UI7 : Tab 5]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+
+        [HttpGet("GetAdminHistory/{personId}")]
+        public async Task<IActionResult> GetAdminHistory(int personId)
+        {
+            var ret = await _adminServices.GetAdminHistory(personId);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+
+        }
+        
+        /// <summary>
+        ///     สำหรับ ใช้สำหรับบันทึกข้อมูลการเปลี่ยนแปลข้อมูลลุกค้าโดยแอดมิน admin [UI7 : Tab1 Edit]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        /// 
+
+        [HttpPost("AddUpdateTempCustomerProfilebyAdmin/{userId}")]
+        public async Task<IActionResult> AddUpdateTempCustomerProfilebyAdmin(string userId, AddProfileDto newProfile)
+        {
+            var ret = await _adminServices.AddUpdateTempCustomerProfilebyAdmin(userId,newProfile);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+        /// <summary>
         ///     สำหรับ ใช้สำหรับยืนยันการแก้ไขของ admin [UI7 : Button]
         /// </summary>
         /// <returns> 
@@ -159,10 +461,11 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        [HttpPost("ConfirmbyAdmin/confirm")]
-        public async Task<IActionResult> ConfirmByAdmin(ConfirmAdminDto confirm)
+       
+        [HttpPost("ConfirmbyAdmin/{personId}")]
+        public async Task<IActionResult> ConfirmByAdmin(int personId)
         {
-            var ret = await _adminServices.ConfirmByAdmin(confirm);
+            var ret = await _adminServices.ConfirmByAdmin(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -175,7 +478,7 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
-        ///     สำหรับ ดูรายละเอียดอัพเดทข้อมูลลุกค้าของ CallCenter [UI8 + UI9 : Datatable]
+        ///     สำหรับ ดูรายละเอียดอัพเดทข้อมูลลุกค้าของ CallCenter [UI8 : Datatable]
         /// </summary>
         /// <returns> 
         ///     List of Personal by JSON format
@@ -238,6 +541,37 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
         /// <summary>
+        ///     สำหรับ ดูรายละเอียดข้อมูลLoginลุกค้าของ CallCenter [UI9 : Datatable]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+
+        [HttpGet("GetLoginbyCallCenter/filter")]
+        public async Task<IActionResult> GetLoginbyCallCenter([FromQuery] GetEditCustomerByFilterDto filter)
+        {
+            var ret = await _adminServices.GetLoginbyCallCenter(filter);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+        /// <summary>
         ///     สำหรับ ดูข้อมูล Login ของลูกค้าสำหรับ CallCenter [UI9]
         /// </summary>
         /// <returns> 
@@ -252,10 +586,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        [HttpGet("GetCompareLoginOfCustomer/{personId}")]
-        public async Task<IActionResult> GetCompareLoginOfCustomer(int personId)
+        [HttpGet("GetLoginOfCustomer/{personId}")]
+        public async Task<IActionResult> GetLoginOfCustomer(int personId)
         {
-            var ret = await _adminServices.GetCompareLoginOfCustomer(personId);
+            var ret = await _adminServices.GetLoginOfCustomer(personId);
 
             if (ret.IsSuccess == true)
             {
@@ -282,10 +616,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        [HttpPost("UpdateCompareLoginOfCustomer/update")]
-        public async Task<IActionResult> UpdateCompareLoginOfCustomer([FromQuery]GetCompareLoginDto update)
+        [HttpPost("UpdateLoginOfCustomer/update")]
+        public async Task<IActionResult> UpdateLoginOfCustomer([FromQuery] GetCompareLoginDto update)
         {
-            var ret = await _adminServices.UpdateCompareLoginOfCustomer(update);
+            var ret = await _adminServices.UpdateLoginOfCustomer(update);
 
             if (ret.IsSuccess == true)
             {
@@ -296,6 +630,10 @@ namespace SmsUpdateCustomer_Api.Controllers
             // 404
             return NotFound(ret);
         }
+
+
+
+
 
     }
 }

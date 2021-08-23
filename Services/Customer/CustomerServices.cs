@@ -35,7 +35,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
         {
             try
             {
-                //Validate
+                // Validate
                 (bool, string) retval = ControlValidator.ValidationsforPayerAndPoliciesByIdentityAndLastName(filter);
 
                 if (retval.Item1 == false)
@@ -43,7 +43,14 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                     return ResponseResult.Failure<List<GetPayerDto>>(retval.Item2);
                 }
 
+                // Check table header first.
+                var customerHeader = await _dbContext.Customer_Headers
+               .FirstOrDefaultAsync(x => x.LoginIdentityCard == filter.IdentityCard && x.LoginLastName == filter.LastName);
 
+                if (customerHeader == null)
+                {
+                    return ResponseResult.Failure<List<GetPayerDto>>("IdentityCard and LastName not match.");
+                }
 
 
                 #region efCore

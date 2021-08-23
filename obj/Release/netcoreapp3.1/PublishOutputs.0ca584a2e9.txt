@@ -11,7 +11,10 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\SmsUpdateCustomer_Api.pdb
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\AutoMapper.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\ClosedXML.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\DocumentFormat.OpenXml.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\EFCore.BulkExtensions.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\ExcelNumberFormat.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -82,6 +85,7 @@ D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.Data.SqlClient.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.Diagnostics.DiagnosticSource.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.IO.Packaging.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.Linq.Dynamic.Core.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.Runtime.Caching.dll
 D:\Work\SSB SOURCE PROJECT\SSB SMS UPDATE CUSTOMER API\obj\Release\netcoreapp3.1\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
