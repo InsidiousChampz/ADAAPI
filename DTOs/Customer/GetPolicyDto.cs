@@ -34,6 +34,10 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer
         [StringLength(255)]
         public string PayerName { get; set; }
 
+
+        [StringLength(250)]
+        public string PaymentType { get; set; }
+
         public Customer_Snapshot CustomerDetail { get; set; }
     }
 }

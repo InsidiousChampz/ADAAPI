@@ -69,16 +69,24 @@ namespace SmsUpdateCustomer_Api.Data
         //for keep transaction what's changed.
         public DbSet<Customer_Profile_Transaction> Customer_Profile_Transactions { get; set; }
 
+        //for keep transaction what's changed.
+        public DbSet<Customer_Profile_Transaction_Log> Customer_Profile_Transaction_Logs { get; set; }
+
+        //for Check Rank of Policy.
+        public DbSet<Customer_Policy_Rank> Customer_Policy_Ranks { get; set; }
+
         //for keep new record of customer by "Admin".
         public DbSet<AdminApprove> AdminApproves { get; set; }
 
         //for keep transaction record of customer by "Admin".
         public DbSet<AdminApproveTransaction> AdminApproveTransactions { get; set; }
 
-        //for Check Rank of Policy.
-        public DbSet<Customer_Policy_Rank> Customer_Policy_Ranks { get; set; }
+        public DbSet<Customer_Login_Log> Customer_Login_Logs { get; set; }
 
-        
+
+
+
+
 
 
 

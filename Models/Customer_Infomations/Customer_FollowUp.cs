@@ -18,7 +18,8 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
         public string PayerFirstName { get; set; }
         [StringLength(100)]
         public string PayerLastName { get; set; }
-        [StringLength(13)]
+
+        [StringLength(100)]
         public string PrimaryPhone { get; set; }
         [StringLength(255)]
         public string OrganizeName { get; set; }
@@ -31,7 +32,8 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Infomations
         public int BranchId { get; set; }
         [StringLength(255)]
         public string Branch { get; set; }
-        public int AgentId { get; set; }
+        [StringLength(100)]
+        public string AgentId { get; set; }
         [StringLength(100)]
         public string AgentName { get; set; }
         [StringLength(50)]

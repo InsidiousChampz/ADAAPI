@@ -44,9 +44,28 @@ namespace SmsUpdateCustomer_Api.Services.Report
             try
             {
                 // wait join tmp.application for organize data
+                //var payer = (from o in _dbContext.Customer_FollowUps.AsNoTracking()
+                //             join x in _dbContext.Policy_Snapshots.AsNoTracking()
+                //             on o.PersonId equals x.PayerPersonId
+                //             select new GetFollowupEditDataDto
+                //             {
+                //                 PersonId = o.PersonId,
+                //                 PayerName = o.PayerFirstName + ' ' + o.PayerLastName,
+                //                 OrganizeName = o.OrganizeName,
+                //                 District = o.District,
+                //                 Province = o.Province,
+                //                 Area = o.Area,
+                //                 BranchId = o.BranchId,
+                //                 Branch = o.Branch,
+                //                 AgentId = o.AgentId.ToString(),
+                //                 AgentName = o.AgentName,
+                //                 AppId = o.AppID,
+                //                 PrimaryPhone = o.PrimaryPhone,
+                //                 CustomerConfirm = o.CustomerConfirm,
+                //             }).AsQueryable();
+
                 var payer = (from o in _dbContext.Customer_FollowUps.AsNoTracking()
-                             join x in _dbContext.Policy_Snapshots.AsNoTracking()
-                             on o.PersonId equals x.PayerPersonId
+                             orderby o.LastUpdated descending
                              select new GetFollowupEditDataDto
                              {
                                  PersonId = o.PersonId,
@@ -57,7 +76,7 @@ namespace SmsUpdateCustomer_Api.Services.Report
                                  Area = o.Area,
                                  BranchId = o.BranchId,
                                  Branch = o.Branch,
-                                 AgentId = o.AgentId,
+                                 AgentId = o.AgentId.ToString(),
                                  AgentName = o.AgentName,
                                  AppId = o.AppID,
                                  PrimaryPhone = o.PrimaryPhone,
@@ -122,24 +141,46 @@ namespace SmsUpdateCustomer_Api.Services.Report
             try
             {
                 // wait join tmp.application for organize data
+                //var payer = (from o in _dbContext.Customer_Profile_Hotlines.AsNoTracking()
+                //             join x in _dbContext.Customer_FollowUps.AsNoTracking()
+                //             on o.PersonId equals x.PersonId
+                //             select new GetFollowupDataDto
+                //             {
+                //                 InformDate = o.InformDate,
+                //                 FirstName = o.FirstName,
+                //                 LastName = o.LastName,
+                //                 PhoneNumber = o.PrimaryPhone,
+                //                 Email = o.Email,
+                //                 Remark = o.Remark,
+                //                 PersonId = o.PersonId,
+                //                 PayerName = o.FirstName + ' ' + o.LastName,
+                //                 OrganizeName = x.OrganizeName,
+                //                 District = x.District,
+                //                 Province = x.Province,
+                //                 Branch = x.Branch,
+                //             }).AsQueryable();
+
                 var payer = (from o in _dbContext.Customer_Profile_Hotlines.AsNoTracking()
-                             join x in _dbContext.Customer_FollowUps.AsNoTracking()
-                             on o.PersonId equals x.PersonId
-                             select new GetFollowupDataDto
-                             {
-                                 InformDate = o.InformDate,
-                                 FirstName = o.FirstName,
-                                 LastName = o.LastName,
-                                 PhoneNumber = o.PrimaryPhone,
-                                 Email = o.Email,
-                                 Remark = o.Remark,
-                                 PersonId = o.PersonId,
-                                 PayerName = o.FirstName + ' ' + o.LastName,
-                                 OrganizeName = x.OrganizeName,
-                                 District = x.District,
-                                 Province = x.Province,
-                                 Branch = x.Branch,
-                             }).AsQueryable();
+                                   join ex in _dbContext.Customer_FollowUps.AsNoTracking()
+                                   on o.PersonId equals ex.PersonId
+                                   into temmGroup
+                                   from x in temmGroup.DefaultIfEmpty()
+                                   orderby x.LastUpdated descending
+                                   select new GetFollowupDataDto
+                                   {
+                                       InformDate = o.InformDate,
+                                       FirstName = o.FirstName,
+                                       LastName = o.LastName,
+                                       PhoneNumber = o.PrimaryPhone,
+                                       Email = o.Email,
+                                       Remark = o.Remark,
+                                       PersonId = o.PersonId,
+                                       PayerName = o.PersonId == null? "" : o.FirstName + ' ' + o.LastName,
+                                       OrganizeName = x.OrganizeName,
+                                       District = x.District,
+                                       Province = x.Province,
+                                       Branch = x.Branch,
+                                   }).AsQueryable();
 
 
                 if (payer == null)
@@ -207,9 +248,7 @@ namespace SmsUpdateCustomer_Api.Services.Report
                              select new GetSMSDataDto
                              {
                                  PersonId = o.PayerPersonId,
-                                 //FullName = o.FirstName + ' ' + o.LastName,
                                  PrimaryPhone = o.PrimaryPhone,
-                                 //Birthdate = o.Birthdate,
                                  DateSMSSended = o.SentDate.Value.Date,
                                  SMSResult = o.SMSResult,
                                  SMSCause = o.SMSCause,
@@ -217,7 +256,6 @@ namespace SmsUpdateCustomer_Api.Services.Report
                                  ReplyDate = o.ReplyDate.Value.Date,
                                  NumberofSended = o.NumberofSended,
                              }).AsQueryable();
-
 
                 if (payer == null)
                 {
@@ -231,7 +269,7 @@ namespace SmsUpdateCustomer_Api.Services.Report
 
                 if ( datedata.SendedDateEnd != null)
                 {
-                    payer = payer.Where(x => x.DateSMSSended.Value.Date <= datedata.SendedDateEnd.Value.Date);
+                    payer = payer.Where(x => x.DateSMSSended.Value.Date < datedata.SendedDateEnd.Value.Date.AddDays(1));
                 }
 
                 List<GetSMSDataDto> dataDto = new List<GetSMSDataDto>();
@@ -310,7 +348,7 @@ namespace SmsUpdateCustomer_Api.Services.Report
                             break;
 
                         case "PhoneNumber":
-                            table.Columns["PhoneNumber"].ColumnName = "เบอรืโทรติดต่อกลับ";
+                            table.Columns["PhoneNumber"].ColumnName = "เบอร์โทรติดต่อกลับ";
                             break;
 
                         case "Birthdate":
@@ -364,7 +402,9 @@ namespace SmsUpdateCustomer_Api.Services.Report
                         case "Area":
                             table.Columns["Area"].ColumnName = "เขตพื้นที่";
                             break;
-
+                        case "BranchId":
+                            table.Columns["BranchId"].ColumnName = "รหัสสาขา";
+                            break;
                         case "Branch":
                             table.Columns["Branch"].ColumnName = "สาขา";
                             break;
@@ -372,8 +412,8 @@ namespace SmsUpdateCustomer_Api.Services.Report
                             table.Columns["AppId"].ColumnName = " APP ที่เกี่ยวข้อง";
                             break;
 
-                        case "AgenId":
-                            table.Columns["AgenId"].ColumnName = "รหัสตัวแทน";
+                        case "AgentId":
+                            table.Columns["AgentId"].ColumnName = "รหัสตัวแทน";
                             break;
 
                         case "AgentName":
@@ -384,6 +424,10 @@ namespace SmsUpdateCustomer_Api.Services.Report
                             table.Columns["Result"].ColumnName = "ผลการตอบรับ";
                             break;
 
+                        case "CustomerConfirm":
+                            table.Columns["CustomerConfirm"].ColumnName = "ผลการตอบกลับ";
+                            break;
+                            
                         default:
                             break;
                     }   
@@ -400,55 +444,71 @@ namespace SmsUpdateCustomer_Api.Services.Report
 
         private DataTable ToDataTable<T>(IList<T> data)
         {
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-
-            DataTable table = new DataTable();
-
-            foreach (PropertyDescriptor prop in properties)
+            try
             {
-                if (prop.Name != "Id" || prop.Name != "BranchId")
-                {
-                    switch (prop.Name)
-                    {
-                        case "IsCustomerReply":
-                            table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? typeof(String));
-                            break;
-                        case "CustomerConfirm":
-                            table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? typeof(String));
-                            break;
-                        default:
-                            table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-                            break;
-                    }                   
-                }
+                PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
 
-                
-            }
-            
-            foreach (T item in data)
-            {
-                DataRow row = table.NewRow();
+                DataTable table = new DataTable();
+
                 foreach (PropertyDescriptor prop in properties)
                 {
                     if (prop.Name != "Id")
                     {
-                        switch (prop.Name)
+                        if (prop.Name != "BranchId")
                         {
-                            case "IsCustomerReply":
-                                row[prop.Name] = prop.GetValue(item).ToString() == "True" ? "ตอบกลับแล้ว" : "ยังไม่ตอบกลับ";
-                                break;
-                            case "CustomerConfirm":
-                                row[prop.Name] = prop.GetValue(item).ToString() == "True" ? "ตอบกลับแล้ว" : "ยังไม่ตอบกลับ";
-                                break;
-                            default:
-                                row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                                break;
-                        }                        
+                            switch (prop.Name)
+                            {
+                                case "IsCustomerReply":
+                                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? typeof(String));
+                                    break;
+                                case "CustomerConfirm":
+                                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? typeof(String));
+                                    break;
+                                default:
+                                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                                    break;
+                            }
+                        }
                     }
+
+
                 }
-                table.Rows.Add(row);
+
+                foreach (T item in data)
+                {
+                    DataRow row = table.NewRow();
+                    foreach (PropertyDescriptor prop in properties)
+                    {
+                        if (prop.Name != "Id")
+                        {
+                            if (prop.Name != "BranchId")
+                            {
+                                switch (prop.Name)
+                                {
+                                    case "IsCustomerReply":
+                                        row[prop.Name] = prop.GetValue(item).ToString() == "True" ? "ตอบกลับแล้ว" : "ยังไม่ตอบกลับ";
+                                        break;
+                                    case "CustomerConfirm":
+                                        row[prop.Name] = prop.GetValue(item).ToString() == "True" ? "ตอบกลับแล้ว" : "ยังไม่ตอบกลับ";
+                                        break;
+                                    default:
+                                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    table.Rows.Add(row);
+                }
+                return table;
             }
-            return table;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+
+           
         }
     }
 }

@@ -69,6 +69,11 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Profiles
         [Column(TypeName = "datetime")]
         public DateTime ConfirmDate { get; set; }
 
+        public bool? IsMerged { get; set; }
+
+        [StringLength(10)]
+        public string IsMergedBy { get; set; }
+
 
 
 

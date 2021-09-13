@@ -15,7 +15,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Report
         public string Area { get; set; }
         public int BranchId { get; set; }
         public string Branch { get; set; }
-        public int AgentId { get; set; }
+        public string AgentId { get; set; }
         public string AgentName { get; set; }
         public string AppId { get; set; }
         public string PrimaryPhone { get; set; }

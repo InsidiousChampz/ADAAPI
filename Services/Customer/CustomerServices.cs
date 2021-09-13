@@ -13,6 +13,8 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using SmsUpdateCustomer_Api.Validations;
+using SmsUpdateCustomer_Api.DTOs.Customer_Infomations;
+using SmsUpdateCustomer_Api.Models.Customer_Infomations;
 
 namespace SmsUpdateCustomer_Api.Services.Customer
 {
@@ -23,6 +25,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
         private readonly ILogger<ICustomerServices> _log;
         private readonly IHttpContextAccessor _httpcontext;
         private const string TEXTSUCCESS = "Success";
+        private const string TEXTCUSTOMERNOTFOUND = "ไม่พบลูกค้า.";
         public CustomerServices(AppDBContext dBContext, IMapper mapper, ILogger<ICustomerServices> log, IHttpContextAccessor httpcontext) : base(dBContext, mapper, httpcontext)
         {
             _dbContext = dBContext;
@@ -49,8 +52,18 @@ namespace SmsUpdateCustomer_Api.Services.Customer
 
                 if (customerHeader == null)
                 {
-                    return ResponseResult.Failure<List<GetPayerDto>>("IdentityCard and LastName not match.");
+                    return ResponseResult.Failure<List<GetPayerDto>>("บัตรประชาชน หรือ นามสกุล ไม่ถูกต้อง");
                 }
+
+                var loginData = new Customer_Login_Log
+                {
+                    IdentityCard = filter.IdentityCard,
+                    LastName = filter.LastName,
+                    LoginDate = Now()
+                };
+
+                _dbContext.Customer_Login_Logs.Add(loginData);
+                await _dbContext.SaveChangesAsync();
 
 
                 #region efCore
@@ -67,7 +80,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                 if (customer == null)
                 {
                     // 404
-                    return ResponseResult.Failure<List<GetPayerDto>>("Payer Not Found.");
+                    return ResponseResult.Failure<List<GetPayerDto>>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {
@@ -80,7 +93,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
                     }
                     // 200
                     var dtos = _mapper.Map<List<GetPayerDto>>(customer);
-                    return ResponseResult.Failure<List<GetPayerDto>>("Payer Not Found.");
+                    return ResponseResult.Failure<List<GetPayerDto>>(TEXTCUSTOMERNOTFOUND);
 
                 }
 
@@ -105,7 +118,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
 
                 if (customer == null)
                 {
-                    return ResponseResult.Failure<List<GetPayerDto>>("Customer Not Found.");
+                    return ResponseResult.Failure<List<GetPayerDto>>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {
@@ -130,7 +143,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer
 
                 if (customer == null)
                 {
-                    return ResponseResult.Failure<GetPayerDto>("Customer Not Found.");
+                    return ResponseResult.Failure<GetPayerDto>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {

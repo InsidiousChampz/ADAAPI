@@ -82,6 +82,16 @@ namespace SmsUpdateCustomer_Api.Models.Customer_Snapshots
         public string AppStatus { get; set; }
         [Column(TypeName = "date")]
         public DateTime? CancelDate { get; set; }
+
+        [StringLength(50)]
+        public string CustPrimaryPhone { get; set; }
+
+        [StringLength(50)]
+        public string PayerPrimaryPhone { get; set; }
+
+        [StringLength(250)]
+        public string PaymentType { get; set; }
+
         //....................
         public int? Payer_SnapshotId { get; set; }
         //Ref back to Customer

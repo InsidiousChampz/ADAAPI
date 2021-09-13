@@ -55,5 +55,9 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
         [StringLength(255)]
         public string ListMergeTo { get; set; }
 
+        public bool IsMerged { get; set; }
+
+        [StringLength(10)]
+        public string IsMergedBy { get; set; }
     }
 }

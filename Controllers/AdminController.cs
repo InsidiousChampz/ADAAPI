@@ -21,7 +21,6 @@ namespace SmsUpdateCustomer_Api.Controllers
             _adminServices = adminServices;
         }
 
-       
 
         /// <summary>
         ///     สำหรับ แสดงข้อมูลลุกค้าที่ได้ทำการแก้ไขทั้งผู้ชำระและผู้เอา [UI7 : Datatable]
@@ -251,7 +250,6 @@ namespace SmsUpdateCustomer_Api.Controllers
 
         }
 
-
         /// <summary>
         ///     สำหรับ แสดงข้อมูลการรวมข้อมูลลูกค้า [UI7 : Tab2]
         /// </summary>
@@ -365,10 +363,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="500"> Internal Server Error </response>
         /// 
 
-        [HttpGet("CustomerHistory/{personId}")]
-        public async Task<IActionResult> GetCustomerHistory(int personId)
+        [HttpGet("CustomerHistory/filter")]
+        public async Task<IActionResult> GetCustomerHistory([FromQuery] GetHistoryCustomerFilterDto filter)
         {
-            var ret = await _adminServices.GetCustomerHistory(personId);
+            var ret = await _adminServices.GetCustomerHistory(filter);
 
             if (ret.IsSuccess == true)
             {
@@ -398,10 +396,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="500"> Internal Server Error </response>
         /// 
 
-        [HttpGet("GetAdminHistory/{personId}")]
-        public async Task<IActionResult> GetAdminHistory(int personId)
+        [HttpGet("GetAdminHistory/filter")]
+        public async Task<IActionResult> GetAdminHistory([FromQuery] GetHistoryAdminFilterDto filter)
         {
-            var ret = await _adminServices.GetAdminHistory(personId);
+            var ret = await _adminServices.GetAdminHistory(filter);
 
             if (ret.IsSuccess == true)
             {
@@ -462,10 +460,10 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
        
-        [HttpPost("ConfirmbyAdmin/{personId}")]
-        public async Task<IActionResult> ConfirmByAdmin(int personId)
+        [HttpPost("ConfirmbyAdmin/confirm/{username}")]
+        public async Task<IActionResult> ConfirmByAdmin(ConfirmDataAdminDto confirm, string username)
         {
-            var ret = await _adminServices.ConfirmByAdmin(personId);
+            var ret = await _adminServices.ConfirmByAdmin(confirm, username);
 
             if (ret.IsSuccess == true)
             {
@@ -616,10 +614,40 @@ namespace SmsUpdateCustomer_Api.Controllers
         /// <response code="403"> Forbidden </response>
         /// <response code="404"> Not Found </response>
         /// <response code="500"> Internal Server Error </response>
-        [HttpPost("UpdateLoginOfCustomer/update")]
-        public async Task<IActionResult> UpdateLoginOfCustomer([FromQuery] GetCompareLoginDto update)
+        [HttpPost("UpdateLoginOfCustomer/{UserId}")]
+        public async Task<IActionResult> UpdateLoginOfCustomer(string UserId, GetCompareLoginDto update)
         {
-            var ret = await _adminServices.UpdateLoginOfCustomer(update);
+            var ret = await _adminServices.UpdateLoginOfCustomer(UserId,update);
+
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
+
+            // 404
+            return NotFound(ret);
+        }
+
+        /// <summary>
+        ///     สำหรับ บันทึกการเปลี่ยนแปลงทั้งหมดของลูกค้าสำหรับ CallCenter [UI9]
+        /// </summary>
+        /// <returns> 
+        ///     List of Personal by JSON format
+        /// </returns>
+        /// <remarks>
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success </response>
+        /// <response code="400"> Bad Request </response>
+        /// <response code="401"> Unauthorize </response>
+        /// <response code="403"> Forbidden </response>
+        /// <response code="404"> Not Found </response>
+        /// <response code="500"> Internal Server Error </response>
+        [HttpPost("AddTransactionsByCallCenter")]
+        public async Task<IActionResult> AddTransactionsByCallCenter(string userId, int personId, string BeforeLastName, string BeforeIdentityCard, string AfterLastName, string AfterIdentityCard)
+        {
+            var ret = await _adminServices.AddTransactionsByCallCenter(userId, personId, BeforeLastName, BeforeIdentityCard, AfterLastName, AfterIdentityCard);
 
             if (ret.IsSuccess == true)
             {
@@ -632,8 +660,20 @@ namespace SmsUpdateCustomer_Api.Controllers
         }
 
 
+        [HttpPost("FixedLostMergeWithoutChangedDataFromAdmin")]
+        public async Task<IActionResult> FixedLostMergeWithoutChangedDataFromAdmin()
+        {
+            var ret = await _adminServices.FixedLostMergeWithoutChangedDataFromAdmin();
 
+            if (ret.IsSuccess == true)
+            {
+                // 200
+                return Ok(ret);
+            }
 
+            // 404
+            return NotFound(ret);
+        }
 
     }
 }
