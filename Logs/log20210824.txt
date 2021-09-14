@@ -1,0 +1,57 @@
+2021-08-24 16:41:44.710 +07:00 [INF] Starting web host
+2021-08-24 17:02:17.802 +07:00 [INF] Starting web host
+2021-08-24 17:09:13.026 +07:00 [ERR] Failed executing DbCommand (23ms) [Parameters=[@__Trim_0='?' (Size = 100), @__Trim_1='?' (Size = 13)], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Birthdate], [p].[Customer_guid], [p].[Email], [p].[FirstName], [p].[IdentityCard], [p].[LastName], [p].[LastUpdated], [p].[LineID], [p].[PersonId], [p].[PrimaryPhone], [p].[SecondaryPhone], [p].[TitleId], [t].[Id], [t].[AppStatus], [t].[ApplicationCode], [t].[CancelDate], [t].[CustBuildingName], [t].[CustDistrict], [t].[CustName], [t].[CustPersonId], [t].[CustPrimaryPhone], [t].[CustProvince], [t].[CustSubDistrict], [t].[Customer_guid], [t].[LastUpdated], [t].[PayerBranch], [t].[PayerBranchId], [t].[PayerBuildingName], [t].[PayerDistrict], [t].[PayerName], [t].[PayerPersonId], [t].[PayerPrimaryPhone], [t].[PayerProvince], [t].[PayerStudyArea], [t].[PayerStudyAreaId], [t].[PayerSubDistrict], [t].[Payer_SnapshotId], [t].[Payer_guid], [t].[PaymentType], [t].[Premium], [t].[Product], [t].[ProductType], [t].[ProductTypeDetail], [t].[SaleCode], [t].[SaleName], [t].[StartCoverDate], [t].[Id0], [t].[Birthdate], [t].[Customer_guid0], [t].[Email], [t].[FirstName], [t].[IdentityCard], [t].[LastName], [t].[LastUpdated0], [t].[LineID], [t].[PersonId], [t].[Policy_SnapshotId], [t].[PrimaryPhone], [t].[SecondaryPhone], [t].[TitleId]
+FROM [ss].[PayerSnapshot] AS [p]
+LEFT JOIN (
+    SELECT [p0].[Id], [p0].[AppStatus], [p0].[ApplicationCode], [p0].[CancelDate], [p0].[CustBuildingName], [p0].[CustDistrict], [p0].[CustName], [p0].[CustPersonId], [p0].[CustPrimaryPhone], [p0].[CustProvince], [p0].[CustSubDistrict], [p0].[Customer_guid], [p0].[LastUpdated], [p0].[PayerBranch], [p0].[PayerBranchId], [p0].[PayerBuildingName], [p0].[PayerDistrict], [p0].[PayerName], [p0].[PayerPersonId], [p0].[PayerPrimaryPhone], [p0].[PayerProvince], [p0].[PayerStudyArea], [p0].[PayerStudyAreaId], [p0].[PayerSubDistrict], [p0].[Payer_SnapshotId], [p0].[Payer_guid], [p0].[PaymentType], [p0].[Premium], [p0].[Product], [p0].[ProductType], [p0].[ProductTypeDetail], [p0].[SaleCode], [p0].[SaleName], [p0].[StartCoverDate], [c].[Id] AS [Id0], [c].[Birthdate], [c].[Customer_guid] AS [Customer_guid0], [c].[Email], [c].[FirstName], [c].[IdentityCard], [c].[LastName], [c].[LastUpdated] AS [LastUpdated0], [c].[LineID], [c].[PersonId], [c].[Policy_SnapshotId], [c].[PrimaryPhone], [c].[SecondaryPhone], [c].[TitleId]
+    FROM [ss].[PolicySnapshot] AS [p0]
+    LEFT JOIN [ss].[CustomerSnapshot] AS [c] ON [p0].[Id] = [c].[Policy_SnapshotId]
+) AS [t] ON [p].[Id] = [t].[Payer_SnapshotId]
+WHERE ((LTRIM(RTRIM([p].[LastName])) = @__Trim_0) AND (LTRIM(RTRIM([p].[IdentityCard])) = @__Trim_1)) AND ((
+    SELECT COUNT(*)
+    FROM [ss].[PolicySnapshot] AS [p1]
+    WHERE [p].[Id] = [p1].[Payer_SnapshotId]) > 0)
+ORDER BY [p].[Id], [t].[Id]
+2021-08-24 17:09:13.069 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'SmsUpdateCustomer_Api.Data.AppDBContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustPrimaryPhone'.
+Invalid column name 'PayerPrimaryPhone'.
+Invalid column name 'PaymentType'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:3d301d99-e401-4732-93a9-66bfcb44f8d7
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'CustPrimaryPhone'.
+Invalid column name 'PayerPrimaryPhone'.
+Invalid column name 'PaymentType'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__169_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(DbContext _, Boolean result, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:3d301d99-e401-4732-93a9-66bfcb44f8d7
+Error Number:207,State:1,Class:16
+2021-08-24 17:19:57.974 +07:00 [INF] Starting web host
+2021-08-24 22:35:12.170 +07:00 [INF] Starting web host
+2021-08-24 22:37:52.346 +07:00 [INF] Starting web host

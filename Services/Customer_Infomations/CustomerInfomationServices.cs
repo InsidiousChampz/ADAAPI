@@ -22,6 +22,8 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
         private readonly IHttpContextAccessor _httpcontext;
 
         private const string TEXTSUCCESS = "Success";
+        private const string TEXTCUSTOMERNOTFOUND = "ไม่พบลูกค้า.";
+        
         public CustomerInfomationServices(AppDBContext dBContext, IMapper mapper, ILogger<ICustomerInfomationServices> log, IHttpContextAccessor httpcontext) : base(dBContext, mapper, httpcontext)
         {
             _dbContext = dBContext;
@@ -64,7 +66,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Infomations
 
                 if (customerHeader == null)
                 {
-                    return ResponseResult.Failure<GetCustomerHeaderDto>("Customer Not Found.");
+                    return ResponseResult.Failure<GetCustomerHeaderDto>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {

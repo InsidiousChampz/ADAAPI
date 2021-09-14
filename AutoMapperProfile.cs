@@ -27,6 +27,8 @@ namespace SmsUpdateCustomer_Api
             CreateMap<Customer_NewProfile, GetProfileDto>();
             CreateMap<Customer_NewProfile, AddProfileDto>();
             CreateMap<Customer_NewProfile, ConfirmAdminDto>();
+            CreateMap<Customer_NewProfile, GetEditCustomerDto>();
+            
 
 
             // Customer infomations
@@ -39,6 +41,7 @@ namespace SmsUpdateCustomer_Api
             //Policy_Snapshot
             CreateMap<Policy_Snapshot, GetPolicyDto>();
             CreateMap<Policy_Snapshot, GetPolicyCustomerFilterDto>();
+            
 
 
 
@@ -73,7 +76,6 @@ namespace SmsUpdateCustomer_Api
 
 
             CreateMap<AdminApproveTransaction, GetHistoryAdminDto>();
-            
 
 
         }

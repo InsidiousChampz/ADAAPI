@@ -3,6 +3,7 @@ using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SmsUpdateCustomer_Api.Data;
@@ -19,6 +20,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SmsUpdateCustomer_Api.Services.Admin
@@ -29,15 +34,18 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         private readonly IMapper _mapper;
         private readonly ILogger<IAdminServices> _log;
         private readonly IHttpContextAccessor _httpcontext;
+        private readonly IConfiguration _configuraton;
 
         private string TEXTSUCCESS = "Success";
+        private string TEXTCUSTOMERNOTFOUND = "ไม่พบลูกค้า";
 
-        public AdminServices(AppDBContext dBContext, IMapper mapper, ILogger<IAdminServices> log, IHttpContextAccessor httpcontext) : base(dBContext, mapper, httpcontext)
+        public AdminServices(AppDBContext dBContext, IMapper mapper, ILogger<IAdminServices> log, IHttpContextAccessor httpcontext, IConfiguration configuraton) : base(dBContext, mapper, httpcontext)
         {
             _dbContext = dBContext;
             _mapper = mapper;
             _log = log;
             _httpcontext = httpcontext;
+            _configuraton = configuraton;
         }
 
         #region Menu N' Som.
@@ -54,28 +62,29 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                 original[0].TitleId = int.Parse(item.BeforeChange.ToString());
                                 break;
                             case "FirstName":
-                                original[0].FirstName = item.BeforeChange.ToString();
+                                original[0].FirstName = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "LastName":
-                                original[0].LastName = item.BeforeChange.ToString();
+                                original[0].LastName = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "IdentityCard":
-                                original[0].IdentityCard = item.BeforeChange.ToString();
+                                original[0].IdentityCard = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "Birthdate":
                                 original[0].Birthdate = Convert.ToDateTime(item.BeforeChange);
                                 break;
                             case "PrimaryPhone":
-                                original[0].PrimaryPhone = item.BeforeChange.ToString();
+                                original[0].PrimaryPhone = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "SecondaryPhone":
-                                original[0].SecondaryPhone = item.BeforeChange.ToString();
+                                original[0].SecondaryPhone = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "Email":
-                                original[0].Email = item.BeforeChange.ToString();
+                                original[0].Email = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "LineID":
-                                original[0].LineID = item.BeforeChange.ToString();
+                                original[0].LineID = item.BeforeChange != null ? item.BeforeChange : "";
+                                
                                 break;
                             default:
                                 break;
@@ -103,28 +112,86 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                 original.TitleId = int.Parse(item.BeforeChange.ToString());
                                 break;
                             case "FirstName":
-                                original.FirstName = item.BeforeChange.ToString();
+                                original.FirstName = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "LastName":
-                                original.LastName = item.BeforeChange.ToString();
+                                original.LastName = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "IdentityCard":
-                                original.IdentityCard = item.BeforeChange.ToString();
+                                original.IdentityCard = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "Birthdate":
                                 original.Birthdate = Convert.ToDateTime(item.BeforeChange);
                                 break;
                             case "PrimaryPhone":
-                                original.PrimaryPhone = item.BeforeChange.ToString();
+                                original.PrimaryPhone = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "SecondaryPhone":
-                                original.SecondaryPhone = item.BeforeChange.ToString();
+                                original.SecondaryPhone = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "Email":
-                                original.Email = item.BeforeChange.ToString();
+                                original.Email = item.BeforeChange != null ? item.BeforeChange : "";
                                 break;
                             case "LineID":
-                                original.LineID = item.BeforeChange.ToString();
+                                original.LineID = item.BeforeChange != null ? item.BeforeChange : "";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+        private static bool AssignAfterData(IEnumerable<Customer_Profile_Transaction> reload, List<GetCompareDto> original)
+        {
+            {
+                try
+                {
+                    foreach (var item in reload)
+                    {
+                        switch (item.FieldData)
+                        {
+                            case "TitleId":
+                                original[0].TitleId = int.Parse(item.AfterChange.ToString());
+                                break;
+                            case "FirstName":
+                                original[0].FirstName = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "LastName":
+                                original[0].LastName = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "IdentityCard":
+                                original[0].IdentityCard = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "Birthdate":
+                                original[0].Birthdate = Convert.ToDateTime(item.AfterChange);
+                                break;
+                            case "PrimaryPhone":
+                                original[0].PrimaryPhone = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "SecondaryPhone":
+                                original[0].SecondaryPhone = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "Email":
+                                original[0].Email = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "LineID":
+                                original[0].LineID = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "ImagePath":
+                                original[0].ImagePath = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "ImageReferenceId":
+                                original[0].ImageReferenceId = item.AfterChange != null ? item.AfterChange : "";
+                                break;
+                            case "DocumentId":
+                                original[0].DocumentId = item.AfterChange != null ? item.AfterChange : "";
                                 break;
                             default:
                                 break;
@@ -145,7 +212,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         {
             try
             {
-
+                #region "OldCode"
                 //var customerx = (from ps in _dbContext.Payer_Snapshots
                 //                 join ct in _dbContext.Customer_Profile_Transactions
                 //                 on ps.PersonId equals ct.PersonId
@@ -168,19 +235,22 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 //          ).AsQueryable();
 
                 //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+                #endregion
 
-                var customer = (from cp in _dbContext.Customer_NewProfiles
-                                where cp.IsUpdated == true
+                var customer = (from c in _dbContext.Customer_NewProfiles.AsNoTracking()
+                                where c.IsUpdated == true && c.IsMerged != true
+                                group c by new { c.PersonId, c.FirstName, c.LastName, c.IdentityCard, c.PrimaryPhone, c.LastUpdated, c.IsConfirm }
+                                into cp
                                 select new GetEditCustomerDto
                                 {
-                                    PersonId = cp.PersonId,
-                                    FirstName = cp.FirstName,
-                                    LastName = cp.LastName,
-                                    FullName = cp.FirstName + " " + cp.LastName,
-                                    IdentityCard = cp.IdentityCard,
-                                    PrimaryPhone = cp.PrimaryPhone,
-                                    LastUpdated = cp.LastUpdated,
-                                    IsConfirm = cp.IsConfirm,
+                                    PersonId = cp.Key.PersonId,
+                                    FirstName = cp.Key.FirstName,
+                                    LastName = cp.Key.LastName,
+                                    FullName = cp.Key.FirstName + " " + cp.Key.LastName,
+                                    IdentityCard = cp.Key.IdentityCard,
+                                    PrimaryPhone = cp.Key.PrimaryPhone,
+                                    LastUpdated = cp.Key.LastUpdated,
+                                    IsConfirm = cp.Key.IsConfirm,
                                 }).AsQueryable();
 
                 if (customer == null)
@@ -221,8 +291,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         {
                             return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>($"Could not order by field: {filter.OrderingField}");
                         }
-
-                      ;
                     }
 
                     var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(customer, filter.RecordsPerPage, filter.Page);
@@ -246,7 +314,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (original == null)
                 {
-                    return ResponseResult.Failure<GetCompareDto>("Not Found Customer.");
+                    return ResponseResult.Failure<GetCompareDto>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 var dto = _mapper.Map<GetCompareDto>(original);
@@ -264,7 +332,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         {
             try
             {
-
                 var original = (from o in await _dbContext.Payer_Snapshots
                                 .Where(x => x.PersonId == personId).ToListAsync()
                                 select new GetCompareDto
@@ -291,18 +358,17 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (original.Count() == 0)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Not Found Customer.");
+                    return ResponseResult.Failure<List<GetCompareDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
 
                 var reload = (from a in await _dbContext.Customer_Profile_Transactions
                               .Where(x => x.PersonId == personId).ToListAsync()
-                              select a
-                              );
+                              select a);
 
                 if (AssignBeforeData(reload, original) == false)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Can't Assign Data");
+                    return ResponseResult.Failure<List<GetCompareDto>>("ไม่สามารถแสดงข้อมูลก่อนหน้าการเปลี่ยนแปลงได้.");
                 }
 
                 var newcustomer = (from o in await _dbContext.Customer_NewProfiles
@@ -323,18 +389,21 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                        SecondaryPhone = o.SecondaryPhone,
                                        Email = o.Email,
                                        LineID = o.LineID,
-                                       ImagePath = o.ImagePath != null ? o.ImagePath : "", //o.ImagePath,
-                                       ImageReferenceId = o.ImageReferenceId != null ? o.ImageReferenceId : "",//o.ImageReferenceId,
-                                       DocumentId = o.DocumentId != null ? o.DocumentId : "",//o.DocumentId,
+                                       ImagePath = "",
+                                       //ImagePath = o.DocumentId != "" ? GetImagePathFromSSSDoc(o.DocumentId) : "",
+                                       ImageReferenceId = o.ImageReferenceId != null ? o.ImageReferenceId : "", //o.ImageReferenceId,
+                                       DocumentId = o.DocumentId != null ? o.DocumentId : "", //o.DocumentId,
                                        ListMergeFrom = o.ListMergeFrom != null ? o.ListMergeFrom : "",
                                        ListMergeTo = o.ListMergeTo != null ? o.ListMergeTo : "",
                                    }).ToList();
+
+                newcustomer[0].ImagePath = newcustomer[0].DocumentId != "" ? await GetImagePathFromSSSDoc(newcustomer[0].DocumentId):"";
 
                 var customer = original.Union(newcustomer);
 
                 if (customer == null || customer.Count() > 2 || customer.Count() < 2)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Can't Compare Data ");
+                    return ResponseResult.Failure<List<GetCompareDto>>("ไม่สามารถเปรียบเทียบข้อมูลได้.");
                 }
 
 
@@ -353,15 +422,15 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         {
             try
             {
-                var original = (from bf in await _dbContext.Customer_NewProfiles.ToListAsync()
-                                join af in await _dbContext.AdminApproves.ToListAsync()
-                                on bf.PersonId equals af.PersonId
-                                where bf.PersonId == personId
-                                select new { bf, af }).ToList();
+                var original = await (from bf in _dbContext.Customer_NewProfiles.AsNoTracking()
+                                      join af in _dbContext.AdminApproves.AsNoTracking()
+                                      on bf.PersonId equals af.PersonId
+                                      where bf.PersonId == personId
+                                      select new { bf, af }).ToListAsync();
 
                 if (original.Count() == 0)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Not Found Customer.");
+                    return ResponseResult.Failure<List<GetCompareDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 GetCompareDto bfData = new GetCompareDto
@@ -401,7 +470,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     SecondaryPhone = original[0].af.SecondaryPhone,
                     Email = original[0].af.Email,
                     LineID = original[0].af.LineID,
-                    ImagePath = original[0].af.ImagePath,
+                    //ImagePath = original[0].af.ImagePath,
+                    ImagePath = original[0].af.DocumentId != "" ? await GetImagePathFromSSSDoc(original[0].af.DocumentId) : "",
                     ImageReferenceId = original[0].af.ImageReferenceId,
                     DocumentId = original[0].af.DocumentId,
                     ListMergeFrom = original[0].af.ListMergeFrom,
@@ -415,7 +485,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (AssignBeforeData(reload, bfData) == false)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Can't Assign Data");
+                    return ResponseResult.Failure<List<GetCompareDto>>("ไม่สามารถแสดงข้อมูลก่อนหน้าการเปลี่ยนแปลงได้.");
                 }
 
                 List<GetCompareDto> retValue = new List<GetCompareDto>();
@@ -433,6 +503,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
+
         // UI7 : Tab 1 : For check already record save by Admin
         public async Task<ServiceResponse<int>> GetCountEditRecordByAdmin(int personId)
         {
@@ -476,6 +547,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
         {
             try
             {
+                var userdata = userId.Split(" ",StringSplitOptions.RemoveEmptyEntries);
+
                 //Validate
                 (bool, string) retval = ControlValidator.ValidationsforAddCustomerProfile(newProfile);
 
@@ -487,11 +560,11 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 //Add transaction by admin
                 var customer = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == newProfile.PersonId);
 
-                bool retAddTransaction = await AddTransactionsByAdmin(customer, newProfile, userId);
+                bool retAddTransaction = await AddTransactionsPersonByAdmin(customer, newProfile, userId);
 
                 if (retAddTransaction == false)
                 {
-                    return ResponseResult.Failure<GetProfileDto>("Can't add transaction for admin.");
+                    return ResponseResult.Failure<GetProfileDto>("ไม่สามารถบันทึกรายการข้อมูลสำหรับแอดมินได้.");
                 }
 
                 #region
@@ -566,15 +639,15 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     customer.PersonId = newProfile.PersonId;
                     customer.Customer_guid = newProfile.Customer_guid;
                     customer.TitleId = newProfile.TitleId;
-                    customer.FirstName = newProfile.FirstName;
-                    customer.LastName = newProfile.LastName;
+                    customer.FirstName = newProfile.FirstName.Trim();
+                    customer.LastName = newProfile.LastName.Trim();
                     customer.Birthdate = newProfile.Birthdate;
-                    customer.IdentityCard = newProfile.IdentityCard;
-                    customer.PrimaryPhone = newProfile.PrimaryPhone;
-                    customer.SecondaryPhone = newProfile.SecondaryPhone;
-                    customer.Email = newProfile.Email;
-                    customer.LineID = newProfile.LineID;
-                    customer.ImagePath = newProfile.ImagePath;
+                    customer.IdentityCard = newProfile.IdentityCard.Trim();
+                    customer.PrimaryPhone = newProfile.PrimaryPhone.Trim();
+                    customer.SecondaryPhone = newProfile.SecondaryPhone.Trim();
+                    customer.Email = newProfile.Email.Trim();
+                    customer.LineID = newProfile.LineID.Trim();
+                    customer.ImagePath = string.Empty; //newProfile.ImagePath; //Error b'cause return path from S3 Over length 255
                     customer.ImageReferenceId = newProfile.ImageReferenceId;
                     customer.DocumentId = newProfile.DocumentId;
                     customer.EditorId = newProfile.EditorId;
@@ -594,15 +667,15 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         PersonId = newProfile.PersonId,
                         Customer_guid = newProfile.Customer_guid,
                         TitleId = newProfile.TitleId,
-                        FirstName = newProfile.FirstName,
-                        LastName = newProfile.LastName,
+                        FirstName = newProfile.FirstName.Trim(),
+                        LastName = newProfile.LastName.Trim(),
                         Birthdate = newProfile.Birthdate,
                         IdentityCard = newProfile.IdentityCard,
-                        PrimaryPhone = newProfile.PrimaryPhone,
-                        SecondaryPhone = newProfile.SecondaryPhone,
-                        Email = newProfile.Email,
-                        LineID = newProfile.LineID,
-                        ImagePath = newProfile.ImagePath,
+                        PrimaryPhone = newProfile.PrimaryPhone.Trim(),
+                        SecondaryPhone = newProfile.SecondaryPhone.Trim(),
+                        Email = newProfile.Email.Trim(),
+                        LineID = newProfile.LineID.Trim(),
+                        ImagePath = string.Empty, //newProfile.ImagePath; //Error b'cause return path from S3 Over length 255 
                         ImageReferenceId = newProfile.ImageReferenceId,
                         DocumentId = newProfile.DocumentId,
                         EditorId = newProfile.EditorId,
@@ -627,8 +700,9 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 return ResponseResult.Failure<GetProfileDto>(ex.Message);
             }
         }
+
         // UI7 : Tab 1 : Add transaction for Admin changed
-        private async Task<bool> AddTransactionsByAdmin(AdminApprove customer, AddProfileDto newProfile, string userId)
+        private async Task<bool> AddTransactionsMergeByAdmin(AdminApprove customer, AddProfileDto newProfile, string userId)
         {
             try
             {
@@ -688,7 +762,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 var transactionData = new AdminApproveTransaction();
                 transactionData.UserId = userId;
                 transactionData.PersonId = newProfile.PersonId;
-                transactionData.Description = newProfile.ListMergeFrom != bfData.ListMergeFrom ? "แก้ไขการรวมข้อมูล" : "แก้ไขข้อมูลส่วนบุคคล";
+                transactionData.Description = "แก้ไขการรวมข้อมูล";
                 transactionData.BeforeChange = JsonConvert.SerializeObject(bfData);
                 transactionData.AfterChange = JsonConvert.SerializeObject(newProfile);
                 transactionData.CreateDate = Now();
@@ -704,6 +778,108 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 return false;
             }
         }
+        private async Task<bool> AddTransactionsConfirmByAdmin(AdminApprove beforedata, AdminApprove afterdata, string userId)
+        {
+            try
+            {
+                //Add transaction by admin
+
+                var transactionData = new AdminApproveTransaction();
+                transactionData.UserId = userId;
+                transactionData.PersonId = afterdata.PersonId;
+                transactionData.Description = "ยืนยันข้อมูลโดยแอดมิน";
+                transactionData.BeforeChange = JsonConvert.SerializeObject(beforedata);
+                transactionData.AfterChange = JsonConvert.SerializeObject(afterdata);
+                transactionData.CreateDate = Now();
+                transactionData.LastUpdated = Now();
+
+                await _dbContext.AdminApproveTransactions.AddRangeAsync(transactionData);
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private async Task<bool> AddTransactionsPersonByAdmin(AdminApprove customer, AddProfileDto newProfile, string userId)
+        {
+            try
+            {
+                //Add transaction by admin
+                Customer_NewProfile dataFromCustomerprofile;
+                AddProfileDto bfData;
+
+                if (customer == null)
+                {
+                    //Get From New Profile for make Default (before Data)
+                    dataFromCustomerprofile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == newProfile.PersonId);
+                    bfData = new AddProfileDto
+                    {
+                        PersonId = dataFromCustomerprofile.PersonId,
+                        Customer_guid = dataFromCustomerprofile.Customer_guid,
+                        TitleId = dataFromCustomerprofile.TitleId,
+                        FirstName = dataFromCustomerprofile.FirstName,
+                        LastName = dataFromCustomerprofile.LastName,
+                        IdentityCard = dataFromCustomerprofile.IdentityCard,
+                        Birthdate = dataFromCustomerprofile.Birthdate,
+                        PrimaryPhone = dataFromCustomerprofile.PrimaryPhone,
+                        SecondaryPhone = dataFromCustomerprofile.SecondaryPhone,
+                        Email = dataFromCustomerprofile.Email,
+                        LineID = dataFromCustomerprofile.LineID,
+                        ImagePath = dataFromCustomerprofile.ImagePath,
+                        ImageReferenceId = dataFromCustomerprofile.ImageReferenceId,
+                        DocumentId = dataFromCustomerprofile.DocumentId,
+                        EditorId = dataFromCustomerprofile.EditorId,
+                        ListMergeFrom = dataFromCustomerprofile.ListMergeFrom,
+                        ListMergeTo = dataFromCustomerprofile.ListMergeTo,
+                    };
+                }
+                else
+                {
+                    bfData = new AddProfileDto
+                    {
+                        PersonId = customer.PersonId,
+                        Customer_guid = customer.Customer_guid,
+                        TitleId = customer.TitleId,
+                        FirstName = customer.FirstName,
+                        LastName = customer.LastName,
+                        IdentityCard = customer.IdentityCard,
+                        Birthdate = customer.Birthdate,
+                        PrimaryPhone = customer.PrimaryPhone,
+                        SecondaryPhone = customer.SecondaryPhone,
+                        Email = customer.Email,
+                        LineID = customer.LineID,
+                        ImagePath = customer.ImagePath,
+                        ImageReferenceId = customer.ImageReferenceId,
+                        DocumentId = customer.DocumentId,
+                        EditorId = customer.EditorId,
+                        ListMergeFrom = customer.ListMergeFrom,
+                        ListMergeTo = customer.ListMergeTo,
+                    };
+                }
+
+                var transactionData = new AdminApproveTransaction();
+                transactionData.UserId = userId;
+                transactionData.PersonId = newProfile.PersonId;
+                transactionData.Description = "แก้ไขข้อมูลส่วนบุคคล";
+                transactionData.BeforeChange = JsonConvert.SerializeObject(bfData);
+                transactionData.AfterChange = JsonConvert.SerializeObject(newProfile);
+                transactionData.CreateDate = Now();
+                transactionData.LastUpdated = Now();
+
+                await _dbContext.AdminApproveTransactions.AddRangeAsync(transactionData);
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         // UI7 : Tab 2 : DataTable
         public async Task<ServiceResponseWithPagination<List<GetMergeDto>>> GetMergeDataOfCustomerByFilter(GetMergeByFilterDto filter)
         {
@@ -713,21 +889,44 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (customer.Count() == 0)
                 {
-                    return ResponseResultWithPagination.Failure<List<GetMergeDto>>("Not Found Customer.");
+                    return ResponseResultWithPagination.Failure<List<GetMergeDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 int[] inq = customer[0].ListMergeFrom.Split(',').Select(Int32.Parse).ToArray();
-
-
+                int ind = int.Parse(customer[0].ListMergeTo);
 
                 if (inq.Count() <= 1)
                 {
                     inq[inq.Length - 1] = 0;
                 }
 
-                int ind = int.Parse(customer[0].ListMergeTo);
+                var newvalue = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == filter.PersonId);
 
-                var result = (from o in _dbContext.Payer_Snapshots
+                IQueryable<GetMergeDto> result;
+
+                if (newvalue != null)
+                {
+                    result = (from o in _dbContext.Payer_Snapshots
+                                  where inq.Contains(o.PersonId)
+                                  orderby o.PersonId
+                                  select new GetMergeDto
+                                  {
+                                      Caption = o.PersonId != filter.PersonId ? "Merge" : "Master",
+                                      PersonId = o.PersonId,
+                                      TitleId = o.TitleId,
+                                      FirstName = o.PersonId == filter.PersonId ? newvalue.FirstName != o.FirstName ? newvalue.FirstName : o.FirstName : o.FirstName,
+                                      LastName = o.PersonId == filter.PersonId ? newvalue.LastName != o.LastName ? newvalue.LastName : o.LastName : o.LastName,
+                                      IdentityCard = o.PersonId == filter.PersonId ? newvalue.IdentityCard != o.IdentityCard ? newvalue.IdentityCard : o.IdentityCard : o.IdentityCard,
+                                      Birthdate = o.PersonId == filter.PersonId ? newvalue.Birthdate != o.Birthdate ? newvalue.Birthdate : o.Birthdate : o.Birthdate,
+                                      PrimaryPhone = o.PersonId == filter.PersonId ? newvalue.PrimaryPhone != o.PrimaryPhone ? newvalue.PrimaryPhone : o.PrimaryPhone : o.PrimaryPhone,
+                                      SecondaryPhone = o.PersonId == filter.PersonId ? newvalue.SecondaryPhone != o.SecondaryPhone ? newvalue.SecondaryPhone : o.SecondaryPhone : o.SecondaryPhone,
+                                      Email = o.PersonId == filter.PersonId ? newvalue.Email != o.Email ? newvalue.Email : o.Email : o.Email,
+                                      LineID = o.PersonId == filter.PersonId ? newvalue.LineID != o.LineID ? newvalue.LineID : o.LineID : o.LineID,
+                                  }).AsQueryable();
+                }
+                else
+                {
+                    result = (from o in _dbContext.Payer_Snapshots
                               where inq.Contains(o.PersonId)
                               orderby o.PersonId
                               select new GetMergeDto
@@ -735,17 +934,16 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                   Caption = o.PersonId != filter.PersonId ? "Merge" : "Master",
                                   PersonId = o.PersonId,
                                   TitleId = o.TitleId,
-                                  FirstName = o.FirstName,
-                                  LastName = o.LastName,
-                                  IdentityCard = o.IdentityCard,
-                                  Birthdate = o.Birthdate,
-                                  PrimaryPhone = o.PrimaryPhone,
-                                  SecondaryPhone = o.SecondaryPhone,
-                                  Email = o.Email,
-                                  LineID = o.LineID,
+                                  FirstName =  o.FirstName,
+                                  LastName =  o.LastName,
+                                  IdentityCard =  o.IdentityCard,
+                                  Birthdate =  o.Birthdate,
+                                  PrimaryPhone =  o.PrimaryPhone,
+                                  SecondaryPhone =  o.SecondaryPhone,
+                                  Email =  o.Email,
+                                  LineID =  o.LineID,
                               }).AsQueryable();
-
-
+                }
 
 
                 if (!string.IsNullOrWhiteSpace(filter.Caption))
@@ -787,14 +985,14 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (customer.Count() == 0)
                 {
-                    return ResponseResult.Failure<List<GetMergeDto>>("Not Found Customer.");
+                    return ResponseResult.Failure<List<GetMergeDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 int[] inq = customer[0].ListMergeFrom.Split(',').Select(Int32.Parse).ToArray();
 
                 if (inq.Count() <= 1)
                 {
-                    return ResponseResult.Failure<List<GetMergeDto>>("No data to merge.");
+                    return ResponseResult.Failure<List<GetMergeDto>>("ไม่มีข้อมูลสำหรับการรวมข้อมูลลุกค้า.");
                 }
 
                 int ind = int.Parse(customer[0].ListMergeTo);
@@ -859,7 +1057,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (results == null)
                 {
-                    return ResponseResultWithPagination.Failure<List<GetPolicyCustomerDataDto>>("not found type of customer");
+                    return ResponseResultWithPagination.Failure<List<GetPolicyCustomerDataDto>>("ไม่พบข้อมุลลูกค้า.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(filter.OrderingField))
@@ -921,7 +1119,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         ListMergeTo = update.ListMergeTo,
                     };
 
-                    await AddTransactionsByAdmin(customer, addpf, userId);
+                    await AddTransactionsMergeByAdmin(customer, addpf, userId);
 
                     // Add into AdminApprove table
                     var admin_new = new AdminApprove
@@ -976,7 +1174,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     ListMergeTo = update.ListMergeTo,
                 };
 
-                await AddTransactionsByAdmin(customer, addpf, userId);
+                await AddTransactionsMergeByAdmin(customer, addpf, userId);
 
                 // Update in Admin Approve
                 customer.ListMergeFrom = update.ListMergeFrom;
@@ -996,54 +1194,93 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-        // UI7 : Tab 4 : DataTable no filter
-        public async Task<ServiceResponse<List<GetHistoryCustomerDto>>> GetCustomerHistory(int personId)
+        // UI7 : Tab 4 : DataTable filter
+        public async Task<ServiceResponseWithPagination<List<GetHistoryCustomerDto>>> GetCustomerHistory(GetHistoryCustomerFilterDto filter)
         {
             try
             {
-                var personName = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == personId);
 
-                var history = (from o in await _dbContext.Customer_Profile_Transactions.ToListAsync()
-                               join s in await _dbContext.Payer_Snapshots.ToListAsync()
-                               on o.EditorId equals s.PersonId
-                               where (o.PersonId == personId)
+                //personid 67499 editorid 67500
+
+                //var history = await _dbContext.Customer_Profile_Transactions.Where(x => x.PersonId == filter.personId).ToListAsync();
+                //var editorName = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == history[0].EditorId);
+                //var personName = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == filter.personId);
+
+                //GetHistoryCustomerDto retHistory;
+                //List<GetHistoryCustomerDto> listHistory = new List<GetHistoryCustomerDto>();
+
+                //foreach (var item in history)
+                //{
+                //    retHistory = new GetHistoryCustomerDto
+                //    {
+                //        PersonId = item.PersonId,
+                //        PersonFullName = personName.FirstName + " " + personName.LastName,
+                //        EditorId = item.EditorId,
+                //        EditorFullName = editorName.FirstName + " " + editorName.LastName,
+                //        LastUpdate = item.LastUpdated,
+                //        FieldData = item.FieldData,
+                //        BeforeChanged = item.BeforeChange,
+                //        AfterChanged = item.AfterChange,
+                //    };
+                //    listHistory.Add(retHistory);
+                //}
+
+                //var dto = _mapper.Map<List<GetHistoryCustomerDto>>(listHistory);
+                //return ResponseResult.Success(dto, TEXTSUCCESS);
+
+                var history = (from o in _dbContext.Customer_Profile_Transactions.AsNoTracking()
+                               join a in _dbContext.Payer_Snapshots.AsNoTracking()
+                               on o.PersonId equals a.PersonId
+                               join b in _dbContext.Payer_Snapshots.AsNoTracking()
+                               on o.EditorId equals b.PersonId
+                               where o.PersonId == filter.personId
                                select new GetHistoryCustomerDto
                                {
-                                   PersonId = s.PersonId,
-                                   PersonFullName = personName.FirstName + " " + personName.LastName,
+                                   PersonId = o.PersonId,
+                                   PersonFullName = a.FirstName + " " + a.LastName,
                                    EditorId = o.EditorId,
-                                   EditorFullName = s.FirstName + " " + s.LastName,
+                                   EditorFullName = b.FirstName + " " + b.LastName,
                                    LastUpdate = o.LastUpdated,
                                    FieldData = o.FieldData,
                                    BeforeChanged = o.BeforeChange,
                                    AfterChanged = o.AfterChange,
-                               });
+                               }).AsQueryable();
 
-                //if (history == null || history.Count() == 0)
-                //{
-                //    return ResponseResult.Failure<List<GetHistoryCustomerDto>>("Not have a history detail.");
-                //}
+                var rawHistory = history.AsQueryable();
 
-                var dto = _mapper.Map<List<GetHistoryCustomerDto>>(history);
-                return ResponseResult.Success(dto, TEXTSUCCESS);
+                if (!string.IsNullOrWhiteSpace(filter.OrderingField))
+                {
+                    try
+                    {
+                        rawHistory = rawHistory.OrderBy($"{filter.OrderingField} {(filter.AscendingOrder ? "ascending" : "descending")}");
+                    }
+                    catch
+                    {
+                        return ResponseResultWithPagination.Failure<List<GetHistoryCustomerDto>>($"Could not order by field: {filter.OrderingField}");
+                    }
+                }
+
+                var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(rawHistory, filter.RecordsPerPage, filter.Page);
+                var dto = await rawHistory.Paginate(filter).ToListAsync();
+                return ResponseResultWithPagination.Success(dto, paginationResult, TEXTSUCCESS);
 
             }
             catch (Exception ex)
             {
-                return ResponseResult.Failure<List<GetHistoryCustomerDto>>(ex.Message);
+                return ResponseResultWithPagination.Failure<List<GetHistoryCustomerDto>>(ex.Message);
 
             }
         }
-        // UI7 : Tab 5 : DataTable no filter
-        public async Task<ServiceResponse<List<GetHistoryAdminDto>>> GetAdminHistory(int personId)
+        // UI7 : Tab 5 : DataTable filter
+        public async Task<ServiceResponseWithPagination<List<GetHistoryAdminDto>>> GetAdminHistory(GetHistoryAdminFilterDto filter)
         {
             try
             {
-                //var records = await _dbContext.AdminApproveTransactions.Where(x => x.PersonId == personId).ToListAsync();
-
-                var records = (from o in await _dbContext.AdminApproveTransactions.Where(x => x.PersonId == personId).ToListAsync()
-                               join a in await _dbContext.AdminApproves.Where(x => x.PersonId == personId).ToListAsync()
+                var records = (from o in _dbContext.AdminApproveTransactions.AsNoTracking()
+                               join a in _dbContext.AdminApproves.AsNoTracking()
                                on o.PersonId equals a.PersonId
+                               where o.PersonId == filter.personId
+                               && a.PersonId == filter.personId
                                select new GetHistoryAdminDto
                                {
                                    UserId = o.UserId,
@@ -1053,42 +1290,388 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                    LastUpdated = o.LastUpdated,
                                    BeforeChange = o.BeforeChange,
                                    AfterChange = o.AfterChange,
-                               }).ToList();
+                               }).AsQueryable();//.ToList();
+
+
 
                 if (records == null)
                 {
-                    return ResponseResult.Failure<List<GetHistoryAdminDto>>("Not have a history detail.");
+                    return ResponseResultWithPagination.Failure<List<GetHistoryAdminDto>>("ไม่พบรายละเอียดการบันทึกข้อมูลย้อยหลัง.");
                 }
 
-                var dto = _mapper.Map<List<GetHistoryAdminDto>>(records);
-                return ResponseResult.Success(dto, TEXTSUCCESS);
+                //var dto = _mapper.Map<List<GetHistoryAdminDto>>(records);
+                //return ResponseResult.Success(dto, TEXTSUCCESS);
+
+                var rawAdminHistory = records.AsQueryable();
+
+
+                if (string.IsNullOrWhiteSpace(filter.OrderingField))
+                {
+                    filter.OrderingField = "LastUpdated";
+                    filter.AscendingOrder = false;
+
+                }
+
+
+
+                if (!string.IsNullOrWhiteSpace(filter.OrderingField))
+                {
+                    try
+                    {
+                        rawAdminHistory = rawAdminHistory.OrderBy($"{filter.OrderingField} {(filter.AscendingOrder ? "ascending" : "descending")}");
+                    }
+                    catch
+                    {
+                        return ResponseResultWithPagination.Failure<List<GetHistoryAdminDto>>($"Could not order by field: {filter.OrderingField}");
+                    }
+                }
+                
+
+                var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(rawAdminHistory, filter.RecordsPerPage, filter.Page);
+                var dto = await rawAdminHistory.Paginate(filter).ToListAsync();
+                return ResponseResultWithPagination.Success(dto, paginationResult, TEXTSUCCESS);
 
             }
             catch (Exception ex)
             {
-                return ResponseResult.Failure<List<GetHistoryAdminDto>>(ex.Message);
+                return ResponseResultWithPagination.Failure<List<GetHistoryAdminDto>>(ex.Message);
 
             }
         }
-       
+
+        // UI 7 : After All Done Old Version..
+        #region Old Version..
+        //public async Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(ConfirmDataAdminDto confirm, string username)
+        //{
+
+        //    try
+        //    {
+        //        // Update data AddminApprove is LastUpdate and use this record for Customer_Newprofile.
+        //        var AdminProve = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+
+        //        if (AdminProve == null)
+        //        {
+        //            // Copy data from customer-newprofile keep record into adminapprove
+        //            var copydata = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+        //            if (copydata == null)
+        //            {
+        //                return ResponseResult.Failure<ConfirmAdminDto>("Can not confirm b'cause not have a customer record.");
+        //            }
+
+        //            var dummydata = new AdminApprove 
+        //            {
+        //                PersonId = copydata.PersonId,
+        //                Customer_guid = copydata.Customer_guid,
+        //                FirstName = copydata.FirstName,
+        //                LastName = copydata.LastName,
+        //                TitleId = copydata.TitleId,
+        //                IdentityCard = copydata.IdentityCard,
+        //                Birthdate = copydata.Birthdate,
+        //                PrimaryPhone = copydata.PrimaryPhone,
+        //                SecondaryPhone = copydata.SecondaryPhone,
+        //                Email = copydata.Email,
+        //                LineID = copydata.LineID,
+        //                ImagePath = copydata.ImagePath,
+        //                ImageReferenceId = copydata.ImageReferenceId,
+        //                DocumentId = copydata.DocumentId,
+        //                EditorId = copydata.EditorId,
+        //                ListMergeFrom = copydata.ListMergeFrom,
+        //                ListMergeTo = copydata.ListMergeTo,
+        //                IsCheckMerge = true,
+        //                IsUpdated = true,
+        //                LastUpdated = Now(),
+        //            };
+
+        //            // Keep Log admin confirm
+
+        //            await AddTransactionsConfirmByAdmin(dummydata, dummydata, username);
+
+        //            // Send data to DataCenter API
+        //            var ret_dummy = await SendRecordToDataCenter(dummydata, confirm.UserId);
+
+        //            if (ret_dummy.Item1 == false)
+        //            {
+        //                //return ResponseResult.Failure<ConfirmAdminDto>("ไม่สามารถส่งข้อมูลไปที่ DataCenter ได้.");
+        //                return ResponseResult.Failure<ConfirmAdminDto>(ret_dummy.Item2);
+        //            }
+
+        //            // add record into adminApprove
+        //            _dbContext.AdminApproves.Add(dummydata);
+        //            await _dbContext.SaveChangesAsync();
+
+        //            // update customer-newprofile
+        //            copydata.IsConfirm = true;
+        //            copydata.LastUpdated = Now();
+        //            copydata.ConfirmDate = Now();
+        //            await _dbContext.SaveChangesAsync();
+
+
+        //            // Update confirm in customer_header
+        //            var Header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == confirm.PersonId);
+
+        //            if (Header != null)
+        //            {
+        //                Header.IsAgentConfirm = true;
+        //                Header.ConfirmDate = Now();
+        //                Header.LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //update follower and mark merge person is false
+        //            IList<int> idDatas = new List<int>();
+        //            var lstPersonIds = (dummydata.ListMergeFrom.Split(",", StringSplitOptions.RemoveEmptyEntries));
+
+        //            foreach (var item in lstPersonIds)
+        //            {
+        //                idDatas.Add(int.Parse(item));
+        //            }
+
+        //            var listFollowers = await (from o in _dbContext.Customer_FollowUps
+        //                                       where idDatas.Contains(o.PersonId)
+        //                                       orderby o.PersonId
+        //                                       select o).ToListAsync();
+
+
+        //            for (int i = 0; i < listFollowers.Count; i++)
+        //            {
+        //                if (listFollowers[i].PersonId != confirm.PersonId)
+        //                {
+        //                    listFollowers[i].AdminConfirm = true;
+        //                    listFollowers[i].Result = false;
+        //                    listFollowers[i].LastUpdated = Now();
+        //                    await _dbContext.SaveChangesAsync();
+        //                }
+        //                else
+        //                {
+        //                    listFollowers[i].AdminConfirm = true;
+        //                    listFollowers[i].Result = true;
+        //                    listFollowers[i].LastUpdated = Now();
+        //                    await _dbContext.SaveChangesAsync();
+        //                }
+        //            }
+
+        //            // Set flag record merged
+        //            var updateRecords = await (from o in _dbContext.Customer_NewProfiles
+        //                                       where idDatas.Contains(o.PersonId)
+        //                                       select o).ToListAsync();
+
+        //            foreach (var item in updateRecords)
+        //            {
+        //                if (item.PersonId != confirm.PersonId) 
+        //                {
+        //                    item.IsMerged = true;
+        //                    item.IsMergedBy = confirm.PersonId.ToString();
+        //                }
+        //                else
+        //                {
+        //                    item.IsMerged = false;
+        //                    item.IsMergedBy = confirm.PersonId.ToString();
+        //                }
+
+        //            }
+
+        //            await _dbContext.SaveChangesAsync();
+
+
+        //            var dtos = _mapper.Map<ConfirmAdminDto>(dummydata);
+        //            return ResponseResult.Success(dtos, TEXTSUCCESS);
+
+        //        }
+
+
+        //        if (AdminProve.IsCheckMerge == false && AdminProve.ListMergeFrom != AdminProve.ListMergeTo)
+        //        {
+        //            return ResponseResult.Failure<ConfirmAdminDto>("กรุณายืนยันการรวมข้อมูลลุกค้าก่อน.");
+        //        }
+
+        //        //Get Customerprofile data for add log and replace bt adminapprove
+        //        var CustNewProfile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+        //        var CustomerProve = new AdminApprove
+        //        {
+        //            PersonId = CustNewProfile.PersonId,
+        //            Customer_guid = CustNewProfile.Customer_guid,
+        //            FirstName = CustNewProfile.FirstName,
+        //            LastName = CustNewProfile.LastName,
+        //            TitleId = CustNewProfile.TitleId,
+        //            IdentityCard = CustNewProfile.IdentityCard,
+        //            Birthdate = CustNewProfile.Birthdate,
+        //            PrimaryPhone = CustNewProfile.PrimaryPhone,
+        //            SecondaryPhone = CustNewProfile.SecondaryPhone,
+        //            Email = CustNewProfile.Email,
+        //            LineID = CustNewProfile.LineID,
+        //            ImagePath = CustNewProfile.ImagePath,
+        //            ImageReferenceId = CustNewProfile.ImageReferenceId,
+        //            DocumentId = CustNewProfile.DocumentId,
+        //            EditorId = CustNewProfile.EditorId,
+        //            ListMergeFrom = CustNewProfile.ListMergeFrom,
+        //            ListMergeTo = CustNewProfile.ListMergeTo,
+        //            IsCheckMerge = true,
+        //            IsUpdated = true,
+        //            LastUpdated = Now(),
+        //        };
+
+        //        // Add log admin confirm data
+        //        await AddTransactionsConfirmByAdmin(CustomerProve, AdminProve, username);
+
+        //        // Send data to DataCenter API
+        //        var ret = await SendRecordToDataCenter(AdminProve, confirm.UserId);
+
+        //        if (ret.Item1 == false)
+        //        {
+        //            //return ResponseResult.Failure<ConfirmAdminDto>("ไม่สามารถส่งข้อมูลไปที่ DataCenter ได้.");
+        //            return ResponseResult.Failure<ConfirmAdminDto>(ret.Item2);
+        //        }
+
+
+        //        AdminProve.IsCheckMerge = true;
+        //        AdminProve.IsUpdated = true;
+        //        AdminProve.LastUpdated = Now();
+        //        await _dbContext.SaveChangesAsync();
+
+
+
+        //        // Update data AdminApprove into Customer_Newprofile from variable in line 1377
+        //        if (CustNewProfile != null)
+        //        {
+        //            CustNewProfile.FirstName = AdminProve.FirstName;
+        //            CustNewProfile.LastName = AdminProve.LastName;
+        //            CustNewProfile.TitleId = AdminProve.TitleId;
+        //            CustNewProfile.IdentityCard = AdminProve.IdentityCard;
+        //            CustNewProfile.Birthdate = AdminProve.Birthdate;
+        //            CustNewProfile.PrimaryPhone = AdminProve.PrimaryPhone;
+        //            CustNewProfile.SecondaryPhone = AdminProve.SecondaryPhone;
+        //            CustNewProfile.Email = AdminProve.Email;
+        //            CustNewProfile.LineID = AdminProve.LineID;
+        //            CustNewProfile.ImagePath = AdminProve.ImagePath;
+        //            CustNewProfile.ImageReferenceId = AdminProve.ImageReferenceId;
+        //            CustNewProfile.DocumentId = AdminProve.DocumentId;
+        //            CustNewProfile.EditorId = AdminProve.EditorId;
+        //            CustNewProfile.ListMergeFrom = AdminProve.ListMergeFrom;
+        //            CustNewProfile.ListMergeTo = AdminProve.ListMergeTo;
+        //            CustNewProfile.IsConfirm = true;
+        //            CustNewProfile.ConfirmDate = Now();
+        //            CustNewProfile.LastUpdated = Now();
+        //            await _dbContext.SaveChangesAsync();
+        //        }
+
+
+
+        //        // Update confirm in customer_header
+        //        var updateHeader = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == confirm.PersonId);
+
+        //        if (updateHeader != null)
+        //        {
+        //            updateHeader.IsAgentConfirm = true;
+        //            updateHeader.ConfirmDate = Now();
+        //            updateHeader.LastUpdated = Now();
+        //            await _dbContext.SaveChangesAsync();
+        //        }
+
+
+        //        // Update Payer-snapshot when other payer login will see last update.
+        //        var updatePayer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+
+        //        updatePayer.FirstName = AdminProve.FirstName;
+        //        updatePayer.LastName = AdminProve.LastName;
+        //        updatePayer.TitleId = AdminProve.TitleId;
+        //        updatePayer.IdentityCard = AdminProve.IdentityCard;
+        //        updatePayer.Birthdate = AdminProve.Birthdate;
+        //        updatePayer.PrimaryPhone = AdminProve.PrimaryPhone;
+        //        updatePayer.SecondaryPhone = AdminProve.SecondaryPhone;
+        //        updatePayer.Email = AdminProve.Email;
+        //        updatePayer.LineID = AdminProve.LineID;
+        //        updatePayer.LastUpdated = Now();
+        //        await _dbContext.SaveChangesAsync();
+
+        //        //update follower and mark merge person is false
+        //        IList<int> idData = new List<int>();
+        //        var lstPersonId = (AdminProve.ListMergeFrom.Split(",", StringSplitOptions.RemoveEmptyEntries));
+
+        //        foreach (var item in lstPersonId)
+        //        {
+        //            idData.Add(int.Parse(item));
+        //        }
+
+        //        var listFollower = await (from o in _dbContext.Customer_FollowUps
+        //                           where idData.Contains(o.PersonId)
+        //                           orderby o.PersonId
+        //                           select o).ToListAsync();
+
+
+        //        for (int i = 0; i < listFollower.Count; i++)
+        //        {
+        //            if (listFollower[i].PersonId != confirm.PersonId)
+        //            {
+        //                listFollower[i].AdminConfirm = true;
+        //                listFollower[i].Result = false;
+        //                listFollower[i].LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+        //            else
+        //            {
+        //                listFollower[i].AdminConfirm = true;
+        //                listFollower[i].Result = true;
+        //                listFollower[i].LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+        //        }
+
+        //        // Set flag record merged
+        //        var updateRecord = await (from o in _dbContext.Customer_NewProfiles
+        //                                   where idData.Contains(o.PersonId)
+        //                                   select o).ToListAsync();
+
+        //        foreach (var item in updateRecord)
+        //        {
+        //            if (item.PersonId != confirm.PersonId)
+        //            {
+        //                item.IsMerged = true;
+        //                item.IsMergedBy = confirm.PersonId.ToString();
+        //            }
+        //            else
+        //            {
+        //                item.IsMerged = false;
+        //                item.IsMergedBy = confirm.PersonId.ToString();
+        //            }
+
+        //        }
+
+        //        await _dbContext.SaveChangesAsync();
+
+        //        var dto = _mapper.Map<ConfirmAdminDto>(CustNewProfile);
+        //        return ResponseResult.Success(dto, TEXTSUCCESS);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ResponseResult.Failure<ConfirmAdminDto>(ex.Message);
+        //    }
+        //}
+
         // UI 7 : After All Done 
-        public async Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(int personId)
+        #endregion
+
+        // UI 7 : After All Done New Version..
+        public async Task<ServiceResponse<ConfirmAdminDto>> ConfirmByAdmin(ConfirmDataAdminDto confirm, string username)
         {
+
             try
             {
-                // Update data AddminApprove is LastUpdate and use this record for Customer_Newprofile.
-                var AdminProve = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == personId);
+                bool flgUpdateCustomer = false;
 
+                // Update data AddminApprove is LastUpdate and use this record for Customer_Newprofile.
+                var AdminProve = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+
+                // If Admin just confirm but not change anything.
                 if (AdminProve == null)
                 {
                     // Copy data from customer-newprofile keep record into adminapprove
-                    var copydata = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == personId);
+                    var copydata = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
                     if (copydata == null)
                     {
                         return ResponseResult.Failure<ConfirmAdminDto>("Can not confirm b'cause not have a customer record.");
                     }
 
-                    var dummydata = new AdminApprove 
+                    var dummydata = new AdminApprove
                     {
                         PersonId = copydata.PersonId,
                         Customer_guid = copydata.Customer_guid,
@@ -1107,112 +1690,379 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         EditorId = copydata.EditorId,
                         ListMergeFrom = copydata.ListMergeFrom,
                         ListMergeTo = copydata.ListMergeTo,
+                        IsCheckMerge = copydata.ListMergeFrom != copydata.ListMergeTo? false : true,
+                        IsUpdated = false,
+                        LastUpdated = Now(),
+                    };
+
+                    // save into Admin Approve.
+                    _dbContext.AdminApproves.Add(dummydata);
+                    await _dbContext.SaveChangesAsync();
+
+                    // set flag update customer is true.
+                    flgUpdateCustomer = true;
+
+                    // assign data back through variable.
+                    AdminProve = dummydata;
+                }
+
+                // check data is already to merge
+                if (AdminProve.IsCheckMerge == false && AdminProve.ListMergeFrom != AdminProve.ListMergeTo)
+                {
+                    return ResponseResult.Failure<ConfirmAdminDto>("กรุณายืนยันการรวมข้อมูลลุกค้าก่อน.");
+                }
+
+                // write log before do anything.
+                if (flgUpdateCustomer == false)
+                {
+                    //Get Customerprofile data and add log for before data.
+                    var CustNewProfile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+                    var CustomerProve = new AdminApprove
+                    {
+                        PersonId = CustNewProfile.PersonId,
+                        Customer_guid = CustNewProfile.Customer_guid,
+                        FirstName = CustNewProfile.FirstName,
+                        LastName = CustNewProfile.LastName,
+                        TitleId = CustNewProfile.TitleId,
+                        IdentityCard = CustNewProfile.IdentityCard,
+                        Birthdate = CustNewProfile.Birthdate,
+                        PrimaryPhone = CustNewProfile.PrimaryPhone,
+                        SecondaryPhone = CustNewProfile.SecondaryPhone,
+                        Email = CustNewProfile.Email,
+                        LineID = CustNewProfile.LineID,
+                        ImagePath = CustNewProfile.ImagePath,
+                        ImageReferenceId = CustNewProfile.ImageReferenceId,
+                        DocumentId = CustNewProfile.DocumentId,
+                        EditorId = CustNewProfile.EditorId,
+                        ListMergeFrom = CustNewProfile.ListMergeFrom,
+                        ListMergeTo = CustNewProfile.ListMergeTo,
                         IsCheckMerge = true,
                         IsUpdated = true,
                         LastUpdated = Now(),
                     };
-
-                    // add record into adminApprove
-                    _dbContext.AdminApproves.Add(dummydata);
-                    await _dbContext.SaveChangesAsync();
-
-                    // update customer-newprofile
-                    copydata.IsConfirm = true;
-                    copydata.LastUpdated = Now();
-                    copydata.ConfirmDate = Now();
-                    await _dbContext.SaveChangesAsync();
-
-
-                    // Update confirm in customer_header
-                    var Header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == personId);
-
-                    if (Header == null)
-                    {
-                        return ResponseResult.Failure<ConfirmAdminDto>("Customer_header is invalid");
-                    }
-                    Header.IsAgentConfirm = true;
-                    Header.ConfirmDate = Now();
-                    Header.LastUpdated = Now();
-                    await _dbContext.SaveChangesAsync();
-
-
-                    var dtos = _mapper.Map<ConfirmAdminDto>(dummydata);
-                    return ResponseResult.Success(dtos, TEXTSUCCESS);
-
+                    
+                    // Add log admin confirm data
+                    await AddTransactionsConfirmByAdmin(CustomerProve, AdminProve, username);
                 }
-
-
-                if (AdminProve.IsCheckMerge == false && AdminProve.ListMergeFrom != AdminProve.ListMergeTo)
+                else
                 {
-                    return ResponseResult.Failure<ConfirmAdminDto>("Please Confirm Merge Data before submit");
+                    // Add log admin confirm data
+                    await AddTransactionsConfirmByAdmin(AdminProve, AdminProve, username);
                 }
+                
+
+                // Send data to DataCenter API
+                var ret = await SendRecordToDataCenter(AdminProve, confirm.UserId);
+
+                if (ret.Item1 == false)
+                {
+                    //return ResponseResult.Failure<ConfirmAdminDto>("ไม่สามารถส่งข้อมูลไปที่ DataCenter ได้.");
+                    return ResponseResult.Failure<ConfirmAdminDto>(ret.Item2);
+                }
+
 
                 AdminProve.IsCheckMerge = true;
                 AdminProve.IsUpdated = true;
                 AdminProve.LastUpdated = Now();
                 await _dbContext.SaveChangesAsync();
 
-                // Update data from AdminApprove into Customer_Newprofile
-                var CustNewProfile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == personId);
 
-                if (CustNewProfile == null)
+
+                // Update data AdminApprove into Customer_Newprofile from variable in line 1377
+                var CustProfile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
+                
+                if (CustProfile != null)
                 {
-                    return ResponseResult.Failure<ConfirmAdminDto>("Customer_newProfile is invalid");
+                    CustProfile.FirstName = AdminProve.FirstName;
+                    CustProfile.LastName = AdminProve.LastName;
+                    CustProfile.TitleId = AdminProve.TitleId;
+                    CustProfile.IdentityCard = AdminProve.IdentityCard;
+                    CustProfile.Birthdate = AdminProve.Birthdate;
+                    CustProfile.PrimaryPhone = AdminProve.PrimaryPhone;
+                    CustProfile.SecondaryPhone = AdminProve.SecondaryPhone;
+                    CustProfile.Email = AdminProve.Email;
+                    CustProfile.LineID = AdminProve.LineID;
+                    CustProfile.ImagePath = AdminProve.ImagePath;
+                    CustProfile.ImageReferenceId = AdminProve.ImageReferenceId;
+                    CustProfile.DocumentId = AdminProve.DocumentId;
+                    CustProfile.EditorId = AdminProve.EditorId;
+                    CustProfile.ListMergeFrom = AdminProve.ListMergeFrom;
+                    CustProfile.ListMergeTo = AdminProve.ListMergeTo;
+                    CustProfile.IsConfirm = true;
+                    CustProfile.ConfirmDate = Now();
+                    CustProfile.LastUpdated = Now();
+                    await _dbContext.SaveChangesAsync();
                 }
-
-                CustNewProfile.FirstName = AdminProve.FirstName;
-                CustNewProfile.LastName = AdminProve.LastName;
-                CustNewProfile.TitleId = AdminProve.TitleId;
-                CustNewProfile.IdentityCard = AdminProve.IdentityCard;
-                CustNewProfile.Birthdate = AdminProve.Birthdate;
-                CustNewProfile.PrimaryPhone = AdminProve.PrimaryPhone;
-                CustNewProfile.SecondaryPhone = AdminProve.SecondaryPhone;
-                CustNewProfile.Email = AdminProve.Email;
-                CustNewProfile.LineID = AdminProve.LineID;
-                CustNewProfile.ImagePath = AdminProve.ImagePath;
-                CustNewProfile.ImageReferenceId = AdminProve.ImageReferenceId;
-                CustNewProfile.DocumentId = AdminProve.DocumentId;
-                CustNewProfile.EditorId = AdminProve.EditorId;
-                CustNewProfile.ListMergeFrom = AdminProve.ListMergeFrom;
-                CustNewProfile.ListMergeTo = AdminProve.ListMergeTo;
-                CustNewProfile.IsConfirm = true;
-                CustNewProfile.ConfirmDate = Now();
-                CustNewProfile.LastUpdated = Now();
-                await _dbContext.SaveChangesAsync();
 
                 // Update confirm in customer_header
-                var updateHeader = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == personId);
+                var updateHeader = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == confirm.PersonId);
 
-                if (updateHeader == null)
+                if (updateHeader != null)
                 {
-                    return ResponseResult.Failure<ConfirmAdminDto>("Customer_header is invalid");
+                    updateHeader.IsAgentConfirm = true;
+                    updateHeader.ConfirmDate = Now();
+                    updateHeader.LastUpdated = Now();
+                    await _dbContext.SaveChangesAsync();
                 }
-                updateHeader.IsAgentConfirm = true;
-                updateHeader.ConfirmDate = Now();
-                updateHeader.LastUpdated = Now();
-                await _dbContext.SaveChangesAsync();
 
                 // Update Payer-snapshot when other payer login will see last update.
-                var updatePayer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == personId);
+                var updatePayer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == confirm.PersonId);
 
-                updatePayer.FirstName = AdminProve.FirstName;
-                updatePayer.LastName = AdminProve.LastName;
-                updatePayer.TitleId = AdminProve.TitleId;
-                updatePayer.IdentityCard = AdminProve.IdentityCard;
-                updatePayer.Birthdate = AdminProve.Birthdate;
-                updatePayer.PrimaryPhone = AdminProve.PrimaryPhone;
-                updatePayer.SecondaryPhone = AdminProve.SecondaryPhone;
-                updatePayer.Email = AdminProve.Email;
-                updatePayer.LineID = AdminProve.LineID;
-                updatePayer.LastUpdated = Now();
+                if (updatePayer != null)
+                {
+                    updatePayer.FirstName = AdminProve.FirstName;
+                    updatePayer.LastName = AdminProve.LastName;
+                    updatePayer.TitleId = AdminProve.TitleId;
+                    updatePayer.IdentityCard = AdminProve.IdentityCard;
+                    updatePayer.Birthdate = AdminProve.Birthdate;
+                    updatePayer.PrimaryPhone = AdminProve.PrimaryPhone;
+                    updatePayer.SecondaryPhone = AdminProve.SecondaryPhone;
+                    updatePayer.Email = AdminProve.Email;
+                    updatePayer.LineID = AdminProve.LineID;
+                    updatePayer.LastUpdated = Now();
+                    await _dbContext.SaveChangesAsync();
+                }
+                
+
+                //update follower and mark merge person is false
+                IList<int> idData = new List<int>();
+                var lstPersonId = (AdminProve.ListMergeFrom.Split(",", StringSplitOptions.RemoveEmptyEntries));
+
+                foreach (var item in lstPersonId)
+                {
+                    idData.Add(int.Parse(item));
+                }
+
+                var listFollower = await (from o in _dbContext.Customer_FollowUps
+                                          where idData.Contains(o.PersonId)
+                                          orderby o.PersonId
+                                          select o).ToListAsync();
+
+                for (int i = 0; i < listFollower.Count; i++)
+                {
+                    if (listFollower[i].PersonId != confirm.PersonId)
+                    {
+                        listFollower[i].AdminConfirm = true;
+                        listFollower[i].Result = false;
+                        listFollower[i].LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        listFollower[i].AdminConfirm = true;
+                        listFollower[i].Result = true;
+                        listFollower[i].LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+                }
+
+                // Set flag record merged
+                var updateRecord = await (from o in _dbContext.Customer_NewProfiles
+                                          where idData.Contains(o.PersonId)
+                                          select o).ToListAsync();
+
+
+                // if data in customer-profile is e
+                if (updateRecord.Count != idData.Count)
+                {
+                    for (int i = 0; i < idData.Count; i++)
+                    {
+                        if (idData[i] == confirm.PersonId)
+                        {
+                            idData.RemoveAt(i);
+                        }
+                    }
+
+                    var copydata = await _dbContext.Payer_Snapshots.Where(x => idData.Contains(x.PersonId)).ToListAsync();
+
+                    Customer_NewProfile CopyCust = new Customer_NewProfile();
+                    AdminApprove CopyAdmin = new AdminApprove();
+                    List<Customer_NewProfile> lstCopy = new List<Customer_NewProfile>();
+
+                    foreach (var item in copydata)
+                    {
+                        CopyCust = new Customer_NewProfile
+                        {
+                            PersonId = item.PersonId,
+                            Customer_guid = item.Customer_guid,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            TitleId = item.TitleId,
+                            IdentityCard = item.IdentityCard,
+                            Birthdate = item.Birthdate,
+                            PrimaryPhone = item.PrimaryPhone,
+                            SecondaryPhone = item.SecondaryPhone,
+                            Email = item.Email,
+                            LineID = item.LineID,
+                            EditorId = item.PersonId,
+                            ListMergeFrom = AdminProve.ListMergeFrom,
+                            ListMergeTo = AdminProve.ListMergeTo,
+                            IsConfirm = true,
+                            IsUpdated = false, // for log in to change data but not show in admin
+                            ConfirmDate = Now(),
+                            LastUpdated = Now(),
+
+                        };
+
+                        CopyAdmin = new AdminApprove
+                        {
+                            PersonId = item.PersonId,
+                            Customer_guid = item.Customer_guid,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            TitleId = item.TitleId,
+                            IdentityCard = item.IdentityCard,
+                            Birthdate = item.Birthdate,
+                            PrimaryPhone = item.PrimaryPhone,
+                            SecondaryPhone = item.SecondaryPhone,
+                            Email = item.Email,
+                            LineID = item.LineID,
+                            EditorId = confirm.PersonId,
+                            IsUpdated = true,
+                            IsCheckMerge = true,
+                            ListMergeFrom = AdminProve.ListMergeFrom,
+                            ListMergeTo = AdminProve.ListMergeTo,
+                            LastUpdated = Now(),
+                        };
+
+                        _dbContext.Customer_NewProfiles.Add(CopyCust);
+                        _dbContext.AdminApproves.Add(CopyAdmin);
+                        lstCopy.Add(CopyCust);
+                    }
+
+                    await _dbContext.SaveChangesAsync();
+                    updateRecord.AddRange(lstCopy);
+                }
+
+                
+                foreach (var item in updateRecord)
+                {
+                    if (item.PersonId != confirm.PersonId)
+                    {
+                        item.IsMerged = true;
+                        item.IsMergedBy = confirm.PersonId.ToString();
+                    }
+                    else
+                    {
+                        item.IsMerged = false;
+                        item.IsMergedBy = confirm.PersonId.ToString();
+                    }
+                }
+
                 await _dbContext.SaveChangesAsync();
 
-                var dto = _mapper.Map<ConfirmAdminDto>(CustNewProfile);
+                var dto = _mapper.Map<ConfirmAdminDto>(CustProfile);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
             }
             catch (Exception ex)
             {
                 return ResponseResult.Failure<ConfirmAdminDto>(ex.Message);
+            }
+        }
+
+        private async Task<(bool,string)> SendRecordToDataCenter(AdminApprove AdminProve,int UserId)
+        {
+            try
+            {
+
+                DataCenterDTO dct = new DataCenterDTO
+                {
+                    PersonIdList = AdminProve.ListMergeFrom,
+                    ToPersonId = AdminProve.ListMergeTo,
+                    TitleId = AdminProve.TitleId,
+                    FirstName = AdminProve.FirstName,
+                    LastName = AdminProve.LastName,
+                    IdentityCard = AdminProve.IdentityCard,
+                    Birthdate = AdminProve.Birthdate,
+                    PrimaryPhone = AdminProve.PrimaryPhone,
+                    SecondaryPhone = AdminProve.SecondaryPhone,
+                    Email = AdminProve.Email,
+                    LineID = AdminProve.LineID,
+                    DocumentCode = AdminProve.DocumentId,
+                    UpdatedByUserId = UserId,
+                };
+
+                using (var httpClient = new HttpClient())
+                {
+
+                    #region content
+                    //var content = new MultipartFormDataContent();
+                    //content.Add(new StringContent(AdminProve.ListMergeFrom), "PersonIdList");
+                    //content.Add(new StringContent(AdminProve.ListMergeTo), "ToPersonId");
+                    //content.Add(new StringContent(AdminProve.TitleId.Value.ToString()), "TitleId");
+                    //content.Add(new StringContent(AdminProve.FirstName), "FirstName");
+                    //content.Add(new StringContent(AdminProve.LastName.ToString()), "LastName");
+                    //content.Add(new StringContent(AdminProve.IdentityCard), "IdentityCard");
+                    //content.Add(new StringContent(AdminProve.Birthdate.ToString()), "Birthdate");
+                    //content.Add(new StringContent(AdminProve.PrimaryPhone), "PrimaryPhone");
+                    //content.Add(new StringContent(AdminProve.SecondaryPhone.ToString()), "SecondaryPhone");
+                    //content.Add(new StringContent(AdminProve.Email), "Email");
+                    //content.Add(new StringContent(AdminProve.LineID), "LineID");
+                    //content.Add(new StringContent(AdminProve.DocumentId), "DocumentCode");
+                    //content.Add(new StringContent("Admin"), "UpdateByUserId");
+                    #endregion
+
+                    var jsonSender = JsonConvert.SerializeObject(dct);
+                    var content = new StringContent(jsonSender,Encoding.UTF8,"application/json");
+                    //var Url_Api = "http://uat.siamsmile.co.th:9116/api/Person/UpdatePerson";
+                    //var Url_Api = "http://192.168.100.169:9116/api/Person/UpdatePerson";
+
+                    var Url_Api = _configuraton.GetSection("ApiLists:DataCenter").Value;
+
+
+                    using (var response = await httpClient.PostAsync(Url_Api, content))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        var retval = JsonConvert.DeserializeObject<GetResultDataCenterDto>(apiResponse);   
+                        return (retval.IsResult,"Data Center Error: " + retval.Msg);
+                    }
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+                return (false, "Data Center Error: " + ex.Message);
+            }
+        }
+
+        private async Task<string> GetImagePathFromSSSDoc(string docId)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+
+                    var Url_Api = _configuraton.GetSection("ApiLists:SSSDocument").Value + "?DocumentId=" + docId;
+
+                    httpClient.BaseAddress = new Uri(Url_Api);
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    //example
+                    //docId = "DC210100000001";
+
+                    using (HttpResponseMessage response = await httpClient.GetAsync(Url_Api).ConfigureAwait(true))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+
+                        
+                        var retval = JsonConvert.DeserializeObject<GetResultDocumentDataDto>(apiResponse);
+
+                        
+
+                        if (retval is null)
+                        {
+                            return "";
+                        }
+
+                        return retval.Data[0].pathFullDoc;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
         }
         #endregion
@@ -1244,30 +2094,55 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
                 #endregion
 
+                #region OldQuery2
+                //var customerx = (from cp in _dbContext.Customer_NewProfiles.AsNoTracking() //personId :1
+                //                 join ct in _dbContext.Policy_Snapshots.AsNoTracking() //PayerPersoId :N
+                //                 on cp.PersonId equals ct.PayerPersonId
+                //                 where cp.IsUpdated == true && cp.PersonId == cp.EditorId
+                //                 select new GetEditCustomerDto
+                //                 {
+                //                     PersonId = cp.PersonId,
+                //                     FirstName = cp.FirstName,
+                //                     LastName = cp.LastName,
+                //                     FullName = cp.FirstName + " " + cp.LastName,
+                //                     IdentityCard = cp.IdentityCard,
+                //                     PrimaryPhone = cp.PrimaryPhone,
+                //                     LastUpdated = cp.LastUpdated,
+                //                     IsConfirm = cp.IsConfirm,
+                //                 }).AsQueryable();
+
+                //var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
+
+                #endregion
+
                 #region NewQuery
-                var customerx = (from cp in _dbContext.Customer_NewProfiles
-                                join ct in _dbContext.Policy_Snapshots
+
+                var customer = (from cp in _dbContext.Customer_NewProfiles.AsNoTracking()
+                                join ct in _dbContext.Policy_Snapshots.AsNoTracking()
                                 on cp.PersonId equals ct.PayerPersonId
                                 where cp.IsUpdated == true && cp.PersonId == cp.EditorId
+                                //orderby cp.PersonId ascending
+                                group cp by new { cp.PersonId, cp.FirstName, cp.LastName, cp.IdentityCard, cp.PrimaryPhone, cp.LastUpdated, cp.IsConfirm }
+                                into newcp
+                                //orderby newcp.Key.PersonId ascending
                                 select new GetEditCustomerDto
                                 {
-                                    PersonId = cp.PersonId,
-                                    FirstName = cp.FirstName,
-                                    LastName = cp.LastName,
-                                    FullName = cp.FirstName + " " + cp.LastName,
-                                    IdentityCard = cp.IdentityCard,
-                                    PrimaryPhone = cp.PrimaryPhone,
-                                    LastUpdated = cp.LastUpdated,
-                                    IsConfirm = cp.IsConfirm,
+                                    PersonId = newcp.Key.PersonId,
+                                    FirstName = newcp.Key.FirstName,
+                                    LastName = newcp.Key.LastName,
+                                    FullName = newcp.Key.FirstName + " " + newcp.Key.LastName,
+                                    IdentityCard = newcp.Key.IdentityCard,
+                                    PrimaryPhone = newcp.Key.PrimaryPhone,
+                                    LastUpdated = newcp.Key.LastUpdated,
+                                    IsConfirm = newcp.Key.IsConfirm,
                                 }).AsQueryable();
 
-                var customer = customerx.Distinct().OrderBy(x => x.PersonId).AsQueryable();
                 #endregion
 
                 if (customer == null)
                 {
                     // 404
-                    return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>("Customer Not Found.");
+                    return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {
@@ -1296,8 +2171,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         {
                             return ResponseResultWithPagination.Failure<List<GetEditCustomerDto>>($"Could not order by field: {filter.OrderingField}");
                         }
-
-                      ;
                     }
 
                     var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(customer, filter.RecordsPerPage, filter.Page);
@@ -1335,7 +2208,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 if (customer == null)
                 {
                     // 404
-                    return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>("Customer Not Found.");
+                    return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>(TEXTCUSTOMERNOTFOUND);
                 }
                 else
                 {
@@ -1364,8 +2237,6 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                         {
                             return ResponseResultWithPagination.Failure<List<GetLoginCustomerDto>>($"Could not order by field: {filter.OrderingField}");
                         }
-
-                      ;
                     }
 
                     var paginationResult = await _httpcontext.HttpContext.InsertPaginationParametersInResponse(customer, filter.RecordsPerPage, filter.Page);
@@ -1388,65 +2259,63 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                 var IsInvalid = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == personId && x.IsUpdated == true);
                 if (IsInvalid == null)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Not found customer.");
+                    return ResponseResult.Failure<List<GetCompareDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 // Get payerId and customerId. 
-                var idDatax = (from ps in await _dbContext.Payer_Snapshots.ToListAsync()
-                              join pss in await _dbContext.Policy_Snapshots.ToListAsync()
-                              on ps.PersonId equals pss.PayerPersonId
-                              where ps.PersonId == personId
-                              select pss.CustPersonId);
-                
-                // Add id into List.
+
+                var pdata = await _dbContext.Policy_Snapshots.Where(x => x.PayerPersonId == personId).ToListAsync();
                 IList<int> idData = new List<int>();
-                if (idDatax.Contains(personId) == false)
+                foreach (var item in pdata)
                 {
-                    idData.Add(personId);  
+                    idData.Add(item.CustPersonId.Value);
                 }
 
-                foreach (var item in idDatax)
+                if (idData.Contains(personId) == false)
                 {
-                    idData.Add(item.Value);
+                    idData.Add(personId);
                 }
+
+                var idDatas = idData.Distinct();
 
 
                 // Get personal data from every id in idData.
 
+                var basepayer = await _dbContext.Payer_Snapshots.Where(x => idDatas.Contains(x.PersonId)).ToListAsync();
 
-                var allcustomer = await (from o in _dbContext.Payer_Snapshots
-                                  join ex in _dbContext.Customer_NewProfiles
-                                  on o.PersonId equals ex.PersonId
-                                  into temmGroup
-                                  from x in temmGroup.DefaultIfEmpty()
-                                  where idData.Contains(o.PersonId)
-                                  orderby o.PersonId
-                                   /*select new { o, x }*/
-                                   select new GetCompareDto
-                                   {
-                                       Caption = "Before",
-                                       IsPayer = o.PersonId != personId ? false : true,
-                                       PersonId = o.PersonId,
-                                       TitleId = o.TitleId,
-                                       FirstName = o.FirstName,
-                                       LastName = o.LastName,
-                                       IdentityCard = o.IdentityCard,
-                                       Birthdate = o.Birthdate,
-                                       PrimaryPhone = o.PrimaryPhone,
-                                       SecondaryPhone = o.SecondaryPhone,
-                                       Email = o.Email,
-                                       LineID = o.LineID,
-                                       ImagePath = x.ImagePath != null ? x.ImagePath : "",
-                                       ImageReferenceId = x.ImageReferenceId != null ? x.ImageReferenceId : "",
-                                       DocumentId = x.DocumentId != null ? x.DocumentId : "",
-                                       ListMergeFrom = x.ListMergeFrom != null ? x.ListMergeFrom : "",
-                                       ListMergeTo = x.ListMergeTo != null ? x.ListMergeTo : "",
-                                   }).ToListAsync();
+                var persondata = new GetCompareDto();
+                var allcustomer = new List<GetCompareDto>();
+                foreach (var o in basepayer)
+                {
+                    persondata = new GetCompareDto
+                    {
+                        Caption = "Before",
+                        IsPayer = o.PersonId != personId ? false : true,
+                        Customer_guid = o.Customer_guid,
+                        PersonId = o.PersonId,
+                        TitleId = o.TitleId,
+                        FirstName = o.FirstName,
+                        LastName = o.LastName,
+                        IdentityCard = o.IdentityCard,
+                        Birthdate = o.Birthdate,
+                        PrimaryPhone = o.PrimaryPhone,
+                        SecondaryPhone = o.SecondaryPhone,
+                        Email = o.Email == null ? "" : o.Email,
+                        LineID = o.LineID == null?"": o.LineID,
+                        ImagePath = "",
+                        ImageReferenceId = "",
+                        DocumentId =  "",
+                        ListMergeFrom = "",
+                        ListMergeTo =  "",
+                    };
 
+                    allcustomer.Add(persondata);
+                };
+               
                 // if not found a payer then exit.
                 if (allcustomer.Count() == 0)
                 {
-                    return ResponseResult.Failure<List<GetCompareDto>>("Not Found Customer.");
+                    return ResponseResult.Failure<List<GetCompareDto>>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 List<GetCompareDto> newList = new List<GetCompareDto>();
@@ -1465,6 +2334,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                                      {
                                          Caption = "After",
                                          IsPayer = o.PersonId != personId ? false : true,
+                                         Customer_guid = o.Customer_guid,
                                          PersonId = o.PersonId,
                                          TitleId = o.TitleId,
                                          FirstName = o.FirstName,
@@ -1486,7 +2356,12 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     // update field before change into allcustomer one by one field by field
                     if (AssignBeforeData(diffield, beforeData) == false)
                     {
-                        return ResponseResult.Failure<List<GetCompareDto>>("Can't update data");
+                        return ResponseResult.Failure<List<GetCompareDto>>("ไม่สามารถปรับปรุงรายการลูกค้า.");
+                    }
+
+                    if (AssignAfterData(diffield, afterData) == false)
+                    {
+                        return ResponseResult.Failure<List<GetCompareDto>>("ไม่สามารถปรับปรุงรายการลูกค้า.");
                     }
 
                     var customers = beforeData.Union(afterData);
@@ -1513,7 +2388,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                 if (IsCustomer == null)
                 {
-                    return ResponseResult.Failure<GetCompareLoginDto>("The Customer not found.");
+                    return ResponseResult.Failure<GetCompareLoginDto>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 GetCompareLoginDto LoginData = new GetCompareLoginDto
@@ -1533,36 +2408,45 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
-        public async Task<ServiceResponse<GetCompareLoginDto>> UpdateLoginOfCustomer(GetCompareLoginDto update)
+        public async Task<ServiceResponse<GetCompareLoginDto>> UpdateLoginOfCustomer(string UserId,GetCompareLoginDto update)
         {
             try
             {
 
-                var IsCustomer = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == update.PersonId);
+                var IsCustomer = await _dbContext.Customer_Headers.Where(x => x.PayerPersonId == update.PersonId).ToListAsync();
 
                 if (IsCustomer == null)
                 {
-                    return ResponseResult.Failure<GetCompareLoginDto>("The Customer not found.");
+                    return ResponseResult.Failure<GetCompareLoginDto>(TEXTCUSTOMERNOTFOUND);
                 }
 
                 //First : Update Table login.
-                IsCustomer.LoginIdentityCard = update.IdentityCard;
-                IsCustomer.LoginLastName = update.LastName;
+                foreach (var item in IsCustomer)
+                {
+                    item.LoginIdentityCard = update.IdentityCard;
+                    item.LoginLastName = update.LastName;
+                }
+
                 await _dbContext.SaveChangesAsync();
+
+
+                //IsCustomer.LoginIdentityCard = update.IdentityCard
+                //IsCustomer.LoginLastName = update.LastName;
+                //await _dbContext.SaveChangesAsync();
 
                 //Second : Update Table Payer.
                 var payertable = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == update.PersonId);
 
                 if (payertable == null)
                 {
-                    return ResponseResult.Failure<GetCompareLoginDto>("The Payer not found.");
+                    return ResponseResult.Failure<GetCompareLoginDto>(TEXTCUSTOMERNOTFOUND);
                 }
+
+                await AddTransactionsByCallCenter(UserId, update.PersonId, payertable.LastName, payertable.IdentityCard, update.LastName, update.IdentityCard);
 
                 payertable.IdentityCard = update.IdentityCard;
                 payertable.LastName = update.LastName;
                 await _dbContext.SaveChangesAsync();
-
-
 
                 //Second Point Five : Check Person as Customer or not?
 
@@ -1575,7 +2459,7 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
                     if (customertable == null)
                     {
-                        return ResponseResult.Failure<GetCompareLoginDto>("The Customer not found.");
+                        return ResponseResult.Failure<GetCompareLoginDto>(TEXTCUSTOMERNOTFOUND);
                     }
 
                     customertable.IdentityCard = update.IdentityCard;
@@ -1583,9 +2467,8 @@ namespace SmsUpdateCustomer_Api.Services.Admin
                     await _dbContext.SaveChangesAsync();
                 }
 
-
-                // Last thing : return result.
-                var dto = _mapper.Map<GetCompareLoginDto>(update);
+                 // Last thing : return result.
+                 var dto = _mapper.Map<GetCompareLoginDto>(update);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
 
             }
@@ -1595,8 +2478,79 @@ namespace SmsUpdateCustomer_Api.Services.Admin
 
             }
         }
+        public async Task<ServiceResponse<bool>> AddTransactionsByCallCenter(string userId, int personId, string BeforeLastName, string BeforeIdentityCard, string AfterLastName, string AfterIdentityCard)
+        {
+            try
+            {
+                //Add transaction by admin
+                var bfData = new[] { "LastName:" + BeforeLastName, "IdentityCard:" + BeforeIdentityCard };
+                var afData = new[] { "LastName:" + AfterLastName, "IdentityCard:" + AfterIdentityCard };
 
-       
+                var transactionData = new AdminApproveTransaction();
+                transactionData.UserId = userId;
+                transactionData.PersonId = personId;
+                transactionData.Description = userId + " แก้ไขข้อมูล login ลูกค้า";
+                transactionData.BeforeChange = JsonConvert.SerializeObject(bfData);
+                transactionData.AfterChange = JsonConvert.SerializeObject(afData);
+                transactionData.CreateDate = Now();
+                transactionData.LastUpdated = Now();
+
+                await _dbContext.AdminApproveTransactions.AddRangeAsync(transactionData);
+                await _dbContext.SaveChangesAsync();
+
+                return ResponseResult.Success(true, TEXTSUCCESS);
+            }
+            catch (Exception ex)
+            {
+                return ResponseResult.Success(false, ex.Message);
+            }
+        }
+        public async Task<ServiceResponse<bool>> FixedLostMergeWithoutChangedDataFromAdmin()
+        {
+            try
+            {
+
+                var allpersonId = await _dbContext.Customer_NewProfiles
+                    .Where(x => x.ListMergeFrom.Length > 5)
+                    .ToListAsync();
+
+                if (allpersonId == null)
+                {
+                    return ResponseResult.Success(false, "No Data for Check.");
+                }
+
+                                
+                IList<int> idData = new List<int>();
+                
+                foreach (var item in allpersonId)
+                {
+                    var psId = item.ListMergeFrom.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var subItem in psId)
+                    {
+                        if (subItem != item.ListMergeTo)
+                        {
+                            idData.Add(int.Parse(subItem));
+                            
+                        }
+
+                    }
+                }
+
+                var listFollower = await (from o in _dbContext.Customer_FollowUps
+                                          where idData.Contains(o.PersonId) 
+                                          && o.Result == true
+                                          select o).ToListAsync();
+
+                listFollower.ForEach(c => c.Result = true);
+                await _dbContext.SaveChangesAsync();
+
+                return ResponseResult.Success(true, TEXTSUCCESS);
+            }
+            catch (Exception ex)
+            {
+                return ResponseResult.Success(false, ex.Message);
+            }
+        }
 
         #endregion
 

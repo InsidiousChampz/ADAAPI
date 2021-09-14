@@ -78,7 +78,8 @@ namespace SmsUpdateCustomer_Api
             //------DBContext------
             services.AddDbContext<AppDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(_connectionString))
-                .ConfigureWarnings(w => w.Throw(RelationalEventId.QueryClientEvaluationWarning)));
+                //.ConfigureWarnings(w => w.Throw(RelationalEventId.QueryClientEvaluationWarning))
+                );
             
             //.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
             //------End: DBContext------

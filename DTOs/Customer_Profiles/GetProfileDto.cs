@@ -52,6 +52,8 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
         [StringLength(255)]
         public string ListMergeTo { get; set; }
 
+        public int EditorId { get; set; }
+
         public bool IsUpdated { get; set; }
 
         public DateTime LastUpdated { get; set; }

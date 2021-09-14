@@ -37,7 +37,7 @@ namespace SmsUpdateCustomer_Api.DTOs.Customer_Profiles
         [StringLength(255)]
         public string LineID { get; set; }
 
-        [StringLength(255)]
+        [StringLength(int.MaxValue)]
         public string ImagePath { get; set; }
 
         [StringLength(255)]

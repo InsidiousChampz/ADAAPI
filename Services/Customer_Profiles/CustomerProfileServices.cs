@@ -19,6 +19,7 @@ using SmsUpdateCustomer_Api.Helpers;
 using SmsUpdateCustomer_Api.DTOs;
 using SmsUpdateCustomer_Api.DTOs.Customer;
 using SmsUpdateCustomer_Api.Validations;
+using Newtonsoft.Json;
 
 namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
 {
@@ -126,9 +127,12 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                     customer.SecondaryPhone = newProfile.SecondaryPhone;
                     customer.Email = newProfile.Email;
                     customer.LineID = newProfile.LineID;
-                    customer.ImagePath = newProfile.ImagePath;
-                    customer.ImageReferenceId = newProfile.ImageReferenceId;
-                    customer.DocumentId = newProfile.DocumentId;
+                    //customer.ImagePath = newProfile.ImagePath;
+                    //customer.ImageReferenceId = newProfile.ImageReferenceId;
+                    //customer.DocumentId = newProfile.DocumentId;
+                    customer.ImagePath = newProfile.ImagePath == ""? customer.ImagePath: newProfile.ImagePath;
+                    customer.ImageReferenceId = newProfile.ImageReferenceId == "" ? customer.ImageReferenceId : newProfile.ImageReferenceId;
+                    customer.DocumentId = newProfile.DocumentId == "" ? customer.DocumentId : newProfile.DocumentId;
                     customer.EditorId = newProfile.EditorId;
                     customer.ListMergeFrom = newProfile.ListMergeFrom;
                     customer.ListMergeTo = newProfile.ListMergeTo;
@@ -181,60 +185,273 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 return ResponseResult.Failure<GetProfileDto>(ex.Message);
             }
         }
+
+        //public async Task<ServiceResponse<List<GetProfileDto>>> ConfirmCustomerProfile(int editorId)
+        //{
+        //    try
+        //    {
+        //        //find a edit record.
+        //        var customer = await _dbContext.Customer_NewProfiles
+        //            .Where(x => x.IsUpdated == false && x.EditorId == editorId).ToListAsync();
+
+        //        // if not found edit record just get data from snap and save into customer_profile.
+        //        if (customer.Count == 0)
+        //        {
+
+        //            // Get data from Snapshot for Default Data
+        //            var dummy_customer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == editorId);
+
+        //            var dummy_listmerg = (from o in await _dbContext.Payer_Snapshots.ToListAsync()
+        //                                  where o.IdentityCard == dummy_customer.IdentityCard && o.LastName == dummy_customer.LastName
+        //                                  select new GetProfileDto {
+        //                                      PersonId = o.PersonId
+        //                                  }).ToList();
+
+        //            string temp_listmergefrom = default;
+        //            string temp_listmergeto = editorId.ToString();
+
+        //            foreach (var item in dummy_listmerg)
+        //            {
+        //                temp_listmergefrom = temp_listmergefrom + item.PersonId.ToString() + ',';
+        //            }
+
+        //            AddProfileDto addprofile = new AddProfileDto
+        //            {
+        //                PersonId = dummy_customer.PersonId,
+        //                Customer_guid = dummy_customer.Customer_guid,
+        //                TitleId = dummy_customer.TitleId,
+        //                FirstName = dummy_customer.FirstName,
+        //                LastName = dummy_customer.LastName,
+        //                Birthdate = dummy_customer.Birthdate,
+        //                IdentityCard = dummy_customer.IdentityCard,
+        //                PrimaryPhone = dummy_customer.PrimaryPhone,
+        //                SecondaryPhone = dummy_customer.SecondaryPhone,
+        //                Email = dummy_customer.Email,
+        //                LineID = dummy_customer.LineID,
+        //                EditorId = editorId,
+        //                ImagePath = string.Empty,
+        //                ImageReferenceId = string.Empty,
+        //                DocumentId = string.Empty,
+        //                ListMergeFrom = temp_listmergefrom.Substring(0, temp_listmergefrom.Length -1),
+        //                ListMergeTo = temp_listmergeto,
+        //                IsUpdated = true,
+
+        //            };
+
+        //            await AddCustomerProfile(addprofile);
+
+        //            //Update header
+        //            var header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == editorId);
+        //            if (header != null)
+        //            {
+        //                header.ReplyDate = Now();
+        //                header.IsCustomerReply = true;
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //update follower
+        //            var follower = await _dbContext.Customer_FollowUps.FirstOrDefaultAsync(x => x.PersonId == editorId);
+        //            if (follower != null)
+        //            {
+        //                follower.CustomerConfirm = true;
+        //                follower.LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //update AdminApprove
+        //            var AdminApp = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == editorId);
+        //            if (AdminApp != null)
+        //            {
+        //                AdminApp.IsUpdated = false;
+        //                AdminApp.IsCheckMerge = false;
+        //                AdminApp.LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //** b'cause no change anything then no keep customer transaction
+        //            //*** but must keep customer transaction log 
+        //            await AddTransactionsByCustomer(addprofile, addprofile, editorId);
+
+
+        //            var gpf = await _dbContext.Customer_NewProfiles.Where(x => x.PersonId == editorId).ToListAsync();
+        //            var dtos = _mapper.Map<List<GetProfileDto>>(gpf);
+        //            return ResponseResult.Success(dtos, TEXTSUCCESS);
+        //        }
+
+
+        //        // start Compare data.
+        //        foreach (var item in customer)
+        //        {
+        //            // Check in customer newprofile if found that mean some peaple edited this person before then get data from newprofile.
+        //            var customerPreviousEditor = await _dbContext.Customer_NewProfiles
+        //               .Where(x => x.PersonId == item.PersonId && x.EditorId != editorId)
+        //               .OrderByDescending(x => x.LastUpdated).FirstOrDefaultAsync();
+
+        //            if (customerPreviousEditor == null)
+        //            {
+        //                // So if not found in customer_newprofile that mean nobody edit this person before then get data from payer_snapshot only!!.
+        //                var snapcustomer = await _dbContext.Payer_Snapshots
+        //                .Where(x => x.PersonId == item.PersonId).ToListAsync();
+
+        //                //Save Transaction
+        //                var addExcept = VerifyData(item, snapcustomer);
+        //                if (addExcept.Count > 0)
+        //                {
+        //                    foreach (var itemexcept in addExcept)
+        //                    {
+        //                        var cpt = new Customer_Profile_Transaction
+        //                        {
+        //                            PersonId = item.PersonId,
+        //                            EditorId = item.EditorId,//item.EditorId.Value,
+        //                            FieldData = itemexcept.FieldData,
+        //                            BeforeChange = itemexcept.BeforeChange,
+        //                            AfterChange = itemexcept.AfterChange,
+        //                            LastUpdated = Now()
+        //                        };
+
+        //                        _dbContext.Customer_Profile_Transactions.Add(cpt);
+        //                        await _dbContext.SaveChangesAsync();
+        //                        var dtos = _mapper.Map<GetProfileTransaction>(cpt);
+
+        //                        if (dtos == null)
+        //                        {
+        //                            return ResponseResult.Failure<List<GetProfileDto>>("Can't Insert Transaction");
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                //Save Transaction
+        //                var addExcept = VerifyData(item, customerPreviousEditor);
+        //                if (addExcept.Count > 0)
+        //                {
+        //                    foreach (var itemexcept in addExcept)
+        //                    {
+        //                        var cpt = new Customer_Profile_Transaction
+        //                        {
+        //                            PersonId = item.PersonId,
+        //                            EditorId = item.EditorId,//item.EditorId.Value,
+        //                            FieldData = itemexcept.FieldData,
+        //                            BeforeChange = itemexcept.BeforeChange,
+        //                            AfterChange = itemexcept.AfterChange,
+        //                            LastUpdated = Now()
+        //                        };
+
+        //                        _dbContext.Customer_Profile_Transactions.Add(cpt);
+        //                        await _dbContext.SaveChangesAsync();
+        //                        var dtos = _mapper.Map<GetProfileTransaction>(cpt);
+
+        //                        if (dtos == null)
+        //                        {
+        //                            return ResponseResult.Failure<List<GetProfileDto>>("Can't Insert Transaction");
+        //                        }
+        //                    }
+        //                }
+        //            }
+
+        //            // update table payer_snapshot and customer_snapshot for new information
+        //            var payersnap = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == item.PersonId);
+        //            if (payersnap == null)
+        //            {
+        //                return ResponseResult.Failure<List<GetProfileDto>>("Can't Update Payer Snapshot");
+        //            }
+        //            else
+        //            {
+        //                payersnap.FirstName = item.FirstName;
+        //                payersnap.LastName = item.LastName;
+        //                payersnap.TitleId = item.TitleId;
+        //                payersnap.Birthdate = item.Birthdate;
+        //                payersnap.IdentityCard = item.IdentityCard;
+        //                payersnap.PrimaryPhone = item.PrimaryPhone;
+        //                payersnap.SecondaryPhone = item.SecondaryPhone;
+        //                payersnap.Email = item.Email;
+        //                payersnap.LineID = item.LineID;
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            var customersnap = await _dbContext.Customer_Snapshots.Where(x => x.PersonId == item.PersonId).ToListAsync();
+        //            if (customersnap == null)
+        //            {
+        //                return ResponseResult.Failure<List<GetProfileDto>>("Can't Update Customer Snapshot");
+        //            }
+        //            else
+        //            {
+
+        //                foreach (var custsnap in customersnap)
+        //                {
+        //                    custsnap.FirstName = item.FirstName;
+        //                    custsnap.LastName = item.LastName;
+        //                    custsnap.TitleId = item.TitleId;
+        //                    custsnap.Birthdate = item.Birthdate;
+        //                    custsnap.IdentityCard = item.IdentityCard;
+        //                    custsnap.PrimaryPhone = item.PrimaryPhone;
+        //                    custsnap.SecondaryPhone = item.SecondaryPhone;
+        //                    custsnap.Email = item.Email;
+        //                    custsnap.LineID = item.LineID;
+        //                    await _dbContext.SaveChangesAsync();
+        //                }                      
+        //            }
+
+
+        //            int idx = customer.FindIndex(x => x.PersonId == item.PersonId);
+        //            customer[idx].IsUpdated = true;
+        //            await _dbContext.SaveChangesAsync();
+
+        //            //Update header
+        //            var header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == editorId);
+        //            if (header != null)
+        //            {
+        //                header.ReplyDate = Now();
+        //                header.IsCustomerReply = true;
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //update follower
+        //            var follower = await _dbContext.Customer_FollowUps.FirstOrDefaultAsync(x => x.PersonId == editorId);
+        //            if (follower != null)
+        //            {
+        //                follower.CustomerConfirm = true;
+        //                follower.LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //update AdminApprove
+        //            var AdminApp = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == editorId);
+        //            if (AdminApp != null)
+        //            {
+        //                AdminApp.IsUpdated = false;
+        //                AdminApp.IsCheckMerge = false;
+        //                AdminApp.LastUpdated = Now();
+        //                await _dbContext.SaveChangesAsync();
+        //            }
+
+        //            //Save Transaction Log
+        //            await AddTransactionsByCustomer(item.PersonId, editorId);
+
+        //        }
+
+        //        var dto = _mapper.Map<List<GetProfileDto>>(customer);
+        //        return ResponseResult.Success(dto, TEXTSUCCESS);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return ResponseResult.Failure<List<GetProfileDto>>(ex.Message);
+        //    }
+        //}
+
         public async Task<ServiceResponse<List<GetProfileDto>>> ConfirmCustomerProfile(int editorId)
         {
             try
             {
-                //this is a new one.
+                //find a edit record.
                 var customer = await _dbContext.Customer_NewProfiles
                     .Where(x => x.IsUpdated == false && x.EditorId == editorId).ToListAsync();
 
-                // if no record change just get data from snap.
+                // if not found edit record just update customer reply
                 if (customer.Count == 0)
                 {
-
-                    // Get data from Snapshot for Default Data
-                    var dummy_customer = await _dbContext.Payer_Snapshots.FirstOrDefaultAsync(x => x.PersonId == editorId);
-
-                    var dummy_listmerg = (from o in await _dbContext.Payer_Snapshots.ToListAsync()
-                                          where o.IdentityCard == dummy_customer.IdentityCard && o.LastName == dummy_customer.LastName
-                                          select new GetProfileDto {
-                                              PersonId = o.PersonId
-                                          }).ToList();
-
-                    string temp_listmergefrom = default;
-                    string temp_listmergeto = editorId.ToString();
-
-                    foreach (var item in dummy_listmerg)
-                    {
-                        temp_listmergefrom = temp_listmergefrom + item.PersonId.ToString() + ',';
-                    }
-
-                    AddProfileDto addprofile = new AddProfileDto
-                    {
-                        PersonId = dummy_customer.PersonId,
-                        Customer_guid = dummy_customer.Customer_guid,
-                        TitleId = dummy_customer.TitleId,
-                        FirstName = dummy_customer.FirstName,
-                        LastName = dummy_customer.LastName,
-                        Birthdate = dummy_customer.Birthdate,
-                        IdentityCard = dummy_customer.IdentityCard,
-                        PrimaryPhone = dummy_customer.PrimaryPhone,
-                        SecondaryPhone = dummy_customer.SecondaryPhone,
-                        Email = dummy_customer.Email,
-                        LineID = dummy_customer.LineID,
-                        EditorId = editorId,
-                        ImagePath = string.Empty,
-                        ImageReferenceId = string.Empty,
-                        DocumentId = string.Empty,
-                        ListMergeFrom = temp_listmergefrom.Substring(0, temp_listmergefrom.Length -1),
-                        ListMergeTo = temp_listmergeto,
-                        IsUpdated = true,
-                            
-                    };
-
-                    await AddCustomerProfile(addprofile);
-
                     //Update header
                     var header = await _dbContext.Customer_Headers.FirstOrDefaultAsync(x => x.PayerPersonId == editorId);
                     if (header != null)
@@ -244,9 +461,27 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                         await _dbContext.SaveChangesAsync();
                     }
 
+                    //update follower
+                    var follower = await _dbContext.Customer_FollowUps.FirstOrDefaultAsync(x => x.PersonId == editorId);
+                    if (follower != null)
+                    {
+                        follower.CustomerConfirm = true;
+                        follower.LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+                    //update AdminApprove
+                    var AdminApp = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == editorId);
+                    if (AdminApp != null)
+                    {
+                        AdminApp.IsUpdated = false;
+                        AdminApp.IsCheckMerge = false;
+                        AdminApp.LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+
 
                     var gpf = await _dbContext.Customer_NewProfiles.Where(x => x.PersonId == editorId).ToListAsync();
-
                     var dtos = _mapper.Map<List<GetProfileDto>>(gpf);
                     return ResponseResult.Success(dtos, TEXTSUCCESS);
                 }
@@ -292,7 +527,6 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                                 }
                             }
                         }
-
                     }
                     else
                     {
@@ -364,7 +598,7 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                             custsnap.Email = item.Email;
                             custsnap.LineID = item.LineID;
                             await _dbContext.SaveChangesAsync();
-                        }                      
+                        }
                     }
 
 
@@ -380,8 +614,30 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                         header.IsCustomerReply = true;
                         await _dbContext.SaveChangesAsync();
                     }
+
+                    //update follower
+                    var follower = await _dbContext.Customer_FollowUps.FirstOrDefaultAsync(x => x.PersonId == editorId);
+                    if (follower != null)
+                    {
+                        follower.CustomerConfirm = true;
+                        follower.LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+                    //update AdminApprove
+                    var AdminApp = await _dbContext.AdminApproves.FirstOrDefaultAsync(x => x.PersonId == editorId);
+                    if (AdminApp != null)
+                    {
+                        AdminApp.IsUpdated = false;
+                        AdminApp.IsCheckMerge = false;
+                        AdminApp.LastUpdated = Now();
+                        await _dbContext.SaveChangesAsync();
+                    }
+
+                    //Save Transaction Log
+                    await AddTransactionsByCustomer(item.PersonId, editorId);
+
                 }
-                
 
                 var dto = _mapper.Map<List<GetProfileDto>>(customer);
                 return ResponseResult.Success(dto, TEXTSUCCESS);
@@ -667,7 +923,176 @@ namespace SmsUpdateCustomer_Api.Services.Customer_Profiles
                 return default;
             }
         }
+        private async Task<bool> AddTransactionsByCustomer(int personId, int EditorId)
+        {
+            try
+            {
+                AddProfileDto oldProfile = new AddProfileDto();
+                AddProfileDto newProfile = new AddProfileDto();
+
+                var profile = await _dbContext.Customer_NewProfiles.FirstOrDefaultAsync(x => x.PersonId == personId);
+
+                if (profile == null)
+                {
+                    var snapcustomer = await _dbContext.Payer_Snapshots
+                        .FirstOrDefaultAsync(x => x.PersonId == personId);
+
+                    oldProfile = new AddProfileDto
+                    {
+                        PersonId = snapcustomer.PersonId,
+                        Customer_guid = snapcustomer.Customer_guid,
+                        TitleId = snapcustomer.TitleId,
+                        FirstName = snapcustomer.FirstName,
+                        LastName = snapcustomer.LastName,
+                        Birthdate = snapcustomer.Birthdate,
+                        IdentityCard = snapcustomer.IdentityCard,
+                        PrimaryPhone = snapcustomer.PrimaryPhone,
+                        SecondaryPhone = snapcustomer.SecondaryPhone,
+                        Email = snapcustomer.Email,
+                        LineID = snapcustomer.LineID,
+                        EditorId = EditorId,
+                        ImagePath = string.Empty,
+                        ImageReferenceId = string.Empty,
+                        DocumentId = string.Empty,
+                        ListMergeFrom = string.Empty,
+                        ListMergeTo = string.Empty,
+                        IsUpdated = true,
+                    };
+                    newProfile = oldProfile;
+
+                }
+                else
+                {
+                    var transaction = await _dbContext.Customer_Profile_Transactions.Where(x => x.EditorId == EditorId && x.PersonId == personId).ToListAsync();
+
+                    oldProfile = new AddProfileDto
+                    {
+                        PersonId = profile.PersonId,
+                        Customer_guid = profile.Customer_guid,
+                        TitleId = profile.TitleId,
+                        FirstName = profile.FirstName,
+                        LastName = profile.LastName,
+                        Birthdate = profile.Birthdate,
+                        IdentityCard = profile.IdentityCard,
+                        PrimaryPhone = profile.PrimaryPhone,
+                        SecondaryPhone = profile.SecondaryPhone,
+                        Email = profile.Email,
+                        LineID = profile.LineID,
+                        EditorId = profile.EditorId,
+                        ImagePath = profile.ImagePath,
+                        ImageReferenceId = profile.ImageReferenceId,
+                        DocumentId = profile.DocumentId,
+                        ListMergeFrom = profile.ListMergeFrom,
+                        ListMergeTo = profile.ListMergeTo,
+                        IsUpdated = true,
+                    };
+
+                    foreach (var item in transaction)
+                    {
+                        switch (item.FieldData)
+                        {
+                            case "PersonId":
+                                oldProfile.PersonId = int.Parse(item.BeforeChange);
+                                break;
+                            case "FirstName":
+                                oldProfile.FirstName = item.BeforeChange;
+                                break;
+                            case "LastName":
+                                oldProfile.LastName = item.BeforeChange;
+                                break;
+                            case "Customer_guid":
+                                oldProfile.Customer_guid = profile.Customer_guid;
+                                break;
+                            case "TitleId":
+                                oldProfile.TitleId = int.Parse(item.BeforeChange);
+                                break;
+                            case "IdentityCard":
+                                oldProfile.IdentityCard = item.BeforeChange;
+                                break;
+                            case "Birthdate":
+                                oldProfile.Birthdate = Convert.ToDateTime(item.BeforeChange);
+                                break;
+                            case "PrimaryPhone":
+                                oldProfile.PrimaryPhone = item.BeforeChange;
+                                break;
+                            case "SecondaryPhone":
+                                oldProfile.SecondaryPhone = item.BeforeChange;
+                                break;
+                            case "Email":
+                                oldProfile.Email = item.BeforeChange;
+                                break;
+                            case "LineID":
+                                oldProfile.LineID = item.BeforeChange;
+                                break;
+                            case "ImagePath":
+                                oldProfile.ImagePath = item.BeforeChange;
+                                break;
+                            case "ImageReferenceId":
+                                oldProfile.ImageReferenceId = item.BeforeChange;
+                                break;
+                            case "DocumentId":
+                                oldProfile.DocumentId = item.BeforeChange;
+                                break;
+                            case "ListMergeFrom":
+                                oldProfile.ListMergeFrom = item.BeforeChange;
+                                break;
+                            case "ListMergeTo":
+                                oldProfile.ListMergeTo = item.BeforeChange;
+                                break;
+                            case "EditorId":
+                                oldProfile.EditorId = int.Parse(item.BeforeChange);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    newProfile = new AddProfileDto
+                    {
+                        PersonId = profile.PersonId,
+                        Customer_guid = profile.Customer_guid,
+                        TitleId = profile.TitleId,
+                        FirstName = profile.FirstName,
+                        LastName = profile.LastName,
+                        Birthdate = profile.Birthdate,
+                        IdentityCard = profile.IdentityCard,
+                        PrimaryPhone = profile.PrimaryPhone,
+                        SecondaryPhone = profile.SecondaryPhone,
+                        Email = profile.Email,
+                        LineID = profile.LineID,
+                        EditorId = profile.EditorId,
+                        ImagePath = profile.ImagePath,
+                        ImageReferenceId = profile.ImageReferenceId,
+                        DocumentId = profile.DocumentId,
+                        ListMergeFrom = profile.ListMergeFrom,
+                        ListMergeTo = profile.ListMergeTo,
+                        IsUpdated = true,
+                    };
+
+
+                }
+
+                
+                var transactionData = new Customer_Profile_Transaction_Log();
+                transactionData.PersonId = personId;
+                transactionData.EditorId = EditorId;
+                transactionData.Description = "";
+                transactionData.BeforeChange = JsonConvert.SerializeObject(oldProfile);
+                transactionData.AfterChange = JsonConvert.SerializeObject(newProfile);
+                transactionData.DateCreated = Now();
+
+                await _dbContext.Customer_Profile_Transaction_Logs.AddRangeAsync(transactionData);
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
-       
+
     }
 }
