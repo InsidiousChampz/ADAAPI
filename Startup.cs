@@ -13,33 +13,30 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SmsUpdateCustomer_Api.Data;
-using SmsUpdateCustomer_Api.Helpers;
+using ADAAPI.Data;
+using ADAAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmsUpdateCustomer_Api.Services;
+using ADAAPI.Services;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Newtonsoft.Json;
-using SmsUpdateCustomer_Api.Services.Customer_Infomations;
-using SmsUpdateCustomer_Api.Services.Customer;
-using SmsUpdateCustomer_Api.Services.Customer_Profiles;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using SmsUpdateCustomer_Api.Services.Admin;
-using SmsUpdateCustomer_Api.Services.Report;
+using ADAAPI.Services.Admin;
 
-namespace SmsUpdateCustomer_Api
+
+namespace ADAAPI
 {
     public class Startup
     {
-        private const string _projectName = "SMS Update Customer API";
-        private const string _connectionString = "CustomerProfilesConnection";
+        private const string _projectName = "ADA API";
+        private const string _connectionString = "AdaConnection";
         private const string _rootSwagger = "/swagger/v1/swagger.json";
 
         public Startup(IConfiguration configuration)
@@ -98,14 +95,8 @@ namespace SmsUpdateCustomer_Api
 
             //------Service------
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
-            services.AddScoped<ICustomerInfomationServices, CustomerInfomationServices>();
-            services.AddScoped<ICustomerProfileServices, CustomerProfileServices>();
-            services.AddScoped<ICustomerServices, CustomerServices>();
             services.AddScoped<IAdminServices, AdminServices>();
-            services.AddScoped<IReportServices, ReportServices>();
-
-
+            
             //------End: Service------
 
             AddFormatters(services);

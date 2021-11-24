@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace SmsUpdateCustomer_Api.Validations
+namespace ADAAPI.Validations
 {
     public class FileSizeValidator : ValidationAttribute
     {

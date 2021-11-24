@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace SmsUpdateCustomer_Api.Models
+namespace ADAAPI.Models
 {
 
     public class ServiceResponse<T>

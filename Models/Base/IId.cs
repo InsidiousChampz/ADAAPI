@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmsUpdateCustomer_Api.Models
+namespace ADAAPI.Models
 {
     public interface IId
     {

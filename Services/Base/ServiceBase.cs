@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using SmsUpdateCustomer_Api.Data;
-using SmsUpdateCustomer_Api.DTOs;
-using SmsUpdateCustomer_Api.Helpers;
-using SmsUpdateCustomer_Api.Models;
+using ADAAPI.Data;
+using ADAAPI.DTOs;
+using ADAAPI.Helpers;
+using ADAAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SmsUpdateCustomer_Api.Services
+namespace ADAAPI.Services
 {
     public class ServiceBase
     {

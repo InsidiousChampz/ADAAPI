@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmsUpdateCustomer_Api.DTOs
+namespace ADAAPI.DTOs
 {
     public class PaginationDto
     {

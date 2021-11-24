@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SmsUpdateCustomer_Api.Validations
+namespace ADAAPI.Validations
 {
     public class FirstLetterUpperCaseAttribute : ValidationAttribute
     {

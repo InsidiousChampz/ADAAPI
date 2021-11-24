@@ -1,6 +1,6 @@
-﻿using SmsUpdateCustomer_Api.DTOs;
+﻿using ADAAPI.DTOs;
 
-namespace SmsUpdateCustomer_Api.Models
+namespace ADAAPI.Models
 {
     public class ServiceResponseWithPagination<T> : ServiceResponse<T>
     {

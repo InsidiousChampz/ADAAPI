@@ -1,7 +1,7 @@
-﻿using SmsUpdateCustomer_Api.DTOs;
+﻿using ADAAPI.DTOs;
 using System.Linq;
 
-namespace SmsUpdateCustomer_Api.Helpers
+namespace ADAAPI.Helpers
 {
     public static class QueryableExtensions
     {

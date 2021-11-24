@@ -5,7 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 
-namespace SmsUpdateCustomer_Api
+namespace ADAAPI
 {
     public class Program
     {

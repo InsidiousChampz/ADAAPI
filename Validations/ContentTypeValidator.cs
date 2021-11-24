@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace SmsUpdateCustomer_Api.Validations
+namespace ADAAPI.Validations
 {
     public class ContentTypeValidator : ValidationAttribute
     {
